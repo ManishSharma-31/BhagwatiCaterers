@@ -24,3 +24,7 @@ _Answer these when possible. Until then we use clearly marked placeholders._
 - [ ] Preferred business logo (or permission to create a simple one)
 - [ ] Preferred website address (domain name), for example bhagwaticaterers.in
 - [ ] Festival or seasonal specials (Ganesh festival, Diwali, Gudi Padwa)
+
+## Photos still needed from the owner (no safe free photo exists)
+- [ ] Puran poli, bhakri with pithla, shrikhand, masale bhat, dal baati churma, rangoli
+- [ ] Real photos of the food at actual events (these should replace the stock photos over time)

@@ -14,3 +14,6 @@
 | 2026-11-27 | FSSAI licence no. 21526049010527 shown in footer, quotes and invoices | Provided by owner. Number to be re-checked against the licence certificate before launch. |
 | 2026-11-27 | Service areas: Latur, Ausa, Nilanga, Renapur, Tuljapur, Ambajogai and nearby | Provided by owner. |
 | 2026-11-27 | Use free-licence stock photos for now, labelled "representative image"; replace with the owner's own photos as they arrive | Owner asked for internet photos. Direct downloads are blocked from the agent workspace, so the download route is still to be decided. |
+| 2026-11-27 | 25 Pexels photos shown in Gallery, all labelled "representative image"; 3 rejected after visual review (thali-top: possible non-veg item; thali-sweets: label mismatch; buffet-indoor: possible logo) | Photos were chosen from page text only, so each was checked by eye after download. |
+| 2026-11-27 | CI size budget counts code and art only, not photos | Photos are lazy-loaded and served at 800 px on phones. |
+| 2026-11-27 | No genuine free photo found for puran poli, bhakri-pithla, shrikhand, masale bhat, dal baati churma, rangoli | Owner photos needed first for these. Wrong-dish substitutes are not used. |

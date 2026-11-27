@@ -21,7 +21,7 @@ Status: `todo`, `doing`, `done`, `blocked`
 | Quote form with WhatsApp prefill (no server; Turnstile and email endpoint deferred) | Page agent B | done |
 | Schema, sitemap, hreflang | Foundation | done (domain placeholder) |
 | QA, accessibility, low-end Android check | QA agent | todo |
-| Curate licence-checked stock photos, run download workflow | Photo agent, GitHub Action | doing |
+| Curate licence-checked stock photos, run download workflow | Photo agent, GitHub Action | done (25 photos live in Gallery; 6 dishes need owner photos) |
 | Deploy preview (Cloudflare Pages) and owner review | Lead agent | todo |
 
 ## Phase 2: Owner dashboard (planned)

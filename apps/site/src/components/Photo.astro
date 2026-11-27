@@ -19,7 +19,7 @@ const srcset = has1600 ? `/photos/${name}-800.webp 800w, /photos/${name}-1600.we
   {exists ? (
     <div class="photo">
       <picture>
-        <source type="image/webp" srcset={srcset} sizes="(min-width: 900px) 33vw, 100vw" />
+        <source type="image/webp" srcset={srcset} sizes="(min-width: 700px) 33vw, 50vw" />
         <img src={hasJpg ? `/photos/${name}-800.jpg` : `/photos/${name}-800.webp`} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
       </picture>
     </div>

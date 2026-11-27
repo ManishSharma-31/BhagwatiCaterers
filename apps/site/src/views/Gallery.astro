@@ -33,5 +33,7 @@ const c = gallery[lang];
   </section>
 </Base>
 <style>
-  .gal { margin-top: 1.5rem; }
+  .gal { margin-top: 1.5rem; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  @media (min-width: 700px) { .gal { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+  .gal :global(.photo img) { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; height: auto; }
 </style>
