@@ -13,7 +13,6 @@ const c = gallery[lang];
     <div class="wrap">
       <h1>{c.title}</h1>
       <p class="lead">{c.lead}</p>
-      <p class="note">{c.note}</p>
       <div class="grid three gal">
         {slots.map((s) => (
           <Photo name={s.name} alt={s.alt[lang]} representative fallbackIcon={s.icon} lang={lang} />

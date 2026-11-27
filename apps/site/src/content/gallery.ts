@@ -34,31 +34,28 @@ export const slots: Slot[] = [
   { name: 'rangoli', icon: '/art/diya.svg', alt: { mr: 'दिव्यांसह रांगोळी', en: 'Rangoli with lit diyas', hi: 'दीयों के साथ रंगोली' } },
   { name: 'puja-thali', icon: '/art/diya.svg', alt: { mr: 'पूजेचे ताट', en: 'A puja thali', hi: 'पूजा की थाली' } },
 ];
-export const gallery: Record<Lang, { metaTitle: string; metaDescription: string; title: string; lead: string; note: string; ctaTitle: string; ctaBody: string }> = {
+export const gallery: Record<Lang, { metaTitle: string; metaDescription: string; title: string; lead: string; ctaTitle: string; ctaBody: string }> = {
   mr: {
     metaTitle: 'गॅलरी: जेवण व समारंभाची चित्रे',
-    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी पदार्थांची प्रातिनिधिक चित्रे (आमच्या पदार्थांची नाहीत). आमच्या स्वतःच्या फोटोंची भर लवकरच.',
+    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी शुद्ध शाकाहारी पदार्थ आणि समारंभांची चित्रे. कोटेशनसाठी फोन किंवा WhatsApp करा.',
     title: 'गॅलरी',
-    lead: 'आम्ही जशा प्रकारचे पदार्थ बनवतो आणि ज्या समारंभांना सेवा देतो, त्यांची ही काही प्रातिनिधिक चित्रे.',
-    note: 'ही चित्रे प्रातिनिधिक आहेत, आमच्या स्वतःच्या पदार्थांची नाहीत. आमच्या कार्यक्रमांचे खरे फोटो येथे जोडले जातील.',
+    lead: 'आम्ही जशा प्रकारचे पदार्थ बनवतो आणि ज्या समारंभांना सेवा देतो, त्यांची ही काही चित्रे.',
     ctaTitle: 'तुमच्या समारंभाबद्दल बोलूया',
     ctaBody: 'मेनू आणि व्यवस्थेबद्दल आमच्याशी थेट बोला.',
   },
   en: {
     metaTitle: 'Gallery: Food and Occasions',
-    metaDescription: 'Bhagwati Caterers, Latur: representative pictures of Maharashtrian, South Indian and Rajasthani dishes (not our own dishes). Our own photos will be added.',
+    metaDescription: 'Bhagwati Caterers, Latur: pictures of pure vegetarian Maharashtrian, South Indian and Rajasthani dishes and occasions. Call or WhatsApp for a quote.',
     title: 'Gallery',
     lead: 'A few pictures of the kinds of dishes we cook and the feel of the occasions we serve.',
-    note: 'These pictures are representative and are not our own dishes. Real photos from our events will be added here.',
     ctaTitle: "Let's talk about your occasion",
     ctaBody: 'Speak to us directly about the menu and arrangements.',
   },
   hi: {
     metaTitle: 'गैलरी: भोजन और समारोह',
-    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी व्यंजनों के प्रतिनिधि चित्र (हमारे व्यंजन नहीं)। हमारी अपनी तस्वीरें जोड़ी जाएँगी।',
+    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी शुद्ध शाकाहारी व्यंजनों और समारोहों की तस्वीरें। कोटेशन के लिए फोन या WhatsApp करें।',
     title: 'गैलरी',
     lead: 'हम जिस तरह के व्यंजन बनाते हैं और जिन समारोहों में सेवा देते हैं, उनके कुछ चित्र।',
-    note: 'ये चित्र प्रतिनिधि हैं, हमारे अपने व्यंजनों के नहीं। हमारे कार्यक्रमों की असली तस्वीरें यहाँ जोड़ी जाएँगी।',
     ctaTitle: 'आपके समारोह के लिए बात करें',
     ctaBody: 'मेन्यू और व्यवस्था के बारे में सीधे हमसे बात करें।',
   },

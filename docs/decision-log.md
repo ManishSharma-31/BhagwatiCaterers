@@ -46,3 +46,6 @@
 ## 2026-11-27 owner photo and email
 - Owner photo added to About (owner-supplied, 375x666 source, cropped 4:5 and upscaled 2x, so slightly soft; ask for a higher-resolution original later). Owner consented by supplying it.
 - Email set to manishsharmadota@gmail.com "for now" (site.ts `email`); shown on Contact, footer, legal pages and JSON-LD.
+
+## 2026-11-27 "representative image" wording
+- Owner asked to remove all "representative / not our own dish" wording except the photo clause in the Terms (section 5). Removed from image captions, Gallery note and meta description, and Credits intro. Credits page keeps the photographer, source and licence table (needed for CC BY-SA attribution).
