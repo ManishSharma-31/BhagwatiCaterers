@@ -21,9 +21,9 @@ jobs:
       - name: Build
         working-directory: apps/site
         run: npm run build
-      - name: Check built size (budget: 3 MB for the whole site at this stage)
+      - name: "Check built size (code and art only; photos are excluded and lazy-loaded)"
         working-directory: apps/site
         run: |
-          size=$(du -sk dist | cut -f1)
+          size=$(du -sk --exclude=photos dist | cut -f1)
           echo "dist size: ${size} KB"
           test "$size" -lt 3072

@@ -332,8 +332,8 @@
     "faces_or_logos": false,
     "alt_en": "Indoor buffet set-up with chafing dishes",
     "alt_mr": "चाफिंग डिशसह घरातील बुफे व्यवस्था",
-    "needs_manual": false,
-    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required. Food contents unknown; check."
+    "needs_manual": true,
+    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required. Food contents unknown; check. REJECTED after visual review 2026-11-27 (possible non-veg item / label mismatch / possible logo). Do not re-enable."
   },
   {
     "slot": "marigold-flowers",
@@ -524,8 +524,8 @@
     "faces_or_logos": false,
     "alt_en": "Top view of a vegetarian thali with chapati, rice, dal, okra and yogurt",
     "alt_mr": "चपाती, भात, वरण, भेंडी आणि दही असलेली शाकाहारी थाळी",
-    "needs_manual": false,
-    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required."
+    "needs_manual": true,
+    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required. REJECTED after visual review 2026-11-27 (possible non-veg item / label mismatch / possible logo). Do not re-enable."
   },
   {
     "slot": "thali-sweets",
@@ -540,8 +540,8 @@
     "faces_or_logos": false,
     "alt_en": "Top view of a thali with curries, sweets and snacks",
     "alt_mr": "भाज्या, गोड पदार्थ आणि फराळासह थाळी",
-    "needs_manual": false,
-    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required. Contents not verified as vegetarian; confirm visually."
+    "needs_manual": true,
+    "notes": "License note: photo page seen/fetched via Pexels search on 2026-11-27; page shows 'Free' and links to Pexels licence; full licence text not re-read. Direct URL follows the pattern confirmed on photo 5993269 but not individually confirmed; the Action must check for HTTP 200. Photographer handle taken from the download filename unless noted, so unverified. Face/logo flag based on page text only; images were not viewed, so a human visual check is required. Contents not verified as vegetarian; confirm visually. REJECTED after visual review 2026-11-27 (possible non-veg item / label mismatch / possible logo). Do not re-enable."
   },
   {
     "slot": "snacks-platter",

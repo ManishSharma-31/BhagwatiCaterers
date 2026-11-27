@@ -127,15 +127,6 @@
       "height": 8640
     },
     {
-      "slug": "buffet-indoor",
-      "source": "pexels",
-      "page_url": "https://www.pexels.com/photo/elegant-buffet-setup-in-modern-interior-35542020/",
-      "photographer": "theamritdev",
-      "license": "Pexels licence (free for commercial use, attribution not required); page labelled Free on 2026-11-27 check",
-      "width": 4480,
-      "height": 6720
-    },
-    {
       "slug": "marigold-flowers",
       "source": "pexels",
       "page_url": "https://www.pexels.com/photo/close-up-shot-of-orange-flowers-12718218/",
@@ -224,24 +215,6 @@
       "license": "Pexels licence (free for commercial use, attribution not required); page labelled Free on 2026-11-27 check",
       "width": 3779,
       "height": 5668
-    },
-    {
-      "slug": "thali-top",
-      "source": "pexels",
-      "page_url": "https://www.pexels.com/photo/traditional-indian-thali-with-chapati-and-vegetables-35008222/",
-      "photographer": "Rajani33",
-      "license": "Pexels licence (free for commercial use, attribution not required); page labelled Free on 2026-11-27 check",
-      "width": 4000,
-      "height": 3000
-    },
-    {
-      "slug": "thali-sweets",
-      "source": "pexels",
-      "page_url": "https://www.pexels.com/photo/traditional-indian-thali-with-sweets-and-curries-36460899/",
-      "photographer": "Vipinvihari Murari Das",
-      "license": "Pexels licence (free for commercial use, attribution not required); page labelled Free on 2026-11-27 check",
-      "width": 3024,
-      "height": 4032
     },
     {
       "slug": "snacks-platter",
