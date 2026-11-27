@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ActionBar from '../components/ActionBar.astro';
+import { site, LANGS, pagePath, SITE_URL, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+
+interface Props { lang: Lang; page: PageKey; title: string; description: string; noindex?: boolean; }
+const { lang, page, title, description, noindex = false } = Astro.props;
+
+const htmlLang = { mr: 'mr-IN', en: 'en-IN', hi: 'hi-IN' }[lang];
+const canonical = new URL(pagePath(lang, page), SITE_URL).href;
+const fullTitle = page === 'home' ? title : `${title} | ${site.name[lang]}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': ['FoodEstablishment', 'LocalBusiness'],
+  name: site.name.en,
+  alternateName: [site.name.mr],
+  description,
+  url: SITE_URL,
+  telephone: `+${site.phoneIntl}`,
+  servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Vegetarian'],
+  areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
+  founder: { '@type': 'Person', name: site.owner.en },
+  identifier: { '@type': 'PropertyValue', name: 'FSSAI Licence No.', value: site.fssai },
+  sameAs: Object.values(site.social).filter(Boolean),
+};
+---
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#7a1f2b" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(l, page), SITE_URL).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath('mr', page), SITE_URL).href} />
+    <link rel="icon" type="image/svg+xml" href="/art/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name[lang]} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={htmlLang.replace('-', '_')} />
+    <meta property="og:image" content={new URL('/art/og-card.svg', SITE_URL).href} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{ui.skip[lang]}</a>
+    <Header lang={lang} page={page} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+    <ActionBar lang={lang} />
+  </body>
+</html>

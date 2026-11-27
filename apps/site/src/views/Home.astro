@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import { home } from '../content/home';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = home[lang];
+---
+<Base lang={lang} page="home" title={c.metaTitle} description={c.metaDescription}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <ul class="badges">
+          <li>🌿 {ui.pureVeg[lang]}</li>
+          <li>{ui.yearsExp[lang]}</li>
+          <li>{ui.fssaiLabel[lang]} {site.fssai}</li>
+        </ul>
+        <h1>{c.heroTitle}</h1>
+        <p class="lead">{c.heroLead}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+          <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">💬 {ui.whatsapp[lang]}</a>
+          <a class="btn btn-ghost" href={`tel:+${site.phoneIntl}`}>📞 {site.phone}</a>
+        </div>
+      </div>
+      <div>
+        <img src="/art/thali.svg" alt="" width="400" height="400" fetchpriority="high" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="center">{c.orderTitle}</h2>
+      <p class="lead center">{c.orderLead}</p>
+      <div class="grid three">
+        {c.orders.map((o, i) => (
+          <article class={`card ${i < 2 ? 'big' : ''}`}>
+            <img class="icon" src={o.icon} alt="" width="64" height="64" loading="lazy" />
+            <h3>{o.title}</h3>
+            <p>{o.body}</p>
+            <ul>{o.points.map((p) => <li>{p}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+      <div class="btn-row center" style="margin-top:1.5rem">
+        <a class="btn btn-primary" href={pagePath(lang, 'packages')}>{{ mr: 'अधिक माहिती', en: 'Learn more', hi: 'अधिक जानकारी' }[lang]}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="center">{c.cuisineTitle}</h2>
+      <p class="note center">{c.cuisineNote}</p>
+      <div class="grid three">
+        {c.cuisines.map((x) => (
+          <article class="card">
+            <img class="icon" src={x.icon} alt="" width="64" height="64" loading="lazy" />
+            <h3>{x.title}</h3>
+            <p>{x.dishes}</p>
+          </article>
+        ))}
+      </div>
+      <div class="btn-row center" style="margin-top:1.5rem">
+        <a class="btn btn-ghost" href={pagePath(lang, 'menu')}>{{ mr: 'पूर्ण मेनू', en: 'See the menu', hi: 'पूरा मेन्यू' }[lang]}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap center">
+      <h2>{c.occasionTitle}</h2>
+      <ul class="chips" style="justify-content:center">
+        {c.occasions.map((o) => <li>{o}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="center">{c.whyTitle}</h2>
+      <div class="grid three">
+        {c.why.map((w) => (
+          <article class="card"><h3>{w.title}</h3><p>{w.body}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap center">
+      <h2>{c.areasTitle}</h2>
+      <p>{c.areasNote}</p>
+      <ul class="chips" style="justify-content:center">
+        {site.areas.map((a) => <li>{a[lang]}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt center">
+    <div class="wrap">
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">💬 {ui.whatsapp[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>

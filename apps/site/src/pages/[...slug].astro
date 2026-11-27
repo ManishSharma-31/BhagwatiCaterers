@@ -1,0 +1,48 @@
+---
+// One route file generates every page in every language:
+//   Marathi (default): /, /services/ ...   English: /en/, /en/services/ ...   Hindi: /hi/, /hi/services/ ...
+// To add a page: add its key to PAGES in src/data/site.ts and create src/views/<Key>.astro, then register it below.
+import { LANGS, PAGES, pagePath, type Lang, type PageKey } from '../data/site';
+import Home from '../views/Home.astro';
+import Placeholder from '../views/Placeholder.astro';
+import Services from '../views/Services.astro';
+import Menu from '../views/Menu.astro';
+import Packages from '../views/Packages.astro';
+import Gallery from '../views/Gallery.astro';
+import About from '../views/About.astro';
+import Faq from '../views/Faq.astro';
+import Areas from '../views/Areas.astro';
+import Contact from '../views/Contact.astro';
+import Quote from '../views/Quote.astro';
+import Credits from '../views/Credits.astro';
+
+// Registered views. Pages not listed fall back to Placeholder until their view exists.
+const views: Partial<Record<PageKey, any>> = {
+  home: Home,
+  services: Services,
+  menu: Menu,
+  packages: Packages,
+  gallery: Gallery,
+  about: About,
+  faq: Faq,
+  areas: Areas,
+  contact: Contact,
+  quote: Quote,
+  credits: Credits,
+};
+
+export function getStaticPaths() {
+  const paths: Array<{ params: { slug: string | undefined }; props: { lang: Lang; page: PageKey } }> = [];
+  for (const lang of LANGS) {
+    for (const page of PAGES) {
+      const p = pagePath(lang, page).replace(/^\/|\/$/g, '');
+      paths.push({ params: { slug: p === '' ? undefined : p }, props: { lang, page } });
+    }
+  }
+  return paths;
+}
+
+const { lang, page } = Astro.props as { lang: Lang; page: PageKey };
+const View = views[page] ?? Placeholder;
+---
+<View lang={lang} page={page} />

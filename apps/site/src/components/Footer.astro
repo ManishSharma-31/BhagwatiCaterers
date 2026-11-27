@@ -1,0 +1,35 @@
+---
+import { site, waLink, pagePath, type Lang } from '../data/site';
+import { nav, ui } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const links = ['services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact'] as const;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div>
+      <h2>{site.name[lang]}</h2>
+      <p>{ui.footerNote[lang]}</p>
+      <p><strong>{ui.fssaiLabel[lang]}</strong> {site.fssai}</p>
+      <p>{ui.servingAreas[lang]}: {site.areas.map((a) => a[lang]).join(', ')}</p>
+    </div>
+    <div>
+      <h2>{nav.contact[lang]}</h2>
+      <ul>
+        <li><a href={`tel:+${site.phoneIntl}`}>📞 {site.phone}</a></li>
+        <li><a href={waLink(lang)} rel="noopener" target="_blank">💬 WhatsApp</a></li>
+        {site.social.instagram && <li><a href={site.social.instagram} rel="noopener">Instagram</a></li>}
+        {site.social.facebook && <li><a href={site.social.facebook} rel="noopener">Facebook</a></li>}
+      </ul>
+    </div>
+    <div>
+      <h2>{ui.home[lang]}</h2>
+      <ul>
+        {links.map((k) => <li><a href={pagePath(lang, k)}>{nav[k][lang]}</a></li>)}
+        <li><a href={pagePath(lang, 'credits')}>{ui.credits[lang]}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap fine">© {year} {site.name[lang]}. {ui.rights[lang]}.</div>
+</footer>

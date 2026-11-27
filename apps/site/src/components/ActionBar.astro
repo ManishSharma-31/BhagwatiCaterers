@@ -1,0 +1,11 @@
+---
+import { site, waLink, pagePath, type Lang } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+---
+<div class="action-bar" role="navigation" aria-label={ui.getQuote[lang]}>
+  <a href={`tel:+${site.phoneIntl}`}>📞 {ui.call[lang]}</a>
+  <a class="wa" href={waLink(lang)} rel="noopener" target="_blank">💬 {ui.whatsapp[lang]}</a>
+  <a class="quote" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+</div>
