@@ -26,6 +26,12 @@ export const slots: Slot[] = [
   { name: 'diyas', icon: '/art/diya.svg', alt: { mr: 'पणत्या', en: 'Lit diyas', hi: 'दीये' } },
   { name: 'kalash', icon: '/art/kalash.svg', alt: { mr: 'कलश', en: 'A kalash', hi: 'कलश' } },
   { name: 'kalash-decorated', icon: '/art/kalash.svg', alt: { mr: 'सजवलेला कलश', en: 'A decorated kalash', hi: 'सजा हुआ कलश' } },
+  { name: 'puran-poli', icon: '/art/icon-puran-poli.svg', alt: { mr: 'केळीच्या पानावर पुरणपोळी', en: 'Puran poli on a banana leaf', hi: 'केले के पत्ते पर पूरन पोली' } },
+  { name: 'bhakri-pithla', icon: '/art/icon-bhakri.svg', alt: { mr: 'झुणका-भाकरी', en: 'Zunka (pithla) with bhakri', hi: 'झुणका-भाकरी' } },
+  { name: 'shrikhand', icon: '/art/icon-shrikhand.svg', alt: { mr: 'श्रीखंड', en: 'Shrikhand', hi: 'श्रीखंड' } },
+  { name: 'masale-bhat', icon: '/art/icon-masale-bhat.svg', alt: { mr: 'मसाले भात', en: 'Masala rice', hi: 'मसाला भात' } },
+  { name: 'dal-baati-churma', icon: '/art/icon-dal-baati.svg', alt: { mr: 'दाल-बाटी-चुरमा थाळी', en: 'Dal baati churma thali', hi: 'दाल-बाटी-चूरमा थाली' } },
+  { name: 'rangoli', icon: '/art/diya.svg', alt: { mr: 'दिव्यांसह रांगोळी', en: 'Rangoli with lit diyas', hi: 'दीयों के साथ रंगोली' } },
   { name: 'puja-thali', icon: '/art/diya.svg', alt: { mr: 'पूजेचे ताट', en: 'A puja thali', hi: 'पूजा की थाली' } },
 ];
 export const gallery: Record<Lang, { metaTitle: string; metaDescription: string; title: string; lead: string; note: string; ctaTitle: string; ctaBody: string }> = {

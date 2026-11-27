@@ -10,7 +10,7 @@ import Photo from '../components/Photo.astro';
 import { slots } from '../content/gallery';
 const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
 const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
-const cuisinePhotos: Array<string | null> = ['misal-pav', 'idli-sambar', null];
+const cuisinePhotos: Array<string | null> = ['misal-pav', 'idli-sambar', 'dal-baati-churma'];
 ---
 <Base lang={lang} page="home" title={c.metaTitle} description={c.metaDescription}>
   <section class="hero">

@@ -242,6 +242,60 @@
       "license": "Pexels licence (free for commercial use, attribution not required); page labelled Free on 2026-11-27 check",
       "width": 3024,
       "height": 4032
+    },
+    {
+      "slug": "puran-poli",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Holige1.JPG",
+      "photographer": "Irrigator",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "slug": "bhakri-pithla",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jhunka_Bhakri_Marathi_Food_by_Dr._Raju_Kasambe_DSCN0221_(6).jpg",
+      "photographer": "Dr. Raju Kasambe",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 960,
+      "height": 996
+    },
+    {
+      "slug": "shrikhand",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Shrikhand.JPG",
+      "photographer": "Miansari66",
+      "license": "CC0 (http://creativecommons.org/publicdomain/zero/1.0/deed.en)",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "slug": "masale-bhat",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Masala_Pea_And_Corn_Rice.jpg",
+      "photographer": "Fatimahope",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "slug": "dal-baati-churma",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Dal_Bati_Choorma.jpg",
+      "photographer": "Niranjan.gohane",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 960,
+      "height": 720
+    },
+    {
+      "slug": "rangoli",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Diya_deepak_Diwali_rangoli_in_goa.JPG",
+      "photographer": "Dinesh Korgaokar",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 960,
+      "height": 720
     }
   ],
   "skipped": [

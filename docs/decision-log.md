@@ -22,3 +22,8 @@
 - Local-first PWA at /admin; Supabase optional (single `records` table, RLS + allowlist, no service-role key, publishable key pre-filled).
 - Default titles/towns follow the UI language (fixed after e2e testing).
 - Not verified here: real Supabase calls (network blocked), real phone taps, wa.me on devices. See docs/supabase-setup.md.
+
+## 2026-11-27 owner details
+- Address: Julhelal Marg, Narayan Nagar, Latur 413531. Hours: open at all times (call/WhatsApp any time). WhatsApp = 9057264895. Email: later. Domain: not bought; SITE_URL stays a placeholder.
+- Original kalash logo replaces the temporary lotus mark; favicon and PWA icons regenerated.
+- Six dish photos with no Pexels match taken from Wikimedia Commons (open CC licences) via the photo-candidates workflow, vetted by eye. Masale bhat is the closest match, not exact: replace with an owner photo.

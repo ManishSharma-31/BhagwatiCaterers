@@ -78,3 +78,13 @@
 
 ## Owner photo shoot list
 See section 4 of `research/01-visuals-and-image-licensing.md` (38 image needs, each tagged own, stock or svg). Ask the owner to send photos as WhatsApp "Document" (not compressed) or by Google Drive, and to note who appears in each photo and whether they agree to its use.
+
+## Added 2026-11-28 (Wikimedia Commons, CC licences)
+| photos/puran-poli | stock photo | Irrigator on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
+| photos/bhakri-pithla | stock photo | Dr. Raju Kasambe on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
+| photos/shrikhand | stock photo | Miansari66 on Wikimedia Commons | CC0 (http://creativecommons.org/publicdomain/zero/1.0/deed.en) | 2026-11-27 | no | reviewed by eye 2026-11-27: no faces or logos | representative image |
+| photos/masale-bhat | stock photo | Fatimahope on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
+| photos/dal-baati-churma | stock photo | Niranjan.gohane on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
+| photos/rangoli | stock photo | Dinesh Korgaokar on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
+
+CC BY-SA photos are shown unmodified except resizing/compression; credit, licence and source link appear on the Credits page.

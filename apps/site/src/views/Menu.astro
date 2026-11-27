@@ -10,7 +10,7 @@ import Photo from '../components/Photo.astro';
 import { slots } from '../content/gallery';
 const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
 const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
-const cuisinePhotos: string[][] = [['misal-pav', 'modak', 'jilebi', 'gulab-jamun', 'poha'], ['idli-sambar', 'dosa'], []];
+const cuisinePhotos: string[][] = [['puran-poli', 'misal-pav', 'bhakri-pithla', 'masale-bhat', 'shrikhand', 'modak', 'jilebi', 'gulab-jamun', 'poha'], ['idli-sambar', 'dosa'], ['dal-baati-churma']];
 ---
 <Base lang={lang} page="menu" title={c.metaTitle} description={c.metaDescription}>
   <section class="hero">
