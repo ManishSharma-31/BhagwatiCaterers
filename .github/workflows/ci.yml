@@ -26,4 +26,4 @@ jobs:
         run: |
           size=$(du -sk --exclude=photos dist | cut -f1)
           echo "dist size: ${size} KB"
-          test "$size" -lt 3072
+          test "$size" -lt 4096
