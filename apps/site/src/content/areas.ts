@@ -7,11 +7,12 @@ export const areaLines: Record<string, L3> = {
   renapur: { mr: 'रेणापूर परिसरातील कार्यक्रमांसाठी आम्ही केटरिंग सेवा देतो.', en: 'We serve events in and around Renapur.', hi: 'रेणापुर और आसपास के कार्यक्रमों के लिए हम सेवा देते हैं।' },
   tuljapur: { mr: 'तुळजापूर परिसरातील कार्यक्रमांसाठी आम्ही केटरिंग सेवा देतो.', en: 'We serve events in and around Tuljapur.', hi: 'तुलजापुर और आसपास के कार्यक्रमों के लिए हम सेवा देते हैं।' },
   ambajogai: { mr: 'अंबाजोगाई परिसरातील कार्यक्रमांसाठी आम्ही केटरिंग सेवा देतो.', en: 'We serve events in and around Ambajogai.', hi: 'अम्बाजोगाई और आसपास के कार्यक्रमों के लिए हम सेवा देते हैं।' },
+  maharashtra: { mr: 'मोठ्या कार्यक्रमांसाठी आम्ही महाराष्ट्रात सर्वत्र येतो. अंतर व कार्यक्रमानुसार व्यवस्था ठरवतो.', en: 'For larger events we travel anywhere in Maharashtra. Arrangements depend on the distance and the event.', hi: 'बड़े आयोजनों के लिए हम पूरे महाराष्ट्र में आते हैं। व्यवस्था दूरी और कार्यक्रम के अनुसार तय होती है।' },
 };
 export const areas: Record<Lang, { metaTitle: string; metaDescription: string; title: string; lead: string; nearbyTitle: string; nearbyBody: string; note: string; ctaTitle: string; ctaBody: string }> = {
   mr: {
     metaTitle: 'लातूर व आसपास केटरिंग सेवा क्षेत्र',
-    metaDescription: 'भगवती केटरर्स लातूर, औसा, निलंगा, रेणापूर, तुळजापूर आणि अंबाजोगाई येथे शुद्ध शाकाहारी केटरिंग देते. तुमचे गाव यादीत नसेल तर विचारा.',
+    metaDescription: 'भगवती केटरर्स लातूर, औसा, निलंगा, रेणापूर, तुळजापूर आणि अंबाजोगाई तसेच संपूर्ण महाराष्ट्रात शुद्ध शाकाहारी केटरिंग देते. तुमचे गाव यादीत नसेल तर विचारा.',
     title: 'सेवा क्षेत्र: लातूर आणि आसपास',
     lead: 'आम्ही लातूर आणि आसपासच्या या ठिकाणी शुद्ध शाकाहारी केटरिंग सेवा देतो.',
     nearbyTitle: 'जवळची इतर गावे',
@@ -22,7 +23,7 @@ export const areas: Record<Lang, { metaTitle: string; metaDescription: string; t
   },
   en: {
     metaTitle: 'Catering Service Areas near Latur',
-    metaDescription: 'Bhagwati Caterers offers pure vegetarian catering in Latur, Ausa, Nilanga, Renapur, Tuljapur and Ambajogai. Ask us if your town is not listed.',
+    metaDescription: 'Bhagwati Caterers offers pure vegetarian catering in Latur, Ausa, Nilanga, Renapur, Tuljapur, Ambajogai and all across Maharashtra. Ask us if your town is not listed.',
     title: 'Service Areas: Latur and Nearby',
     lead: 'We provide pure vegetarian catering in Latur and these nearby places.',
     nearbyTitle: 'Other nearby towns and villages',
@@ -33,7 +34,7 @@ export const areas: Record<Lang, { metaTitle: string; metaDescription: string; t
   },
   hi: {
     metaTitle: 'लातूर और आसपास सेवा क्षेत्र',
-    metaDescription: 'भगवती केटरर्स लातूर, औसा, निलंगा, रेणापुर, तुलजापुर और अम्बाजोगाई में शुद्ध शाकाहारी कैटरिंग देता है। आपका गाँव सूची में न हो तो पूछें।',
+    metaDescription: 'भगवती केटरर्स लातूर, औसा, निलंगा, रेणापुर, तुलजापुर, अम्बाजोगाई और पूरे महाराष्ट्र में शुद्ध शाकाहारी कैटरिंग देता है। आपका गाँव सूची में न हो तो पूछें।',
     title: 'सेवा क्षेत्र: लातूर और आसपास',
     lead: 'हम लातूर और आसपास के इन स्थानों पर शुद्ध शाकाहारी कैटरिंग सेवा देते हैं।',
     nearbyTitle: 'आसपास के अन्य गाँव और शहर',

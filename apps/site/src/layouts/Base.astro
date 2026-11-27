@@ -34,7 +34,7 @@ const schema = {
   address: { '@type': 'PostalAddress', streetAddress: site.address.street.en, addressLocality: 'Latur', addressRegion: 'Maharashtra', postalCode: site.address.postalCode, addressCountry: 'IN' },
   hasMap: mapsLink(),
   servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Gujarati', 'Bengali', 'Indo-Chinese', 'Vegetarian'],
-  areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
+  areaServed: site.areas.map((a) => (a.key === 'maharashtra' ? { '@type': 'State', name: 'Maharashtra' } : { '@type': 'City', name: a.en })),
   sameAs: Object.values(site.social).filter(Boolean),
 };
 

@@ -31,6 +31,7 @@ export const site = {
     { key: 'renapur', mr: 'रेणापूर', en: 'Renapur', hi: 'रेणापुर' },
     { key: 'tuljapur', mr: 'तुळजापूर', en: 'Tuljapur', hi: 'तुलजापुर' },
     { key: 'ambajogai', mr: 'अंबाजोगाई', en: 'Ambajogai', hi: 'अम्बाजोगाई' },
+    { key: 'maharashtra', mr: 'संपूर्ण महाराष्ट्र', en: 'All across Maharashtra', hi: 'पूरे महाराष्ट्र में' },
   ] as Array<{ key: string } & L3>,
   // Profiles are not created yet. Add the URLs here when they exist (used for schema sameAs and footer).
   social: { instagram: '', facebook: '', googleBusiness: '' },
