@@ -2,11 +2,14 @@
 // Cloud configured => CloudStore. If nobody is signed in yet it starts "locked": LockGate shows the login form.
 import { LocalStore } from './local-store';
 import type { Store } from './store';
-import { loadCloudConfig } from './cloud-config';
+import { loadCloudConfig, isLocalOnly } from './cloud-config';
+import { DEFAULT_CLOUD_KEY, DEFAULT_CLOUD_URL } from './cloud-defaults';
 import { CloudStore, isCloudStore } from './cloud-store';
 
 export async function createStore(): Promise<Store> {
-  const cfg = loadCloudConfig();
+  // Cloud with login is the default, so a new visitor or device always meets the login screen first.
+  // Only someone already inside the dashboard can switch a device to local-only (Settings > Cloud > Disconnect).
+  const cfg = loadCloudConfig() ?? (isLocalOnly() ? null : { url: DEFAULT_CLOUD_URL, anonKey: DEFAULT_CLOUD_KEY });
   if (cfg) {
     const c = new CloudStore({ cfg });
     await c.init();

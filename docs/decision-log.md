@@ -60,3 +60,7 @@
 - 27 sections got a Wikimedia Commons photo (800px). Credits page reads processed.json, so attribution appears automatically.
 - Not changed: phone, address, brand name. The printed menu shows other numbers and a different address; waiting for owner to confirm.
 - Skipped or unclear: items that were unreadable or looked non-vegetarian were left out; owner should review the list.
+
+## Admin login required
+- /admin/ now uses cloud mode with login by default (DEFAULT_CLOUD_URL/KEY), so every new device meets the login screen. Local-only is a deliberate switch inside Settings > Cloud > Disconnect (flag bc:local-only). Removed the "use on this phone only" button from the public login screen; hid header search and tabs while signed out.
+- Honest limit: the dashboard page and code are static and public; data protection is Supabase login + row-level security + sign-ups off.

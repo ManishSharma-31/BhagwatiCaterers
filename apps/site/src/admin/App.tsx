@@ -4,7 +4,7 @@ import { StoreContext, LangContext, tr, useList } from './hooks';
 import { useRoute, href, type Route } from './router';
 import type { Store } from './store';
 import type { Lang } from './types';
-import { createStore } from './store-factory';
+import { createStore, getAuthState } from './store-factory';
 import { LockGate } from './screens/settings/LockGate';
 import { SettingsScreen } from './screens/settings';
 import { TodayScreen } from './screens/today';
@@ -78,6 +78,9 @@ function Shell({ rawStore }: { rawStore: Store }) {
   const { buf, store } = useMemo(() => { const b = new UndoBuffer(); return { buf: b, store: withUndo(rawStore, b) }; }, [rawStore]);
   const [undoGroup, setUndoGroup] = useState(buf.current());
   useEffect(() => buf.subscribe(() => setUndoGroup(buf.current())), [buf]);
+  const [, bump] = useState(0);
+  useEffect(() => rawStore.subscribe(() => bump((n) => n + 1)), [rawStore]);
+  const signedOut = ['cloud-locked', 'cloud-denied'].includes(getAuthState(rawStore));
   const [notice, setNotice] = useState<ToastData | null>(null);
   const [online, setOnline] = useState(typeof navigator === 'undefined' || navigator.onLine !== false);
   useEffect(() => {
@@ -100,7 +103,7 @@ function Shell({ rawStore }: { rawStore: Store }) {
         <div class="app">
           <header class="topbar no-print">
             <a class="brand" href={href('/')}>{tr(lang, 'भगवती केटरर्स', 'Bhagwati Caterers')}</a>
-            <a class="btn btn-ghost btn-sm top-search" href={href('/search')} aria-label={tr(lang, 'शोधा', 'Search')}>🔍</a>
+            {!signedOut && <a class="btn btn-ghost btn-sm top-search" href={href('/search')} aria-label={tr(lang, 'शोधा', 'Search')}>🔍</a>}
             <span class="store-mode" title={store.mode === 'local' ? 'Data is saved on this device only' : 'Data is saved online'}>
               {store.mode === 'local' ? tr(lang, 'या फोनवर', 'This device') : tr(lang, 'ऑनलाइन', 'Online')}
             </span>
@@ -124,14 +127,14 @@ function Shell({ rawStore }: { rawStore: Store }) {
               : notice}
             onClose={() => (undoGroup ? buf.dismiss() : setNotice(null))}
           />
-          <nav class="tabs no-print" aria-label="Main">
+          {!signedOut && <nav class="tabs no-print" aria-label="Main">
             {tabs.map((t) => (
               <a href={href(t.name === 'today' ? '/' : '/' + t.name)} class={active === t.name ? 'tab on' : 'tab'} aria-current={active === t.name ? 'page' : undefined}>
                 <span class="tab-icon" aria-hidden="true">{t.icon}</span>
                 <span>{tr(lang, t.mr, t.en)}</span>
               </a>
             ))}
-          </nav>
+          </nav>}
         </div>
       </LangContext.Provider>
     </StoreContext.Provider>

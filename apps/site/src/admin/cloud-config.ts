@@ -57,6 +57,11 @@ export function loadCloudConfig(storage: SyncStorage | null = ls()): CloudConfig
   return null;
 }
 export function saveCloudConfig(cfg: CloudConfig, storage: SyncStorage | null = ls()) {
+  storage?.removeItem(LOCAL_ONLY_KEY);
   storage?.setItem(CLOUD_KEY, JSON.stringify({ url: cfg.url, anonKey: cfg.anonKey }));
 }
-export function clearCloudConfig(storage: SyncStorage | null = ls()) { storage?.removeItem(CLOUD_KEY); }
+/** Disconnect on purpose from inside the dashboard: this device then works on its own (local only). */
+export function clearCloudConfig(storage: SyncStorage | null = ls()) { storage?.removeItem(CLOUD_KEY); storage?.setItem(LOCAL_ONLY_KEY, '1'); }
+export const LOCAL_ONLY_KEY = 'bc:local-only';
+/** True when someone chose, from inside the dashboard, to use this device without the cloud. */
+export function isLocalOnly(storage: SyncStorage | null = ls()): boolean { try { return storage?.getItem(LOCAL_ONLY_KEY) === '1'; } catch { return false; } }

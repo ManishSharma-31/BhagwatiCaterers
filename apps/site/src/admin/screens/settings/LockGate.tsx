@@ -7,7 +7,6 @@ import type { Lang } from '../../types';
 import { tr } from '../../hooks';
 import { getAuthState } from '../../store-factory';
 import { isCloudStore } from '../../cloud-store';
-import { clearCloudConfig } from '../../cloud-config';
 import { PIN_MAX, isUnlocked, loadLock, registerFail, saveLock, setUnlocked, verifyPin, waitSeconds, freshLock } from '../../pin';
 
 export function LockGate({ store, lang, children }: { store: Store; lang: Lang; children: ComponentChildren }) {
@@ -112,11 +111,6 @@ function Login({ store, lang }: { store: Store; lang: Lang }) {
     setBusy(false);
     if (!r.ok) setErr(loginError(lang, r.code)); else setPw('');
   };
-  const disconnect = () => {
-    if (confirm(tr(lang, 'क्लाउड जोडणी काढायची? ही माहिती फक्त या फोनवर राहील. क्लाउडमधील माहिती तशीच राहील.', 'Disconnect the cloud? The app will use this phone only. Data in the cloud stays safe.'))) {
-      void store.clearLocalCopy().then(() => { clearCloudConfig(); location.reload(); });
-    }
-  };
   return (
     <div class="lock-wrap">
       <form class="lock-box card" onSubmit={submit}>
@@ -127,7 +121,6 @@ function Login({ store, lang }: { store: Store; lang: Lang }) {
           <input id="lg-pw" type="password" autocomplete="current-password" required value={pw} onInput={(e) => setPw((e.target as HTMLInputElement).value)} /></div>
         {err && <p class="err" role="alert">{err}</p>}
         <button class="btn" type="submit" disabled={busy} style="width:100%">{busy ? '…' : tr(lang, 'लॉग इन', 'Log in')}</button>
-        <p style="margin-top:1rem"><button type="button" class="btn btn-ghost btn-sm" onClick={disconnect}>{tr(lang, 'फक्त या फोनवर वापरा', 'Use on this phone only')}</button></p>
       </form>
     </div>
   );
