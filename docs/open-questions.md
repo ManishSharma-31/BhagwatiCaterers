@@ -3,12 +3,13 @@
 _Answer these when possible. Until then we use clearly marked placeholders._
 
 ## Must have (blocks launch)
-- [ ] FSSAI licence number (to display on the site, as required for food businesses)
-- [ ] Business address or kitchen location, and exact service area (Latur only, or which nearby towns?)
+- [x] FSSAI licence number: 21526049010527 (received 2026-11-27; shown in footer, quotes, invoices)
+- [x] Service area: Latur, Ausa, Nilanga, Renapur, Tuljapur, Ambajogai and nearby areas (received 2026-11-27)
+- [ ] Business address or kitchen location (for the map and Google Business Profile)
 - [ ] Email address (if any) and WhatsApp number (same as 9057264895?)
-- [ ] Your own photos of food, events and the kitchen (strongly preferred over stock images)
+- [ ] Your own photos of food, events and the kitchen (owner said to use internet photos for now; own photos will replace them as they arrive)
 - [ ] Menus: dishes you serve for Maharashtrian, South Indian and Rajasthani
-- [ ] Prices: per-plate price ranges, or whether to show "request a quote" only
+- [ ] Prices: owner will provide soon
 
 ## Should have
 - [ ] Minimum number of guests and maximum you can serve

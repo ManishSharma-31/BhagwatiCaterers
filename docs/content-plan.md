@@ -50,5 +50,8 @@ Wedding menu planning for Marathwada weddings; how to plan food per guest count;
 ## Local SEO terms (starter list, see research file 02)
 Marathi: लातूर केटरर्स, लातूर लग्न केटरिंग, शुद्ध शाकाहारी केटरर्स लातूर. English: catering in Latur, veg caterers Latur, wedding catering Latur. Hindi: लातूर कैटरिंग. Test each phrase in Google from Latur before finalising page titles.
 
+## Service areas (owner, 2026-11-27)
+Latur (main), Ausa, Nilanga, Renapur, Tuljapur, Ambajogai and nearby areas. The site lists them on the Service Areas and Contact pages in plain words ("we serve ..."). Separate town pages are created only for towns where we can show real events or real customer feedback (see decision log).
+
 ## Do not
 Publish prices the owner has not confirmed. Use hygiene or health superlatives. Show real customers' names or photos without permission. Use stock photos as if they were our own work.
