@@ -1,0 +1,147 @@
+{
+ "soup": [
+  "Tomato soup",
+  "Sweet corn soup",
+  "Indian vegetable soup"
+ ],
+ "salad": [
+  "Kachumber salad",
+  "Indian salad plate",
+  "Sprouts salad"
+ ],
+ "juice": [
+  "Fruit juice glasses",
+  "Orange juice glass",
+  "Pineapple juice glass"
+ ],
+ "dryfruits": [
+  "Mixed dry fruits",
+  "Cashew almond pistachio nuts",
+  "Roasted cashew nuts"
+ ],
+ "bengali": [
+  "Rasmalai",
+  "Rasgulla",
+  "Chamcham sweet",
+  "Bengali sweets"
+ ],
+ "rabdi": [
+  "Rabri dessert",
+  "Basundi",
+  "Kheer bowl"
+ ],
+ "halwa": [
+  "Gajar ka halwa",
+  "Moong dal halwa",
+  "Almond halwa"
+ ],
+ "churma": [
+  "Churma Rajasthani",
+  "Choorma sweet"
+ ],
+ "mawa": [
+  "Gulab jamun",
+  "Kalakand",
+  "Peda sweet",
+  "Milk cake sweet"
+ ],
+ "mithai": [
+  "Jalebi",
+  "Mohanthal",
+  "Ghevar",
+  "Motichoor ladoo"
+ ],
+ "dalkadhi": [
+  "Dal tadka",
+  "Dal makhani",
+  "Kadhi pakora",
+  "Gujarati kadhi"
+ ],
+ "raita": [
+  "Boondi raita",
+  "Raita bowl",
+  "Dahi vada"
+ ],
+ "rice": [
+  "Jeera rice",
+  "Vegetable pulao",
+  "Kashmiri pulao"
+ ],
+ "papad": [
+  "Roasted papad",
+  "Masala papad",
+  "Papadum"
+ ],
+ "roti": [
+  "Tandoori roti",
+  "Naan bread",
+  "Lachha paratha",
+  "Aloo paratha"
+ ],
+ "chinese": [
+  "Vegetable Manchurian",
+  "Hakka noodles vegetarian",
+  "Gobi Manchurian",
+  "Chilli paneer"
+ ],
+ "chutney": [
+  "Green chutney",
+  "Tamarind chutney",
+  "Indian chutneys"
+ ],
+ "kajusweets": [
+  "Kaju katli",
+  "Cashew barfi",
+  "Badam barfi"
+ ],
+ "south": [
+  "Uttapam",
+  "Masala dosa",
+  "Medu vada sambar",
+  "Idli sambar"
+ ],
+ "chat": [
+  "Pani puri",
+  "Dahi puri",
+  "Bhel puri",
+  "Sev puri"
+ ],
+ "pavbhaji": [
+  "Pav bhaji",
+  "Aloo tikki chaat",
+  "Ragda pattice"
+ ],
+ "farsan": [
+  "Khaman dhokla",
+  "Patra Gujarati",
+  "Khandvi"
+ ],
+ "corn": [
+  "Sweet corn chaat",
+  "Roasted corn on the cob India"
+ ],
+ "namkeen": [
+  "Sev bhujia",
+  "Chivda",
+  "Samosa",
+  "Kachori"
+ ],
+ "pakoda": [
+  "Pakora",
+  "Onion bhaji",
+  "Mirchi bajji",
+  "Vada pav"
+ ],
+ "paneer": [
+  "Paneer butter masala",
+  "Palak paneer",
+  "Kadai paneer",
+  "Shahi paneer"
+ ],
+ "vegsabzi": [
+  "Baingan bharta",
+  "Aloo gobi",
+  "Malai kofta",
+  "Mixed vegetable curry"
+ ]
+}

@@ -1,15 +1,16 @@
 // Finds candidate photos on Wikimedia Commons (open licences only) and saves 900px thumbnails
 // plus metadata to photos/candidates/. A human (or reviewer agent) then picks and vets them.
 // Runs on GitHub Actions (the agent workspace cannot reach Wikimedia).
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const out = path.join(root, 'photos', 'candidates');
+const qfile = process.argv[2];
+const out = path.join(root, 'photos', 'candidates', qfile ? 'menu' : '');
 await mkdir(out, { recursive: true });
 const UA = { 'User-Agent': 'BhagwatiCaterersSiteBuilder/1.0 (https://github.com/ManishSharma-31/BhagwatiCaterers; photo candidate search)' };
-const queries = {
+const queries = qfile ? JSON.parse(await readFile(path.join(root, qfile), 'utf8')) : {
   'puran-poli': ['Puran poli', 'Puranpoli'],
   'bhakri-pithla': ['Pithla bhakri', 'Bhakri', 'Jowar bhakri'],
   'shrikhand': ['Shrikhand'],
@@ -34,9 +35,10 @@ for (const [slot, terms] of Object.entries(queries)) {
       const ii = p.imageinfo?.[0]; if (!ii || seen.has(p.title)) continue;
       const m = ii.extmetadata ?? {};
       const lic = m.LicenseShortName?.value ?? '';
-      if (!okLicence.test(lic) || !/jpe?g|png/.test(ii.mime) || ii.width < 900) continue;
+      if (!okLicence.test(lic) || !/jpe?g|png/.test(ii.mime) || ii.width < 700) continue;
       seen.add(p.title);
       const n = meta[slot].length; if (n >= 6) continue;
+      await new Promise((r) => setTimeout(r, 400));
       const file = `${slot}-${n + 1}.jpg`;
       const img = await fetch(ii.thumburl, { headers: UA });
       if (!img.ok) { console.log(`thumb failed ${p.title}: ${img.status}`); continue; }
@@ -47,4 +49,4 @@ for (const [slot, terms] of Object.entries(queries)) {
   }
   console.log(`${slot}: ${meta[slot].length} candidates`);
 }
-await writeFile(path.join(out, 'candidates.json'), JSON.stringify(meta, null, 2) + '\n');
+await writeFile(path.join(out, qfile ? 'candidates-menu.json' : 'candidates.json'), JSON.stringify(meta, null, 2) + '\n');

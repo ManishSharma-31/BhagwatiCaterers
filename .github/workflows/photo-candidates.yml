@@ -3,6 +3,11 @@ name: Find photo candidates (Wikimedia Commons)
 # Run manually. Saves candidate thumbnails + licence metadata to apps/site/photos/candidates for review.
 on:
   workflow_dispatch:
+    inputs:
+      queries:
+        description: 'Query file relative to apps/site (blank = original dishes)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -17,7 +22,7 @@ jobs:
           node-version: 22
       - name: Search Commons
         working-directory: apps/site
-        run: node scripts/find-candidates.mjs
+        run: node scripts/find-candidates.mjs "${{ inputs.queries }}"
       - name: Commit candidates
         run: |
           git config user.name "github-actions[bot]"
