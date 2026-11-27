@@ -1,6 +1,61 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { about } from '../content/about';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = about[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="about" title={c.metaTitle} description={c.metaDescription}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>{c.h1}</h1>
+        <p class="lead">{c.lead}</p>
+      </div>
+      <div><img src="/art/pure-veg-badge.svg" alt="" width="260" height="260" fetchpriority="high" /></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2>{c.whoTitle}</h2>
+      {c.who.map((p) => <p>{p}</p>)}
+      <p><strong>{site.owner[lang]}</strong></p>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="center">{c.factsTitle}</h2>
+      <div class="grid three">
+        {c.facts.map((f) => (<article class="card"><h3>{f.title}</h3><p>{f.body}</p></article>))}
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2 class="center">{c.approachTitle}</h2>
+      <div class="grid three">
+        {c.approach.map((f) => (<article class="card big"><h3>{f.title}</h3><p>{f.body}</p></article>))}
+      </div>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <h2>{c.fssaiTitle}</h2>
+      <p class="lead">{c.fssaiBody}</p>
+      <p><strong>{ui.fssaiLabel[lang]} {site.fssai}</strong></p>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <img class="art-divider" src="/art/divider-kolam.svg" alt="" width="400" height="40" loading="lazy" />
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">💬 {ui.whatsapp[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>

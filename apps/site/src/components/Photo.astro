@@ -1,0 +1,38 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { ui } from '../i18n/ui';
+import type { Lang } from '../data/site';
+interface Props {
+  name: string; alt: string; width?: number; height?: number;
+  representative?: boolean; fallbackIcon?: string; lang: Lang;
+}
+const { name, alt, width = 800, height = 600, representative = false, fallbackIcon = '/art/icon-sweets.svg', lang } = Astro.props;
+const dir = path.join(process.cwd(), 'public', 'photos');
+const has = (f: string) => fs.existsSync(path.join(dir, f));
+const exists = has(`${name}-800.webp`);
+const has1600 = has(`${name}-1600.webp`);
+const hasJpg = has(`${name}-800.jpg`);
+const srcset = has1600 ? `/photos/${name}-800.webp 800w, /photos/${name}-1600.webp 1600w` : `/photos/${name}-800.webp 800w`;
+---
+<figure class="photo-fig">
+  {exists ? (
+    <div class="photo">
+      <picture>
+        <source type="image/webp" srcset={srcset} sizes="(min-width: 900px) 33vw, 100vw" />
+        <img src={hasJpg ? `/photos/${name}-800.jpg` : `/photos/${name}-800.webp`} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+      </picture>
+    </div>
+  ) : (
+    <div class="photo photo-fallback" role="img" aria-label={alt} style={`aspect-ratio:${width}/${height}`}>
+      <img src={fallbackIcon} alt="" width="96" height="96" loading="lazy" />
+    </div>
+  )}
+  {!exists && <figcaption class="rep">{alt}</figcaption>}
+  {exists && representative && <figcaption class="rep">{ui.repImage[lang]}</figcaption>}
+</figure>
+<style>
+  .photo-fig { margin: 0; }
+  .photo-fallback { display: flex; align-items: center; justify-content: center; background: var(--cream-2, #fbeccb); }
+  .photo-fallback img { width: 96px; height: 96px; opacity: .9; }
+</style>

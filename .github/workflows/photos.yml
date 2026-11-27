@@ -1,0 +1,38 @@
+name: Download and optimise stock photos
+
+# Run manually: GitHub > Actions > "Download and optimise stock photos" > Run workflow.
+# Reads apps/site/photos/manifest.json, downloads each licence-checked photo,
+# creates web-sized copies in apps/site/public/photos, and commits them.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/site/package-lock.json
+      - name: Install
+        working-directory: apps/site
+        run: npm ci
+      - name: Download and optimise photos
+        working-directory: apps/site
+        run: npm run photos
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/site/public/photos apps/site/photos/processed.json
+          if git diff --cached --quiet; then
+            echo "No photo changes to commit."
+          else
+            git commit -m "chore(photos): add optimised stock photos"
+            git push
+          fi

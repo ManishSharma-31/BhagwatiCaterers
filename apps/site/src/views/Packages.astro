@@ -1,6 +1,93 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { packages } from '../content/packages';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = packages[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="packages" title={c.metaTitle} description={c.metaDescription}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>{c.h1}</h1>
+        <p class="lead">{c.lead}</p>
+      </div>
+      <div><img src="/art/banana-leaf-meal.svg" alt="" width="320" height="320" fetchpriority="high" /></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2 class="center">{c.typesTitle}</h2>
+      <div class="grid two">
+        {c.types.map((t) => (
+          <article class="card big">
+            <img class="icon" src={t.icon} alt="" width="64" height="64" loading="lazy" />
+            <h3>{t.title}</h3>
+            <p>{t.body}</p>
+            <ul>{t.points.map((p) => <li>{p}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+      <p class="center" style="margin-top:1.25rem"><img class="inline-icon" src="/art/diya.svg" alt="" width="32" height="32" loading="lazy" /> {c.homeNote}</p>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="wrap">
+      <h2 class="center">{c.tableTitle}</h2>
+      <div class="table-scroll">
+        <table class="table">
+          <caption class="sr-only">{c.tableTitle}</caption>
+          <thead><tr>{c.tableHead.map((h, i) => <th scope="col">{i === 0 ? <span class="sr-only">{c.tableTitle}</span> : h}</th>)}</tr></thead>
+          <tbody>
+            {c.tableRows.map((r) => (
+              <tr><th scope="row" class="rowh">{r[0]}</th><td>{r[1]}</td><td>{r[2]}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="note">{c.tableNote}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2 class="center">{c.stepsTitle}</h2>
+      <ol class="steps">
+        {c.steps.map((s) => (
+          <li><h3>{s.title}</h3><p>{s.body}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="section alt">
+    <div class="wrap">
+      <h2>{c.needTitle}</h2>
+      <p>{c.needLead}</p>
+      <ul class="needs">{c.needs.map((n) => <li>{n}</li>)}</ul>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <img class="art-divider" src="/art/divider-kolam.svg" alt="" width="400" height="40" loading="lazy" />
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">💬 {ui.whatsapp[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .table-scroll { overflow-x: auto; }
+  .table .rowh { background: #fff; color: var(--maroon); font-weight: 700; }
+  .inline-icon { display: inline-block; vertical-align: middle; }
+  .steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+  .steps li { counter-increment: s; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem; border-top: 5px solid var(--kesari); }
+  .steps li::before { content: counter(s); display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 50%; background: var(--maroon); color: #fff; font-weight: 700; font-size: 1.2rem; margin-bottom: .5rem; }
+  .steps h3 { font-size: 1.15rem; }
+  .steps p { margin: 0; }
+  .needs { padding-left: 1.3rem; }
+  .needs li { margin-bottom: .4rem; }
+</style>

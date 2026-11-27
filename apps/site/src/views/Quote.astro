@@ -1,6 +1,113 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { quote, events, orderTypes, cuisineOpts, otherTown, messageLabels } from '../content/quote';
+import { site, waLink, type Lang, type PageKey } from '../data/site';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = quote[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="quote" title={c.metaTitle} description={c.metaDescription}>
+  <section class="section">
+    <div class="wrap">
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+
+      <noscript>
+        <p class="card"><strong>{c.noscript}</strong></p>
+        <div class="btn-row" style="margin-bottom:1.5rem">
+          <a class="btn btn-primary" href={`tel:+${site.phoneIntl}`}>{site.phone}</a>
+          <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </noscript>
+
+      <form id="quote-form" class="form" novalidate data-labels={JSON.stringify(messageLabels[lang])} data-phone={site.phoneIntl}>
+        <div class="hp" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div>
+          <label for="name">{c.name} *</label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="err-name" />
+          <p class="err" id="err-name" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="phone">{c.phone} *</label>
+          <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" required aria-describedby="err-phone" />
+          <p class="err" id="err-phone" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="event">{c.event} *</label>
+          <select id="event" name="event" required aria-describedby="err-event">
+            <option value="">{c.choose}</option>
+            {events.map((e) => <option value={e.key}>{e[lang]}</option>)}
+          </select>
+          <p class="err" id="err-event" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="date">{c.date} {c.optional}</label>
+          <input id="date" name="date" type="date" />
+        </div>
+        <div>
+          <label for="guests">{c.guests} *</label>
+          <input id="guests" name="guests" type="number" min="1" inputmode="numeric" required aria-describedby="err-guests" />
+          <p class="err" id="err-guests" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="town">{c.town}</label>
+          <select id="town" name="town">
+            <option value="">{c.choose}</option>
+            {site.areas.map((a) => <option value={a.key}>{a[lang]}</option>)}
+            <option value="other">{otherTown[lang]}</option>
+          </select>
+        </div>
+        <div>
+          <label for="order">{c.order}</label>
+          <select id="order" name="order">
+            <option value="">{c.choose}</option>
+            {orderTypes.map((o) => <option value={o.key}>{o[lang]}</option>)}
+          </select>
+        </div>
+        <fieldset class="opts">
+          <legend>{c.cuisine}</legend>
+          {cuisineOpts.map((o) => (
+            <label class="opt"><input type="checkbox" name="cuisine" value={o.key} /> {o[lang]}</label>
+          ))}
+        </fieldset>
+        <div>
+          <label for="notes">{c.notes}</label>
+          <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+        <button class="btn btn-wa" type="submit">{c.submit}</button>
+        <p class="note">{c.privacy}</p>
+      </form>
+
+      <section id="quote-done" class="card done" hidden aria-live="polite">
+        <h2>{c.doneTitle}</h2>
+        <p>{c.doneBody}</p>
+        <pre id="quote-msg" class="msg"></pre>
+        <div class="btn-row">
+          <button type="button" id="quote-copy" class="btn btn-ghost" data-ok={c.copied} data-manual={c.manual}>{c.copy}</button>
+          <a class="btn btn-primary" href={`tel:+${site.phoneIntl}`}>{c.callBtn}: {site.phone}</a>
+          <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{c.waBtn}</a>
+        </div>
+        <p class="note" id="quote-copied" role="status"></p>
+      </section>
+    </div>
+  </section>
+</Base>
+<style>
+  .err { color: #a11a1a; font-weight: 700; margin: .25rem 0 0; min-height: 0; font-size: .98rem; }
+  .err:empty { display: none; }
+  .form [aria-invalid='true'] { border-color: #a11a1a; }
+  .opts { border: 2px solid #c9b79b; border-radius: 10px; padding: .6rem .9rem .9rem; background: #fff; }
+  .opts legend { font-weight: 700; padding: 0 .4rem; }
+  .opt { display: flex; align-items: center; gap: .6rem; min-height: 44px; font-weight: 400 !important; }
+  .opt input { width: 22px; height: 22px; min-height: 0; }
+  .done { margin-top: 2rem; max-width: 640px; }
+  .done[hidden] { display: none; }
+  .msg { white-space: pre-wrap; background: var(--cream-2); border-radius: 10px; padding: 1rem; font: inherit; margin: 0 0 1rem; }
+</style>
+<script>
+  import { initQuoteForm } from '../scripts/quote';
+  initQuoteForm();
+</script>

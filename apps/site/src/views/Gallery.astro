@@ -1,6 +1,37 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { gallery, slots } from '../content/gallery';
+import { waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = gallery[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="gallery" title={c.metaTitle} description={c.metaDescription}>
+  <section class="section">
+    <div class="wrap">
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+      <p class="note">{c.note}</p>
+      <div class="grid three gal">
+        {slots.map((s) => (
+          <Photo name={s.name} alt={s.alt[lang]} representative fallbackIcon={s.icon} lang={lang} />
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{ui.whatsapp[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .gal { margin-top: 1.5rem; }
+</style>

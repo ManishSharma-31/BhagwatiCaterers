@@ -1,6 +1,47 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { contact } from '../content/contact';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = contact[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="contact" title={c.metaTitle} description={c.metaDescription}>
+  <section class="section">
+    <div class="wrap">
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+      <div class="grid two">
+        <article class="card big">
+          <dl class="facts">
+            <dt>{c.phoneLabel}</dt>
+            <dd><a href={`tel:+${site.phoneIntl}`}>{site.phone}</a></dd>
+            <dt>{c.waLabel}</dt>
+            <dd><a href={waLink(lang)} target="_blank" rel="noopener">{site.phone}</a></dd>
+            <dt>{c.ownerLabel}</dt>
+            <dd>{site.owner[lang]}</dd>
+            <dt>{c.fssaiLabel}</dt>
+            <dd>{site.fssai}</dd>
+            <dt>{c.areasLabel}</dt>
+            <dd>{site.areas.map((a) => a[lang]).join(', ')}</dd>
+          </dl>
+          <div class="btn-row">
+            <a class="btn btn-primary" href={`tel:+${site.phoneIntl}`}>{site.phone}</a>
+            <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{c.waLabel}</a>
+          </div>
+        </article>
+        <article class="card">
+          <h2>{c.replyTitle}</h2>
+          <p>{c.reply}</p>
+          <a class="btn btn-ghost" href={pagePath(lang, 'quote')}>{c.ctaQuote}</a>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .facts { margin: 0 0 1.25rem; }
+  .facts dt { font-weight: 700; color: var(--maroon); font-size: .95rem; }
+  .facts dd { margin: 0 0 .8rem; font-size: 1.15rem; }
+  .card h2 { font-size: 1.4rem; }
+</style>

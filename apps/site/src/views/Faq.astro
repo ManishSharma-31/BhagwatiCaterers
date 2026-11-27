@@ -1,6 +1,49 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { faq } from '../content/faq';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = faq[lang];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),
+};
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="faq" title={c.metaTitle} description={c.metaDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      <div class="faq">
+        {c.items.map((i) => (
+          <details>
+            <summary>{i.q}</summary>
+            <p>{i.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <img class="art-divider" src="/art/divider-kolam.svg" alt="" width="400" height="40" loading="lazy" />
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">💬 {ui.whatsapp[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .narrow { max-width: 820px; }
+  .faq details { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: .75rem; border-left: 5px solid var(--haldi); }
+  .faq summary { cursor: pointer; min-height: 48px; padding: .75rem 1rem; font-weight: 700; color: var(--maroon); display: flex; align-items: center; }
+  .faq details[open] { border-left-color: var(--kesari); }
+  .faq details p { margin: 0; padding: 0 1rem 1rem; }
+</style>

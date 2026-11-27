@@ -1,6 +1,44 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { areas, areaLines } from '../content/areas';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = areas[lang];
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="areas" title={c.metaTitle} description={c.metaDescription}>
+  <section class="section">
+    <div class="wrap">
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+      <div class="grid three">
+        {site.areas.map((a, i) => (
+          <article class={`card ${i === 0 ? 'big' : ''}`}>
+            <h2>{a[lang]}</h2>
+            <p>{areaLines[a.key][lang]}</p>
+          </article>
+        ))}
+        <article class="card">
+          <h2>{c.nearbyTitle}</h2>
+          <p>{c.nearbyBody}</p>
+        </article>
+      </div>
+      <p class="note" style="margin-top:1rem">{c.note}</p>
+    </div>
+  </section>
+  <section class="section alt center">
+    <div class="wrap">
+      <h2>{c.ctaTitle}</h2>
+      <p class="lead">{c.ctaBody}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+        <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{ui.whatsapp[lang]}</a>
+        <a class="btn btn-ghost" href={`tel:+${site.phoneIntl}`}>{site.phone}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .card h2 { font-size: 1.4rem; }
+</style>

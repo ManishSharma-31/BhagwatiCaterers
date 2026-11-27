@@ -1,6 +1,54 @@
 ---
-// STUB: replace this file with the real page view (see src/views/Home.astro for the pattern).
-import Placeholder from './Placeholder.astro';
-const { lang, page } = Astro.props;
+import Base from '../layouts/Base.astro';
+import { credits, loadPhotoCredits } from '../content/credits';
+import type { Lang, PageKey } from '../data/site';
+interface Props { lang: Lang; page: PageKey; }
+const { lang } = Astro.props;
+const c = credits[lang];
+const photos = loadPhotoCredits();
+const safeUrl = (u: string) => (/^https?:\/\//.test(u) ? u : '');
 ---
-<Placeholder lang={lang} page={page} />
+<Base lang={lang} page="credits" title={c.metaTitle} description={c.metaDescription}>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+
+      <h2>{c.fontsTitle}</h2>
+      <p>{c.fonts} {c.fontsLicence}</p>
+      <p><a href="https://openfontlicense.org" rel="noopener">{c.licenceLink}</a></p>
+
+      <h2>{c.artTitle}</h2>
+      <p>{c.art}</p>
+
+      <h2>{c.photosTitle}</h2>
+      {photos.length === 0 ? (
+        <p>{c.photosNone}</p>
+      ) : (
+        <>
+          <p>{c.photosIntro}</p>
+          <div class="tbl-wrap">
+            <table class="table">
+              <thead><tr><th>{c.colPhoto}</th><th>{c.colBy}</th><th>{c.colSource}</th><th>{c.colLicence}</th></tr></thead>
+              <tbody>
+                {photos.map((p) => (
+                  <tr>
+                    <td>{p.file_name}</td>
+                    <td>{p.photographer || c.unknown}</td>
+                    <td>{safeUrl(p.page_url) ? <a href={safeUrl(p.page_url)} rel="noopener">{p.source || p.page_url}</a> : (p.source || c.unknown)}</td>
+                    <td>{p.license || c.unknown}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .prose { max-width: 46rem; }
+  .prose h2 { margin-top: 1.8rem; }
+  .tbl-wrap { overflow-x: auto; }
+</style>

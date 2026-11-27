@@ -16,7 +16,31 @@
 
 | File | Type | Source / creator | Licence | Checked on | Attribution needed | People / logos? | Status |
 |---|---|---|---|---|---|---|---|
-| _(none yet)_ | | | | | | | |
+| art/toran.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/border-paithani.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/rangoli-corner.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/kalash.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/diya.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/warli-scene.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/thali.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/banana-leaf-meal.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/divider-kolam.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/pure-veg-badge.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/logo.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg (temporary logo, replace if owner has a logo) |
+| art/favicon.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/og-card.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-puran-poli.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-modak.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-misal.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-bhakri.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-shrikhand.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-jilebi.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-idli.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-dosa.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-dal-baati.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-masale-bhat.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-vada-sambar.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
+| art/icon-sweets.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
 
 ## Fonts
 
