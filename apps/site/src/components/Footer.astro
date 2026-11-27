@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
     <div>
       <h2>{site.name[lang]}</h2>
       <p>{ui.footerNote[lang]}</p>
-      <p><strong>{ui.fssaiLabel[lang]}</strong> {site.fssai}</p>
+      <p><strong>{ui.fssaiCertified[lang]}</strong> · {ui.fssaiLabel[lang]} {site.fssai}</p>
       <p>{ui.servingAreas[lang]}: {site.areas.map((a) => a[lang]).join(', ')}</p>
     </div>
     <div>

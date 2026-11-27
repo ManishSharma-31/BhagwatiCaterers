@@ -27,3 +27,9 @@
 - Address: Julhelal Marg, Narayan Nagar, Latur 413531. Hours: open at all times (call/WhatsApp any time). WhatsApp = 9057264895. Email: later. Domain: not bought; SITE_URL stays a placeholder.
 - Original kalash logo replaces the temporary lotus mark; favicon and PWA icons regenerated.
 - Six dish photos with no Pexels match taken from Wikimedia Commons (open CC licences) via the photo-candidates workflow, vetted by eye. Masale bhat is the closest match, not exact: replace with an owner photo.
+
+## 2026-11-27 owner corrections (round 1)
+- FAQ removed from header nav (still in footer). FSSAI number only in footer; elsewhere "FSSAI Certified" (also removed from JSON-LD and FAQ answers). The dashboard still adds the number to customer quote messages (owner can change in Settings).
+- Menu: 150+ example dishes in 12 sections, trilingual, with jump links and live search (src/content/menu-items.ts). Names are drafts for the owner to confirm.
+- Quote page redesigned (side panel, numbered steps, pill choices); form logic unchanged.
+- About: owner section with photo slot (/photos/owner-800.webp etc.). Placeholder shows the logo until the photo arrives.

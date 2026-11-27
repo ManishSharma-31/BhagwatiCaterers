@@ -3,7 +3,7 @@ import { site, LANGS, pagePath, type Lang, type PageKey } from '../data/site';
 import { nav, ui } from '../i18n/ui';
 interface Props { lang: Lang; page: PageKey; }
 const { lang, page } = Astro.props;
-const items = ['services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact'] as const;
+const items = ['services', 'menu', 'packages', 'gallery', 'about', 'areas', 'contact'] as const;
 ---
 <header class="site-header">
   <div class="wrap head-inner">

@@ -6,7 +6,7 @@ export const contact: Record<Lang, {
 }> = {
   mr: {
     metaTitle: 'संपर्क',
-    metaDescription: 'भगवती केटरर्सशी संपर्क साधा: फोन किंवा WhatsApp वर बोला. शुद्ध शाकाहारी केटरिंग, लातूर आणि आसपास. FSSAI परवानाधारक.',
+    metaDescription: 'भगवती केटरर्सशी संपर्क साधा: फोन किंवा WhatsApp वर बोला. शुद्ध शाकाहारी केटरिंग, लातूर आणि आसपास. FSSAI प्रमाणित.',
     title: 'संपर्क',
     lead: 'ऑर्डर किंवा चौकशीसाठी फोन किंवा WhatsApp वर आमच्याशी बोला.',
     phoneLabel: 'फोन', waLabel: 'WhatsApp', fssaiLabel: 'FSSAI परवाना क्र.', ownerLabel: 'मालक', areasLabel: 'सेवा क्षेत्र', addressLabel: 'पत्ता', hoursLabel: 'वेळ', mapLabel: 'नकाशावर पहा',
@@ -17,7 +17,7 @@ export const contact: Record<Lang, {
   },
   en: {
     metaTitle: 'Contact Us',
-    metaDescription: 'Contact Bhagwati Caterers by phone or WhatsApp. Pure vegetarian catering in Latur and nearby areas. FSSAI licensed.',
+    metaDescription: 'Contact Bhagwati Caterers by phone or WhatsApp. Pure vegetarian catering in Latur and nearby areas. FSSAI certified.',
     title: 'Contact Us',
     lead: 'For orders or enquiries, speak to us by phone or WhatsApp.',
     phoneLabel: 'Phone', waLabel: 'WhatsApp', fssaiLabel: 'FSSAI Licence No.', ownerLabel: 'Owner', areasLabel: 'Service areas', addressLabel: 'Address', hoursLabel: 'Hours', mapLabel: 'View on map',
@@ -28,7 +28,7 @@ export const contact: Record<Lang, {
   },
   hi: {
     metaTitle: 'संपर्क करें',
-    metaDescription: 'भगवती केटरर्स से फोन या WhatsApp पर संपर्क करें। लातूर और आसपास शुद्ध शाकाहारी कैटरिंग। FSSAI लाइसेंस प्राप्त।',
+    metaDescription: 'भगवती केटरर्स से फोन या WhatsApp पर संपर्क करें। लातूर और आसपास शुद्ध शाकाहारी कैटरिंग। FSSAI प्रमाणित।',
     title: 'संपर्क करें',
     lead: 'ऑर्डर या पूछताछ के लिए फोन या WhatsApp पर हमसे बात करें।',
     phoneLabel: 'फोन', waLabel: 'WhatsApp', fssaiLabel: 'FSSAI लाइसेंस क्र.', ownerLabel: 'मालिक', areasLabel: 'सेवा क्षेत्र', addressLabel: 'पता', hoursLabel: 'समय', mapLabel: 'नक्शे पर देखें',

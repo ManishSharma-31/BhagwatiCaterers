@@ -27,7 +27,6 @@ const schema = {
   servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Vegetarian'],
   areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
   founder: { '@type': 'Person', name: site.owner.en },
-  identifier: { '@type': 'PropertyValue', name: 'FSSAI Licence No.', value: site.fssai },
   sameAs: Object.values(site.social).filter(Boolean),
 };
 ---

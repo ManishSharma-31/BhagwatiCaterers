@@ -79,3 +79,16 @@ export const quote: Record<Lang, Record<string, string>> = {
     noscript: 'इस फॉर्म के लिए JavaScript ज़रूरी है। कृपया सीधे फोन करें या WhatsApp पर संदेश भेजें।',
   },
 };
+
+// Extra copy for the redesigned quote page.
+export const qdesign: Record<Lang, { panelTitle: string; panelBody: string; steps: string[]; trust: string[]; s1: string; s2: string; s3: string; callNow: string; }> = {
+  mr: { panelTitle: 'काही मिनिटांत चौकशी करा', panelBody: 'फॉर्म भरा, आम्ही तुमचा तयार संदेश WhatsApp वर उघडतो. फोन किंवा WhatsApp वर थेट बोलणेही चालेल.',
+    steps: ['माहिती भरा', 'WhatsApp वर पाठवा', 'आम्ही संपर्क करतो'], trust: ['शुद्ध शाकाहारी', '३०+ वर्षांचा अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपासच्या शहरांत सेवा'],
+    s1: 'तुमची माहिती', s2: 'तुमचा कार्यक्रम', s3: 'जेवणाची आवड', callNow: 'लगेच फोन करा' },
+  en: { panelTitle: 'Plan your event in minutes', panelBody: 'Fill in the form and we open a ready message on WhatsApp. You can also call or WhatsApp us directly.',
+    steps: ['Fill in the details', 'Send on WhatsApp', 'We get back to you'], trust: ['Pure vegetarian', '30+ years of experience', 'FSSAI Certified', 'Serving Latur and nearby towns'],
+    s1: 'About you', s2: 'Your event', s3: 'Food preferences', callNow: 'Call now' },
+  hi: { panelTitle: 'कुछ ही मिनटों में पूछताछ करें', panelBody: 'फ़ॉर्म भरें, हम आपका तैयार संदेश WhatsApp पर खोल देते हैं। आप सीधे फोन या WhatsApp भी कर सकते हैं।',
+    steps: ['जानकारी भरें', 'WhatsApp पर भेजें', 'हम संपर्क करेंगे'], trust: ['शुद्ध शाकाहारी', '30+ साल का अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपास के शहरों में सेवा'],
+    s1: 'आपकी जानकारी', s2: 'आपका आयोजन', s3: 'खाने की पसंद', callNow: 'अभी फोन करें' },
+};

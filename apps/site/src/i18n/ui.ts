@@ -22,6 +22,7 @@ export const ui = {
   getQuote: { mr: 'कोटेशन मिळवा', en: 'Get a Quote', hi: 'कोटेशन पाएं' } as L3,
   pureVeg: { mr: '१००% शुद्ध शाकाहारी', en: '100% Pure Vegetarian', hi: '100% शुद्ध शाकाहारी' } as L3,
   yearsExp: { mr: '३०+ वर्षांचा अनुभव', en: '30+ Years of Experience', hi: '30+ वर्षों का अनुभव' } as L3,
+  fssaiCertified: { mr: 'FSSAI प्रमाणित', en: 'FSSAI Certified', hi: 'FSSAI प्रमाणित' } as L3,
   fssaiLabel: { mr: 'FSSAI परवाना क्र.', en: 'FSSAI Licence No.', hi: 'FSSAI लाइसेंस क्र.' } as L3,
   servingAreas: { mr: 'लातूर आणि आसपासच्या परिसरात सेवा', en: 'Serving Latur and nearby areas', hi: 'लातूर और आसपास के क्षेत्रों में सेवा' } as L3,
   skip: { mr: 'मुख्य मजकुराकडे जा', en: 'Skip to content', hi: 'मुख्य सामग्री पर जाएं' } as L3,

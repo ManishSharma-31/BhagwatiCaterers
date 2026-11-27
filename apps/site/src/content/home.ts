@@ -27,7 +27,7 @@ export const home: Record<Lang, HomeCopy> = {
   mr: {
     metaTitle: 'भगवती केटरर्स, लातूर: शुद्ध शाकाहारी केटरिंग',
     metaDescription:
-      'लातूर आणि आसपास विवाह, समारंभ, पार्टी व पूजेसाठी शुद्ध शाकाहारी केटरिंग. महाराष्ट्रीयन, दाक्षिणात्य व राजस्थानी जेवण. ३० वर्षांहून अधिक अनुभव. FSSAI परवानाधारक.',
+      'लातूर आणि आसपास विवाह, समारंभ, पार्टी व पूजेसाठी शुद्ध शाकाहारी केटरिंग. महाराष्ट्रीयन, दाक्षिणात्य व राजस्थानी जेवण. ३० वर्षांहून अधिक अनुभव. FSSAI प्रमाणित.',
     heroTitle: 'तुमच्या प्रत्येक समारंभासाठी शुद्ध शाकाहारी चव',
     heroLead:
       'महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी जेवण: विवाह, समारंभ, पार्ट्या आणि धार्मिक कार्यक्रमांसाठी. ३० वर्षांहून अधिक अनुभव.',
@@ -66,7 +66,7 @@ export const home: Record<Lang, HomeCopy> = {
     why: [
       { title: '३० वर्षांहून अधिक अनुभव', body: 'अनेक वर्षांपासून लातूर परिसरातील कुटुंबांच्या आनंदात सहभागी.' },
       { title: '१००% शाकाहारी', body: 'आमचे सर्व पदार्थ शुद्ध शाकाहारी असतात.' },
-      { title: 'FSSAI परवानाधारक', body: 'अन्न सुरक्षा व मानक प्राधिकरणाचा परवाना क्रमांक पृष्ठाच्या शेवटी दिला आहे.' },
+      { title: 'FSSAI प्रमाणित', body: 'अन्न सुरक्षा व मानक प्राधिकरणाचा परवाना क्रमांक पृष्ठाच्या शेवटी दिला आहे.' },
       { title: 'तुमच्या सोयीची ऑर्डर', body: 'साहित्यासह किंवा तुमच्या साहित्यासह: तुमचा पर्याय.' },
     ],
     areasTitle: 'आमचे सेवा क्षेत्र',
@@ -77,7 +77,7 @@ export const home: Record<Lang, HomeCopy> = {
   en: {
     metaTitle: 'Bhagwati Caterers, Latur: Pure Vegetarian Catering',
     metaDescription:
-      'Pure vegetarian catering for weddings, events, parties and pujas in Latur and nearby areas. Maharashtrian, South Indian and Rajasthani food. 30+ years of experience. FSSAI licensed.',
+      'Pure vegetarian catering for weddings, events, parties and pujas in Latur and nearby areas. Maharashtrian, South Indian and Rajasthani food. 30+ years of experience. FSSAI certified.',
     heroTitle: 'Pure vegetarian taste for every celebration',
     heroLead:
       'Maharashtrian, South Indian and Rajasthani food for weddings, events, parties and religious functions. Over 30 years of experience.',
@@ -116,7 +116,7 @@ export const home: Record<Lang, HomeCopy> = {
     why: [
       { title: '30+ years of experience', body: 'Serving families in and around Latur at their happiest moments.' },
       { title: '100% vegetarian', body: 'All our food is pure vegetarian.' },
-      { title: 'FSSAI licensed', body: 'Our licence number is shown at the bottom of every page.' },
+      { title: 'FSSAI Certified', body: 'Our licence number is shown at the bottom of every page.' },
       { title: 'Flexible ordering', body: 'With our ingredients or yours: your choice.' },
     ],
     areasTitle: 'Where we serve',
@@ -127,7 +127,7 @@ export const home: Record<Lang, HomeCopy> = {
   hi: {
     metaTitle: 'भगवती केटरर्स, लातूर: शुद्ध शाकाहारी कैटरिंग',
     metaDescription:
-      'लातूर और आसपास विवाह, समारोह, पार्टी और पूजा के लिए शुद्ध शाकाहारी कैटरिंग। महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी भोजन। 30 साल से अधिक का अनुभव। FSSAI लाइसेंस प्राप्त।',
+      'लातूर और आसपास विवाह, समारोह, पार्टी और पूजा के लिए शुद्ध शाकाहारी कैटरिंग। महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी भोजन। 30 साल से अधिक का अनुभव। FSSAI प्रमाणित।',
     heroTitle: 'आपके हर समारोह के लिए शुद्ध शाकाहारी स्वाद',
     heroLead:
       'महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी भोजन: विवाह, समारोह, पार्टियों और धार्मिक कार्यक्रमों के लिए। 30 साल से अधिक का अनुभव।',
@@ -166,7 +166,7 @@ export const home: Record<Lang, HomeCopy> = {
     why: [
       { title: '30 साल से अधिक का अनुभव', body: 'लातूर और आसपास के परिवारों की खुशियों में वर्षों से साथ।' },
       { title: '100% शाकाहारी', body: 'हमारे सभी व्यंजन शुद्ध शाकाहारी होते हैं।' },
-      { title: 'FSSAI लाइसेंस प्राप्त', body: 'हमारा लाइसेंस नंबर हर पृष्ठ के नीचे दिया गया है।' },
+      { title: 'FSSAI प्रमाणित', body: 'हमारा लाइसेंस नंबर हर पृष्ठ के नीचे दिया गया है।' },
       { title: 'आपकी सुविधा का ऑर्डर', body: 'हमारी सामग्री के साथ या आपकी सामग्री के साथ: आपका चुनाव।' },
     ],
     areasTitle: 'हमारा सेवा क्षेत्र',

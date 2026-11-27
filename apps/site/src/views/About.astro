@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 import { about } from '../content/about';
 import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
 import { ui } from '../i18n/ui';
+import fs from 'node:fs';
+import path from 'node:path';
+const hasOwner = fs.existsSync(path.join(process.cwd(), 'public', 'photos', 'owner-800.webp'));
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = about[lang];
@@ -17,11 +20,31 @@ const c = about[lang];
       <div><img src="/art/pure-veg-badge.svg" alt="" width="260" height="260" fetchpriority="high" /></div>
     </div>
   </section>
+  <section class="section owner">
+    <div class="wrap owner-grid">
+      <figure class="owner-photo">
+        {hasOwner ? (
+          <picture>
+            <source type="image/webp" srcset="/photos/owner-800.webp 800w, /photos/owner-1600.webp 1600w" sizes="(min-width: 800px) 360px, 80vw" />
+            <img src="/photos/owner-800.jpg" alt={c.ownerAlt} width="800" height="1000" loading="lazy" decoding="async" />
+          </picture>
+        ) : (
+          <div class="owner-ph" role="img" aria-label={c.ownerAlt}><img src="/art/logo.svg" alt="" width="120" height="120" /></div>
+        )}
+        <figcaption><strong>{site.owner[lang]}</strong><br />{c.ownerRole}</figcaption>
+      </figure>
+      <div class="owner-text">
+        <h2>{c.ownerTitle}</h2>
+        {c.ownerBody.map((p) => <p>{p}</p>)}
+        <ul class="owner-badges"><li>{site.years} {lang === 'en' ? 'years' : lang === 'hi' ? 'साल' : 'वर्षे'}</li><li>{lang === 'en' ? 'Pure vegetarian' : 'शुद्ध शाकाहारी'}</li><li>{ui.fssaiCertified[lang]}</li></ul>
+        <a class="btn btn-primary" href={`tel:+${site.phoneIntl}`}>📞 {c.ownerCall}</a>
+      </div>
+    </div>
+  </section>
   <section class="section">
     <div class="wrap">
       <h2>{c.whoTitle}</h2>
       {c.who.map((p) => <p>{p}</p>)}
-      <p><strong>{site.owner[lang]}</strong></p>
     </div>
   </section>
   <section class="section alt">
@@ -44,7 +67,7 @@ const c = about[lang];
     <div class="wrap">
       <h2>{c.fssaiTitle}</h2>
       <p class="lead">{c.fssaiBody}</p>
-      <p><strong>{ui.fssaiLabel[lang]} {site.fssai}</strong></p>
+      <p><strong>{ui.fssaiCertified[lang]}</strong></p>
     </div>
   </section>
   <section class="section alt center">
@@ -59,3 +82,14 @@ const c = about[lang];
     </div>
   </section>
 </Base>
+<style>
+  .owner-grid { display: grid; gap: 1.75rem; align-items: center; }
+  @media (min-width: 800px) { .owner-grid { grid-template-columns: 360px 1fr; gap: 3rem; } }
+  .owner-photo { margin: 0; text-align: center; }
+  .owner-photo img:not([width="120"]) { width: 100%; max-width: 360px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px; border: 6px solid #fff; box-shadow: var(--shadow), 0 0 0 3px #f2b01e; display: block; margin: 0 auto; }
+  .owner-ph { width: 100%; max-width: 360px; aspect-ratio: 4 / 5; margin: 0 auto; border-radius: 20px; background: linear-gradient(160deg, #7a1f2b, #5c1620); display: grid; place-items: center; box-shadow: var(--shadow), 0 0 0 3px #f2b01e; }
+  .owner-photo figcaption { margin-top: .8rem; font-size: 1.05rem; }
+  .owner-text h2 { margin-top: 0; }
+  .owner-badges { list-style: none; padding: 0; margin: 1rem 0 1.2rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .owner-badges li { background: #fff6e3; border: 1.5px solid #f2b01e; border-radius: 999px; padding: .3rem .9rem; font-weight: 700; color: var(--maroon); }
+</style>
