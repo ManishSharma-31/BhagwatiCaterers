@@ -107,7 +107,7 @@ function EventForm({ lang, id, init, menu, staff, tasks, quotes, payments, event
 
   return (
     <div class="page">
-      <p><a href={href('/events')}>← {tr(lang, 'कार्यक्रम', 'Events')}</a></p>
+      <p><a class="back" href={href('/events')}>← {tr(lang, 'कार्यक्रम', 'Events')}</a></p>
       <h1>{isNew ? tr(lang, 'नवीन कार्यक्रम', 'New event') : f.title}</h1>
 
       <div class="card">

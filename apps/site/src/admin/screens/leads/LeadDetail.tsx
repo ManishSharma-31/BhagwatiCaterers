@@ -4,7 +4,7 @@ import { useList, useStore, tr } from '../../hooks';
 import { go, href, type Route } from '../../router';
 import { EVENT_TYPES, LEAD_SOURCES, LEAD_STATUSES, ORDER_TYPES, type EventType, type Lang, type Lead, type LeadSource, type LeadStatus, type OrderType } from '../../types';
 import { defaultSettings } from '../../seed';
-import { fmtDate, fmtMoney, normPhone, orderTypeLabel, quoteTotal, telUrl, today, waUrl } from '../../util';
+import { fmtDate, fmtMoney, normPhone, orderTypeLabel, quoteTotal, telUrl, today, waUrl, focusFirstInvalid } from '../../util';
 import { LEAD_TOWNS, buildLeadMessage, findDuplicates, followUpDate, townLabel, validateLead, type LeadErrors } from './logic';
 import { EVENT_LABEL, STATUS_LABEL } from './LeadsScreen';
 import { QSTATUS } from '../quotes/QuotesScreen';
@@ -66,7 +66,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
     const x = { ...f, ...over };
     const e = validateLead(x, lang);
     setErrs(e);
-    if (Object.keys(e).length) { setMsg(tr(lang, 'कृपया लाल रंगातील चुका दुरुस्त करा.', 'Please fix the errors shown in red.')); return null; }
+    if (Object.keys(e).length) { focusFirstInvalid(); setMsg(tr(lang, 'कृपया लाल रंगातील चुका दुरुस्त करा.', 'Please fix the errors shown in red.')); return null; }
     if (isNew && findDuplicates(leads, x.phone).length && !confirm(tr(lang, 'या नंबरची चौकशी आधीच आहे. तरीही नवी चौकशी सेव्ह करायची?', 'A lead with this number already exists. Save a new one anyway?'))) return null;
     if (isNew && x.eventDate && x.eventDate < today() && !confirm(tr(lang, 'कार्यक्रमाची तारीख होऊन गेलेली आहे. तरीही सेव्ह करायचे?', 'The event date is in the past. Save anyway?'))) return null;
     const saved = await store.put('leads', build(over));
@@ -93,7 +93,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
 
   return (
     <div class="page">
-      <p class="no-print"><a href={href('/leads')}>← {tr(lang, 'चौकशी यादी', 'All leads')}</a></p>
+      <p class="no-print"><a class="back" href={href('/leads')}>← {tr(lang, 'चौकशी यादी', 'All leads')}</a></p>
       <h1>{isNew ? tr(lang, 'नवीन चौकशी', 'New lead') : f.name || tr(lang, 'चौकशी', 'Lead')}</h1>
 
       {!isNew && (
@@ -124,7 +124,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
 
       <form class="card" onSubmit={(e) => { e.preventDefault(); void save(); }} noValidate>
         <div class="field"><label for="ld-name">{tr(lang, 'ग्राहकाचे नाव *', 'Customer name *')}</label>
-          <input id="ld-name" value={f.name} onInput={txt('name')} autoComplete="off" aria-invalid={!!errs.name} />{errs.name && <div class="err">{errs.name}</div>}</div>
+          <input id="ld-name" autoFocus={isNew} value={f.name} onInput={txt('name')} autoComplete="off" aria-invalid={!!errs.name} />{errs.name && <div class="err">{errs.name}</div>}</div>
         <div class="field"><label for="ld-phone">{tr(lang, 'मोबाईल नंबर * (१० अंक)', 'Mobile number * (10 digits)')}</label>
           <input id="ld-phone" type="tel" inputMode="tel" value={f.phone} onInput={txt('phone')} aria-invalid={!!errs.phone} />{errs.phone && <div class="err">{errs.phone}</div>}
           {dupes.length > 0 && (

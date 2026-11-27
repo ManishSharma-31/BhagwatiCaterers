@@ -3,7 +3,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { useList, useStore, tr } from '../../hooks';
 import { go, href, type Route } from '../../router';
 import { PAYMENT_METHODS, type Lang, type Payment, type PaymentMethod } from '../../types';
-import { fmtDate, fmtMoney, today, waUrl } from '../../util';
+import { fmtDate, fmtMoney, today, waUrl, focusFirstInvalid } from '../../util';
 import { CopyButton, MoreButton, pageOf, usePager } from '../../ui';
 import { defaultSettings } from '../../seed';
 import { acceptedQuoteFor, buildBalanceReminder, buildReceiptMessage, defaultKind, duplicateReference, eventBalance, filterPayments, monthSummary, paymentsForEvent, unpaidBalances, validatePayment, type PayErrors } from './logic';
@@ -86,7 +86,7 @@ export function PaymentsScreen({ lang, route }: { lang: Lang; route: Route }) {
     const dup = duplicateReference(payments, form.reference, form.id);
     if (dup && !e.reference) e.reference = tr(lang, `हा संदर्भ क्रमांक आधीच वापरला आहे (${fmtDate(dup.date, lang)}, ${fmtMoney(dup.amount)}). एकच पैसे दोनदा नोंदवले नाहीत ना ते तपासा.`, `This reference is already used (${fmtDate(dup.date, lang)}, ${fmtMoney(dup.amount)}). Check you are not entering the same payment twice.`);
     setErrs(e);
-    if (Object.keys(e).length) return;
+    if (Object.keys(e).length) { focusFirstInvalid(); return; }
     if (form.date > today() && !confirm(tr(lang, 'ही तारीख पुढची आहे. तरीही सेव्ह करायचे?', 'This date is in the future. Save anyway?'))) return;
     if (form.direction === 'in' && formBal && Number(form.amount) > formBal.balance + (form.id ? (payments.find((p) => p.id === form.id)?.amount ?? 0) : 0) && !confirm(tr(lang, `ही रक्कम बाकी रकमेपेक्षा (${fmtMoney(formBal.balance)}) जास्त आहे. तरीही सेव्ह करायचे?`, `This is more than the balance (${fmtMoney(formBal.balance)}). Save anyway?`))) return;
     await store.put('payments', {
@@ -120,7 +120,7 @@ export function PaymentsScreen({ lang, route }: { lang: Lang; route: Route }) {
             <div class="field"><label for="p-kind">{tr(lang, 'प्रकार', 'Kind')}</label>
               <select id="p-kind" value={form.kind} onChange={(e) => set('kind', (e.target as HTMLSelectElement).value as Payment['kind'])}>{KINDS.map((k) => <option value={k}>{tr(lang, KIND[k].mr, KIND[k].en)}</option>)}</select></div>
             <div class="field"><label for="p-amt">{tr(lang, 'रक्कम (₹) *', 'Amount (₹) *')}</label>
-              <input id="p-amt" type="number" inputMode="decimal" min="0" value={form.amount} onInput={(e) => set('amount', (e.target as HTMLInputElement).value)} aria-invalid={!!errs.amount} />{errs.amount && <div class="err">{errs.amount}</div>}</div>
+              <input id="p-amt" autoFocus={!form.id} type="number" inputMode="decimal" min="0" value={form.amount} onInput={(e) => set('amount', (e.target as HTMLInputElement).value)} aria-invalid={!!errs.amount} />{errs.amount && <div class="err">{errs.amount}</div>}</div>
             <div class="field"><label for="p-date">{tr(lang, 'तारीख', 'Date')}</label>
               <input id="p-date" type="date" value={form.date} onInput={(e) => set('date', (e.target as HTMLInputElement).value)} />{errs.date && <div class="err">{errs.date}</div>}</div>
             <div class="field"><label for="p-method">{tr(lang, 'कसे दिले?', 'Method')}</label>

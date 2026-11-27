@@ -33,7 +33,7 @@ const moreItems = [
   { path: '/search', icon: '🔍', mr: 'शोधा (नाव, फोन, कार्यक्रम)', en: 'Search everything' },
   { path: '/tasks', icon: '✅', mr: 'कामांची यादी', en: 'Tasks' },
   { path: '/staff', icon: '👥', mr: 'कर्मचारी', en: 'Staff' },
-  { path: '/settings', icon: '⚙️', mr: 'सेटिंग्ज, बॅकअप', en: 'Settings and backup' },
+  { path: '/settings', icon: '⚙️', mr: 'सेटिंग्ज, बॅकअप', en: 'Settings, backup' },
 ];
 
 function MorePage({ lang }: { lang: Lang }) {
@@ -69,8 +69,21 @@ function Screens({ route, lang }: { route: Route; lang: Lang }) {
     case 'staff': return <StaffScreen lang={lang} route={route} />;
     case 'settings': return <SettingsScreen lang={lang} route={route} />;
     case 'more': return <MorePage lang={lang} />;
-    default: return <div class="page"><h1>404</h1><a class="btn" href={href('/')}>{tr(lang, 'मुख्य पृष्ठ', 'Home')}</a></div>;
+    default: return <div class="page"><h1>{tr(lang, 'हे पान सापडले नाही', 'This page was not found')}</h1><a class="btn" href={href('/')}>{tr(lang, 'मुख्य पृष्ठ', 'Home')}</a></div>;
   }
+}
+
+function SideNav({ lang, route, active }: { lang: Lang; route: Route; active: string }) {
+  const hasPin = !!useList('settings')?.[0]?.pinHash;
+  return (
+    <aside class="side no-print" aria-label="Main">
+      {[...tabs.filter((t) => t.name !== 'more').map((t) => ({ path: t.name === 'today' ? '/' : '/' + t.name, icon: t.icon, mr: t.mr, en: t.en, on: active === t.name })),
+        ...moreItems.map((m) => ({ path: m.path, icon: m.icon, mr: m.mr.split(' (')[0], en: m.en, on: route.path === m.path || route.path.startsWith(m.path + '/') }))].map((it) => (
+        <a href={href(it.path)} class={it.on ? 'side-link on' : 'side-link'} aria-current={it.on ? 'page' : undefined}><span aria-hidden="true">{it.icon}</span>{tr(lang, it.mr, it.en)}</a>
+      ))}
+    {hasPin && <button type="button" class="btn btn-ghost btn-sm side-lock" onClick={() => { setUnlocked(false); location.reload(); }}>🔒 {tr(lang, 'आता लॉक करा', 'Lock now')}</button>}
+    </aside>
+  );
 }
 
 function Shell({ rawStore }: { rawStore: Store }) {
@@ -100,9 +113,11 @@ function Shell({ rawStore }: { rawStore: Store }) {
   return (
     <StoreContext.Provider value={store}>
       <LangContext.Provider value={lang}>
-        <div class="app">
+        <div class={signedOut ? 'app signed-out' : 'app'}>
+          <a class="skip no-print" href="#main">{tr(lang, 'मुख्य मजकुराकडे जा', 'Skip to content')}</a>
           <header class="topbar no-print">
             <a class="brand" href={href('/')}>{tr(lang, 'भगवती केटरर्स', 'Bhagwati Caterers')}</a>
+            <span class="top-spacer" />
             {!signedOut && <a class="btn btn-ghost btn-sm top-search" href={href('/search')} aria-label={tr(lang, 'शोधा', 'Search')}>🔍</a>}
             <span class="store-mode" title={store.mode === 'local' ? 'Data is saved on this device only' : 'Data is saved online'}>
               {store.mode === 'local' ? tr(lang, 'या फोनवर', 'This device') : tr(lang, 'ऑनलाइन', 'Online')}
@@ -116,15 +131,8 @@ function Shell({ rawStore }: { rawStore: Store }) {
                 : tr(lang, 'इंटरनेट नाही. बदल फोनवर सेव्ह होतात आणि नेट आल्यावर आपोआप अपलोड होतील.', 'No internet. Changes are kept on this phone and upload when you are back online.')}
             </div>
           )}
-          {!signedOut && (
-            <aside class="side no-print" aria-label="Main">
-              {[...tabs.filter((t) => t.name !== 'more').map((t) => ({ path: t.name === 'today' ? '/' : '/' + t.name, icon: t.icon, mr: t.mr, en: t.en, on: active === t.name })),
-                ...moreItems.map((m) => ({ path: m.path, icon: m.icon, mr: m.mr.split(' (')[0], en: m.en, on: route.path === m.path || route.path.startsWith(m.path + '/') }))].map((it) => (
-                <a href={href(it.path)} class={it.on ? 'side-link on' : 'side-link'} aria-current={it.on ? 'page' : undefined}><span aria-hidden="true">{it.icon}</span>{tr(lang, it.mr, it.en)}</a>
-              ))}
-            </aside>
-          )}
-          <main class="main">
+          {!signedOut && <SideNav lang={lang} route={route} active={active} />}
+          <main class="main" id="main">
             <LockGate store={store} lang={lang}>
               <Screens route={route} lang={lang} />
             </LockGate>

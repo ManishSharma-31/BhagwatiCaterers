@@ -147,3 +147,26 @@ input[type='checkbox'], input[type='radio'] { width: 22px; min-height: 22px; hei
   .today-cols { grid-template-columns: 1fr 1fr; align-items: start; }
   .list-cols { grid-template-columns: 1fr 1fr; align-items: start; }
 }
+
+@media (min-width: 960px) {
+  .app.signed-out .main, .app.signed-out .offline-bar { margin-left: 0; }
+}
+
+/* UX review round 2 */
+.back, .page > p:first-child > a { display: inline-flex; align-items: center; min-height: 44px; padding-right: 1rem; }
+.item-actions .btn { min-height: 44px; }
+.sh-scale .chip { min-height: 44px; }
+.topbar .brand { white-space: nowrap; font-size: 1.05rem; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+.topbar .top-spacer { flex: 1; }
+.skip { position: absolute; left: -999px; top: 0; z-index: 100; background: #fff; padding: .6rem 1rem; }
+.skip:focus { left: .5rem; top: .5rem; }
+.side-lock { margin-top: auto; }
+.kpi-l { font-size: .8rem; }
+@media (max-width: 959px) {
+  .pipe { display: none; }
+  .store-mode { display: none; }
+  .fab { min-height: 48px; padding: .4rem 1rem; font-size: .95rem; bottom: calc(var(--a-tab-h) + .6rem + env(safe-area-inset-bottom, 0px)); }
+  .list, .page > form, .page > .card:last-child { scroll-margin-bottom: 6rem; }
+  .main { padding-bottom: calc(var(--a-tab-h) + 5rem + env(safe-area-inset-bottom, 0px)); }
+  .toast { bottom: calc(var(--a-tab-h) + 4.2rem + env(safe-area-inset-bottom, 0px)); }
+}

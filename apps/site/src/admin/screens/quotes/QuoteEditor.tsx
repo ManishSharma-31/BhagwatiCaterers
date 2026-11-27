@@ -4,7 +4,7 @@ import { useList, useStore, tr } from '../../hooks';
 import { go, href, type Route } from '../../router';
 import { ORDER_TYPES, type Lang, type OrderType, type Quote, type QuoteStatus } from '../../types';
 import { defaultSettings } from '../../seed';
-import { fmtDate, fmtMoney, newId, normPhone, orderTypeLabel, quoteTotal, waNumber, waUrl } from '../../util';
+import { fmtDate, fmtMoney, newId, normPhone, orderTypeLabel, quoteTotal, waNumber, waUrl, focusFirstInvalid } from '../../util';
 import { CUISINE_LABEL, balanceAfterAdvance, buildQuoteMessage, cleanLines, dishNames, fromEvent, fromLead, groupMenu, leadStatusAfterQuote, perPlateLabel, validateQuote, type QuoteErrors } from './logic';
 import { QSTATUS } from './QuotesScreen';
 import { CopyButton } from '../../ui';
@@ -76,7 +76,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
   const total = quoteTotal(cur);
   const balance = balanceAfterAdvance(cur);
   const names = dishNames(cur, menu!, lang);
-  const check = () => { const e = validateQuote(cur, !!waNumber(cur.customerPhone), lang); setErrs(e); if (Object.keys(e).length) { setMsg(tr(lang, 'कृपया लाल रंगातील चुका दुरुस्त करा.', 'Please fix the errors shown in red.')); return false; } return true; };
+  const check = () => { const e = validateQuote(cur, !!waNumber(cur.customerPhone), lang); setErrs(e); if (Object.keys(e).length) { focusFirstInvalid(); setMsg(tr(lang, 'कृपया लाल रंगातील चुका दुरुस्त करा.', 'Please fix the errors shown in red.')); return false; } return true; };
 
   const persist = async (status: QuoteStatus): Promise<Quote> => {
     const q = toQuote({ ...f, status }, qid, existing);
@@ -115,7 +115,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
   return (
     <div class="page">
       <div class="no-print">
-        <p><a href={href('/quotes')}>← {tr(lang, 'कोटेशन यादी', 'All quotes')}</a></p>
+        <p><a class="back" href={href('/quotes')}>← {tr(lang, 'कोटेशन यादी', 'All quotes')}</a></p>
         <h1>{isNew ? tr(lang, 'नवीन कोटेशन', 'New quote') : tr(lang, 'कोटेशन', 'Quote')} <span class={'badge ' + f.status}>{tr(lang, QSTATUS[f.status].mr, QSTATUS[f.status].en)}</span></h1>
 
         {(accepted || f.status === 'accepted') && savedId && (

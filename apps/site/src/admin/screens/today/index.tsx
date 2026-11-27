@@ -90,16 +90,6 @@ export function TodayScreen({ lang }: P) {
         );
       })()}
 
-      {level !== 'none' && (
-        <div class={`today-alert ${level}`} role="alert">
-          <strong>{days === null
-            ? tr(lang, 'अजून बॅकअप घेतलेला नाही.', 'You have not taken a backup yet.')
-            : tr(lang, `शेवटचा बॅकअप ${days} दिवसांपूर्वी घेतला.`, `Last backup was ${days} days ago.`)}</strong>
-          <p class="small" style="margin:.3rem 0 .6rem">{tr(lang, 'फोन हरवला तर सर्व माहिती जाऊ शकते. आठवड्यातून एकदा बॅकअप घ्या.', 'If the phone is lost, all data can be lost. Take a backup once a week.')}</p>
-          <button class="btn" type="button" disabled={busy} onClick={backupNow}>{tr(lang, 'आता बॅकअप घ्या', 'Backup now')}</button>
-        </div>
-      )}
-      {done && level === 'none' && <p class="ok">{tr(lang, 'बॅकअप फाइल डाउनलोड झाली. ती WhatsApp किंवा Drive मध्ये सुरक्षित ठेवा.', 'Backup file downloaded. Keep it safe in WhatsApp or Drive.')}</p>}
 
       {!s ? <p class="muted">{tr(lang, 'थोडा वेळ थांबा…', 'Loading…')}</p> : (
         <div class="today-cols">
@@ -213,6 +203,16 @@ export function TodayScreen({ lang }: P) {
           </div>
         </div>
       )}
+      {level !== 'none' && (
+        <div class={`today-alert ${level}`} role="alert">
+          <strong>{days === null
+            ? tr(lang, 'अजून बॅकअप घेतलेला नाही.', 'You have not taken a backup yet.')
+            : tr(lang, `शेवटचा बॅकअप ${days} दिवसांपूर्वी घेतला.`, `Last backup was ${days} days ago.`)}</strong>
+          <p class="small" style="margin:.3rem 0 .6rem">{tr(lang, 'फोन हरवला तर सर्व माहिती जाऊ शकते. आठवड्यातून एकदा बॅकअप घ्या.', 'If the phone is lost, all data can be lost. Take a backup once a week.')}</p>
+          <button class="btn" type="button" disabled={busy} onClick={backupNow}>{tr(lang, 'आता बॅकअप घ्या', 'Backup now')}</button>
+        </div>
+      )}
+      {done && level === 'none' && <p class="ok">{tr(lang, 'बॅकअप फाइल डाउनलोड झाली. ती WhatsApp किंवा Drive मध्ये सुरक्षित ठेवा.', 'Backup file downloaded. Keep it safe in WhatsApp or Drive.')}</p>}
       {store.mode === 'cloud' && <p class="muted small" style="margin-top:1rem">{tr(lang, 'माहिती ऑनलाइन सुरक्षित आहे. तरीही अधूनमधून बॅकअप घेणे चांगले (सेटिंग्ज).', 'Your data is saved online. A backup now and then is still a good idea (Settings).')}</p>}
     </div>
   );

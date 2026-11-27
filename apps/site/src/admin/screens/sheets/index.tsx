@@ -52,7 +52,7 @@ export function SheetsScreen({ lang, route }: { lang: Lang; route: Route }) {
 
   return (
     <div class="page sh-big">
-      <div class="no-print"><a href={href('/events/' + ev.id)}>← {tr(lang, 'कार्यक्रम', 'Event')}</a></div>
+      <div class="no-print"><a class="back" href={href('/events/' + ev.id)}>← {tr(lang, 'कार्यक्रम', 'Event')}</a></div>
       <div class="sh-head">
         <h1>{ev.title}</h1>
         <div>📅 {fmtDate(ev.date, lang)}{ev.startTime ? ', ' + ev.startTime : ''} · 👥 {guests} {tr(lang, 'पाहुणे', 'guests')}{guests !== ev.guests && <span class="muted"> ({tr(lang, `कार्यक्रमात ${ev.guests}`, `event has ${ev.guests}`)})</span>}</div>

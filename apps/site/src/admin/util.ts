@@ -5,6 +5,8 @@ export const newId = () =>
     ? crypto.randomUUID()
     : 'id-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
 
+/** After a failed save, move focus to the first field marked invalid so the owner sees what to fix. */
+export const focusFirstInvalid = () => setTimeout(() => (document.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus(), 30);
 export const today = () => toISODate(new Date());
 export const toISODate = (d: Date) => {
   const z = (n: number) => String(n).padStart(2, '0');
@@ -20,7 +22,7 @@ export const daysBetween = (a: string, b: string) =>
 
 export const fmtMoney = (n: number) => '₹' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(Math.round(n || 0));
 export const fmtDate = (iso?: string, lang: Lang = 'en') =>
-  iso ? new Intl.DateTimeFormat(lang === 'mr' ? 'mr-IN' : 'en-IN', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(iso + 'T00:00:00')) : '';
+  iso ? new Intl.DateTimeFormat(lang === 'mr' ? 'mr-IN-u-nu-latn' : 'en-IN', { day: 'numeric', month: lang === 'mr' ? 'long' : 'short', year: 'numeric' }).format(new Date(iso + 'T00:00:00')) : '';
 
 /** Normalise an Indian mobile number to 91XXXXXXXXXX for wa.me. Returns '' if it is not a valid 10-digit mobile. */
 export const waNumber = (phone: string) => {

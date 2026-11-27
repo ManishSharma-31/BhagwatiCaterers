@@ -70,3 +70,7 @@
 - Today: summary tiles (new leads, follow-ups, events in 7 days, to collect, received and net this month), lead pipeline strip, compact quick actions, backup alert moved below.
 - Leads list and Today follow-ups: one-tap Call and WhatsApp buttons.
 - No data-model change.
+
+## Admin UX review round 2 (docs/admin-ux-review-2.md)
+Done: login centring, due-today first on Today, pipeline hidden on phone, 44px tap targets (back links, call/WhatsApp, scale chips), one-line brand, no FAB/toast overlap, autofocus on new lead name and payment amount, focus first invalid field, skip link, Lock now in sidebar, friendlier 404, Latin digits in Marathi dates.
+Not done yet: sticky Save bars and Delete placement (F08, F10), shorter lead form (F05 grouping), print layout (F12, F13), calendar day badges (F19), Settings card hints (F20).
