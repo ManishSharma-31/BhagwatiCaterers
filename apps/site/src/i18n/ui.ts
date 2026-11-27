@@ -3,7 +3,7 @@ import type { Lang, PageKey } from '../data/site';
 type L3<T = string> = Record<Lang, T>;
 
 // Short, shared interface text. Longer page copy lives in src/content/*.ts
-export const nav: Record<Exclude<PageKey, 'credits' | 'home'>, L3> = {
+export const nav: Record<Exclude<PageKey, 'credits' | 'home' | 'terms' | 'privacy' | 'cookies'>, L3> = {
   services: { mr: 'सेवा', en: 'Services', hi: 'सेवाएँ' },
   menu: { mr: 'मेनू', en: 'Menu', hi: 'मेन्यू' },
   packages: { mr: 'ऑर्डर कशी द्यावी', en: 'How to Order', hi: 'ऑर्डर कैसे करें' },
@@ -39,5 +39,9 @@ export const ui = {
     hi: 'लातूर में शुद्ध शाकाहारी कैटरिंग: विवाह, समारोह, पार्टियाँ और धार्मिक कार्यक्रम।',
   } as L3,
   credits: { mr: 'श्रेय', en: 'Credits', hi: 'श्रेय' } as L3,
+  terms: { mr: 'अटी व शर्ती', en: 'Terms and Conditions', hi: 'नियम और शर्तें' } as L3,
+  privacy: { mr: 'गोपनीयता धोरण', en: 'Privacy Policy', hi: 'गोपनीयता नीति' } as L3,
+  cookies: { mr: 'कुकी धोरण', en: 'Cookie Policy', hi: 'कुकी नीति' } as L3,
+  legalNav: { mr: 'कायदेशीर माहिती', en: 'Legal', hi: 'कानूनी जानकारी' } as L3,
   rights: { mr: 'सर्व हक्क राखीव', en: 'All rights reserved', hi: 'सर्वाधिकार सुरक्षित' } as L3,
 };

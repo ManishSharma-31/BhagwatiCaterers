@@ -1,0 +1,75 @@
+---
+// Shared view for Terms, Privacy and Cookie pages. Text lives in src/content/legal.ts.
+import Base from '../layouts/Base.astro';
+import { legal, legalCommon, type LegalKey } from '../content/legal';
+import { ui } from '../i18n/ui';
+import { site, waLink, fullAddress, pagePath, type Lang, type PageKey } from '../data/site';
+interface Props { lang: Lang; page: PageKey; }
+const { lang, page } = Astro.props;
+const key = page as LegalKey;
+const d = legal[key][lang];
+const k = legalCommon[lang];
+const others = (['terms', 'privacy', 'cookies'] as const).filter((x) => x !== key);
+---
+<Base lang={lang} page={page} title={d.metaTitle} description={d.metaDescription}>
+  <section class="section legal">
+    <div class="wrap prose">
+      <h1>{d.title}</h1>
+      <p class="lead">{d.lead}</p>
+      <p class="updated">{k.updatedLabel}: <time datetime={k.updatedIso}>{k.updatedDate}</time></p>
+
+      <aside class="summary card" aria-labelledby="sum-h">
+        <h2 id="sum-h">{k.summaryTitle}</h2>
+        <ul>{d.summary.map((x) => <li>{x}</li>)}</ul>
+      </aside>
+      <aside class="notice" aria-labelledby="not-h">
+        <h2 id="not-h">{k.noticeTitle}</h2>
+        <p>{k.notice}</p>
+      </aside>
+
+      {d.sections.map((s) => (
+        <section>
+          <h2>{s.h}</h2>
+          {s.p?.map((x) => <p>{x}</p>)}
+          {s.ul && <ul>{s.ul.map((x) => <li>{x}</li>)}</ul>}
+        </section>
+      ))}
+
+      <section class="contact-box card">
+        <h2>{k.contactTitle}</h2>
+        <dl>
+          <dt>{k.ownerLabel}</dt><dd>{site.owner[lang]}</dd>
+          <dt>{k.phoneLabel}</dt><dd><a href={`tel:+${site.phoneIntl}`}>{site.phone}</a></dd>
+          <dt>{k.waLabel}</dt><dd><a href={waLink(lang)} target="_blank" rel="noopener">{site.phone}</a></dd>
+          <dt>{k.addressLabel}</dt><dd>{fullAddress(lang)}</dd>
+          <dt>{k.emailLabel}</dt><dd>{k.emailNote}</dd>
+        </dl>
+        <p><a class="btn btn-ghost" href={pagePath(lang, 'contact')}>{k.contactCta}</a></p>
+      </section>
+
+      <nav class="others" aria-label={k.otherPages}>
+        <strong>{k.otherPages}:</strong>
+        {others.map((o) => <a href={pagePath(lang, o)}>{ui[o][lang]}</a>)}
+        <a href={pagePath(lang, 'credits')}>{ui.credits[lang]}</a>
+      </nav>
+    </div>
+  </section>
+</Base>
+<style>
+  .prose { max-width: 46rem; overflow-wrap: anywhere; }
+  .prose section { margin-top: 1.6rem; }
+  .prose h2 { margin: 0 0 .5rem; font-size: 1.35rem; }
+  .prose ul { padding-left: 1.3rem; }
+  .prose li { margin-bottom: .4rem; }
+  .updated { color: #5a4036; font-size: .98rem; margin: .25rem 0 1.25rem; }
+  .summary { margin: 0 0 1rem; }
+  .summary h2 { margin-top: 0; }
+  .summary ul { margin: 0; }
+  .notice { background: var(--cream-2); border-left: 5px solid var(--kesari-dark); border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 1rem; }
+  .notice h2 { font-size: 1.1rem; margin: 0 0 .25rem; }
+  .notice p { margin: 0; }
+  .contact-box dl { margin: 0 0 1rem; }
+  .contact-box dt { font-weight: 700; color: var(--maroon); }
+  .contact-box dd { margin: 0 0 .7rem; }
+  .others { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; align-items: center; }
+</style>

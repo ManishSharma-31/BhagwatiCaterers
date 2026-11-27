@@ -38,3 +38,7 @@
 - Hours wording: "Call or WhatsApp any time"; no 24h opening hours in schema.
 - Public copy audited and rewritten (docs/content-review.md); 13 questions open for the owner.
 - Dashboard reviewed and improved (docs/admin-review.md): global search, duplicate-phone warning, global undo, safer restore with automatic safety copy, kitchen-sheet guest scaling (no prices), wage tracking, Today priorities. Only additive field: Payment.staffId.
+
+## 2026-11-27 legal pages
+- Added Terms (/terms/), Privacy (/privacy/), Cookies (/cookies/) in mr/en/hi, linked from footer legal row and quote form note. Written from verified data practices (no cookies, no analytics, form only builds a WhatsApp message). No cookie banner (nothing to consent to). General policy, not legal advice: owner to have a Latur advocate review (docs/legal-review.md has sources and open questions).
+- Re-check when: analytics, forms posting to a server, email or payments are added; DPDP Rules timeline (core duties expected May 2027, re-verify).

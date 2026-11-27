@@ -4,6 +4,7 @@ import { nav, ui } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const links = ['services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact'] as const;
+const legal = ['terms', 'privacy', 'cookies'] as const;
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -32,5 +33,18 @@ const year = new Date().getFullYear();
       </ul>
     </div>
   </div>
+  <div class="wrap legal-row">
+    <nav aria-label={ui.legalNav[lang]}>
+      <ul>
+        {legal.map((k) => <li><a href={pagePath(lang, k)}>{ui[k][lang]}</a></li>)}
+      </ul>
+    </nav>
+  </div>
   <div class="wrap fine">© {year} {site.name[lang]}. {ui.rights[lang]}.</div>
 </footer>
+<style>
+  .legal-row { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255, 233, 184, .35); }
+  .legal-row ul { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; }
+  .legal-row li { margin: 0; }
+  .legal-row a { display: inline-block; padding: .35rem 0; }
+</style>

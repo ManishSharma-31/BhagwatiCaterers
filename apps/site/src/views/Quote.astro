@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import { quote, qdesign, events, orderTypes, cuisineOpts, otherTown, messageLabels } from '../content/quote';
-import { site, waLink, type Lang, type PageKey } from '../data/site';
+import { ui } from '../i18n/ui';
+import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = quote[lang];
@@ -100,7 +101,7 @@ const d = qdesign[lang];
           <textarea id="notes" name="notes" rows="4"></textarea>
         </div>
         <button class="btn btn-wa q-submit" type="submit">💬 {c.submit}</button>
-        <p class="note">{c.privacy}</p>
+        <p class="note">{c.privacy} <a href={pagePath(lang, 'privacy')}>{ui.privacy[lang]}</a> · <a href={pagePath(lang, 'terms')}>{ui.terms[lang]}</a></p>
       </form>
 
       <section id="quote-done" class="card done" hidden aria-live="polite">

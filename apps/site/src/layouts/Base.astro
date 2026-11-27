@@ -38,7 +38,8 @@ const schema = {
 };
 
 // BreadcrumbList for every page except home: Home > This page.
-const pageName = page === 'credits' ? ui.credits[lang] : page === 'home' ? ui.home[lang] : nav[page][lang];
+const uiPages = { credits: ui.credits, terms: ui.terms, privacy: ui.privacy, cookies: ui.cookies } as Record<string, Record<Lang, string>>;
+const pageName = page === 'home' ? ui.home[lang] : uiPages[page] ? uiPages[page][lang] : (nav as Record<string, Record<Lang, string>>)[page][lang];
 const breadcrumb = page === 'home' ? null : {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

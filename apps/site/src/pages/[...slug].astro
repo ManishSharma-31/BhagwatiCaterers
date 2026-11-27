@@ -15,6 +15,7 @@ import Areas from '../views/Areas.astro';
 import Contact from '../views/Contact.astro';
 import Quote from '../views/Quote.astro';
 import Credits from '../views/Credits.astro';
+import Legal from '../views/Legal.astro';
 
 // Registered views. Pages not listed fall back to Placeholder until their view exists.
 const views: Partial<Record<PageKey, any>> = {
@@ -29,6 +30,9 @@ const views: Partial<Record<PageKey, any>> = {
   contact: Contact,
   quote: Quote,
   credits: Credits,
+  terms: Legal,
+  privacy: Legal,
+  cookies: Legal,
 };
 
 export function getStaticPaths() {

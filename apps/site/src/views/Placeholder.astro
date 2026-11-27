@@ -4,7 +4,7 @@ import { nav, ui } from '../i18n/ui';
 import { pagePath, type Lang, type PageKey } from '../data/site';
 interface Props { lang: Lang; page: PageKey; }
 const { lang, page } = Astro.props;
-const label = page === 'credits' ? ui.credits[lang] : (nav as any)[page]?.[lang] ?? page;
+const label = (ui as any)[page]?.[lang] ?? (nav as any)[page]?.[lang] ?? page;
 const soon = { mr: 'हे पृष्ठ लवकरच येत आहे.', en: 'This page is coming soon.', hi: 'यह पृष्ठ जल्द आ रहा है।' }[lang];
 ---
 <Base lang={lang} page={page} title={label} description={soon} noindex>

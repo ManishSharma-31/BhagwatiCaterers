@@ -37,7 +37,7 @@ export const site = {
 
 // Page keys in navigation order. '' is the home page.
 export const PAGES = [
-  'home', 'services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact', 'quote', 'credits',
+  'home', 'services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact', 'quote', 'credits', 'terms', 'privacy', 'cookies',
 ] as const;
 export type PageKey = (typeof PAGES)[number];
 
