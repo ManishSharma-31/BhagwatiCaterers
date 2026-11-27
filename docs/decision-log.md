@@ -49,3 +49,7 @@
 
 ## 2026-11-27 "representative image" wording
 - Owner asked to remove all "representative / not our own dish" wording except the photo clause in the Terms (section 5). Removed from image captions, Gallery note and meta description, and Credits intro. Credits page keeps the photographer, source and licence table (needed for CC BY-SA attribution).
+
+## 2026-11-27 dish cart
+- Menu dishes are tap-to-select (no prices, no quantities: catering is by guest count). Selection kept in sessionStorage (`bc-cart`), cleared when the tab closes; never sent to a server. Quote page lists the selection (removable) and adds it to the WhatsApp message, which opens on submit as before.
+- Privacy and Cookie pages updated to disclose the session-storage cart (they previously said nothing is stored). Re-check them if the cart moves to localStorage or the server.

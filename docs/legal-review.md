@@ -62,3 +62,6 @@ Verified by reading the source and grepping the built output in `/tmp/dist-legal
 - **No SPDI-Rules-specific policy text and no GST rates or number:** SPDI Rules are being replaced; GST figures change and none was provided.
 - **No arbitration clause or heavy disclaimers:** overkill for a local caterer and can conflict with consumer law.
 - **No email, social-media or domain text:** none exist yet.
+
+## Update 2026-11-27: dish cart
+The public site now uses browser **sessionStorage** (key `bc-cart`) for the dish selection. It is not a cookie, is not sent anywhere, and clears when the tab/browser closes. Privacy (section 2 and summary) and Cookies (section 2 and summary) were updated in mr/en/hi. Still no cookies, analytics or third-party scripts, so still no cookie banner. If the cart is ever stored longer (localStorage) or sent to a server, revisit both pages and consider consent wording.

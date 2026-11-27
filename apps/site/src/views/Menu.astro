@@ -13,6 +13,18 @@ const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
 const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
 const groupPhotos: Record<string, string[]> = { mh: ['puran-poli', 'misal-pav', 'bhakri-pithla', 'masale-bhat', 'shrikhand', 'modak'], si: ['idli-sambar', 'dosa'], rj: ['dal-baati-churma'], more: ['jilebi', 'gulab-jamun', 'poha'] };
 const groups = (['mh', 'si', 'rj', 'more'] as const).map((k) => ({ key: k, title: cuisineTitle[k][lang], secs: sections.filter((x) => x.cuisine === k) }));
+const CT = {
+  add: { mr: 'पदार्थ निवडा', en: 'Tap a dish to add it to your quote', hi: 'पदार्थ चुनने के लिए टैप करें' }[lang],
+  selected: { mr: 'निवडलेले पदार्थ', en: 'Selected dishes', hi: 'चुने हुए व्यंजन' }[lang],
+  view: { mr: 'यादी', en: 'View', hi: 'सूची' }[lang],
+  quote: { mr: 'कोटेशन मागवा', en: 'Get quote', hi: 'कोटेशन मागें' }[lang],
+  clear: { mr: 'सर्व काढा', en: 'Clear all', hi: 'सब हटाएँ' }[lang],
+  remove: { mr: 'काढा', en: 'Remove', hi: 'हटाएँ' }[lang],
+  close: { mr: 'बंद करा', en: 'Close', hi: 'बंद करें' }[lang],
+  empty: { mr: 'अजून काहीही निवडलेले नाही.', en: 'Nothing selected yet.', hi: 'अभी कुछ नहीं चुना।' }[lang],
+  hint: { mr: 'तुम्हाला आवडणारे पदार्थ + दाबून निवडा. कोटेशनसाठी ही यादी तुमच्या WhatsApp संदेशात जाईल.', en: 'Tap dishes you like to select them. The list goes into your WhatsApp quote message.', hi: 'पसंद के व्यंजन टैप करके चुनें। यह सूची आपके WhatsApp कोटेशन संदेश में जाएगी।' }[lang],
+  quoteHref: pagePath(lang, 'quote'),
+};
 const T = {
   searchLabel: { mr: 'पदार्थ शोधा', en: 'Search dishes', hi: 'व्यंजन खोजें' }[lang],
   searchPh: { mr: 'उदा. मोदक, डोसा, पनीर…', en: 'e.g. modak, dosa, paneer…', hi: 'जैसे मोदक, डोसा, पनीर…' }[lang],
@@ -46,6 +58,7 @@ const T = {
         <input type="search" id="dish-search" placeholder={T.searchPh} autocomplete="off" />
       </label>
       <p id="no-match" class="nomatch" hidden>{T.none}</p>
+      <p class="cart-hint">🛒 {CT.hint}</p>
     </div>
   </section>
   {groups.map((g) => (
@@ -67,7 +80,7 @@ const T = {
             <article class="card sec" data-sec>
               <h3 class="h3"><img class="sec-ic" src={x.icon} alt="" width="36" height="36" loading="lazy" />{x.title[lang]} <small>({x.items.length})</small></h3>
               <ul class="dishes">
-                {x.items.map((d) => <li data-dish data-q={`${d[0]} ${d[1]} ${d[2]}`.toLowerCase()}>{d[['mr', 'en', 'hi'].indexOf(lang)]}</li>)}
+                {x.items.map((d, di) => <li data-dish data-q={`${d[0]} ${d[1]} ${d[2]}`.toLowerCase()}><button type="button" class="dish-btn" aria-pressed="false" data-id={`${x.id}:${di}`} data-n={JSON.stringify(d)}><span class="dn-t">{d[['mr', 'en', 'hi'].indexOf(lang)]}</span><span class="dn-i" aria-hidden="true">+</span></button></li>)}
               </ul>
             </article>
           ))}
@@ -100,7 +113,57 @@ const T = {
       </div>
     </div>
   </section>
+  <div id="cart-bar" class="cart-bar" hidden>
+    <button type="button" id="cart-open" class="cart-count" aria-expanded="false" aria-controls="cart-sheet" aria-label={CT.selected}>🛒 <span id="cart-n">0</span> · {CT.view}</button>
+    <a class="btn btn-wa cart-go" href={CT.quoteHref}>💬 {CT.quote}</a>
+  </div>
+  <div id="cart-sheet" class="cart-sheet" role="dialog" aria-label={CT.selected} hidden>
+    <div class="cart-head"><strong>{CT.selected}</strong><button type="button" id="cart-close" class="cart-x" aria-label={CT.close}>✕</button></div>
+    <ul id="cart-list" class="cart-list"></ul>
+    <p id="cart-empty" class="cart-empty">{CT.empty}</p>
+    <div class="cart-foot"><button type="button" id="cart-clear" class="btn btn-ghost">{CT.clear}</button><a class="btn btn-wa" href={CT.quoteHref}>💬 {CT.quote}</a></div>
+  </div>
+  <script define:vars={{ rm: CT.remove }} is:inline>window.__cartRemove = rm;</script>
 </Base>
+<script>
+  import { readCart, toggle, removeItem, clearCart, langIndex, type CartItem } from '../scripts/cart';
+  const $ = (id: string) => document.getElementById(id)!;
+  const bar = $('cart-bar'), sheet = $('cart-sheet'), list = $('cart-list'), n = $('cart-n'), empty = $('cart-empty');
+  function render() {
+    const items = readCart(), li = langIndex();
+    n.textContent = String(items.length);
+    bar.hidden = items.length === 0;
+    if (items.length === 0) { sheet.hidden = true; $('cart-open').setAttribute('aria-expanded', 'false'); }
+    empty.hidden = items.length > 0;
+    list.innerHTML = '';
+    items.forEach((it) => {
+      const row = document.createElement('li');
+      const t = document.createElement('span'); t.textContent = it.n[li] || it.n[0];
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'cart-rm'; b.textContent = (window as any).__cartRemove || 'x'; b.dataset.id = it.id;
+      row.append(t, b); list.append(row);
+    });
+    const ids = new Set(items.map((i) => i.id));
+    document.querySelectorAll<HTMLButtonElement>('.dish-btn').forEach((btn) => {
+      const on = ids.has(btn.dataset.id!);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.classList.toggle('on', on);
+      btn.querySelector('.dn-i')!.textContent = on ? '✓' : '+';
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const btn = t.closest<HTMLButtonElement>('.dish-btn');
+    if (btn) { toggle({ id: btn.dataset.id!, n: JSON.parse(btn.dataset.n!) } as CartItem); return; }
+    const rm = t.closest<HTMLButtonElement>('.cart-rm');
+    if (rm) removeItem(rm.dataset.id!);
+  });
+  $('cart-open').addEventListener('click', () => { const open = sheet.hidden; sheet.hidden = !open; $('cart-open').setAttribute('aria-expanded', String(open)); });
+  $('cart-close').addEventListener('click', () => { sheet.hidden = true; $('cart-open').setAttribute('aria-expanded', 'false'); });
+  $('cart-clear').addEventListener('click', () => clearCart());
+  window.addEventListener('cart-change', render);
+  window.addEventListener('pageshow', render);
+  render();
+</script>
 <script is:inline>
   (function () {
     var q = document.getElementById('dish-search'); if (!q) return;
@@ -119,6 +182,26 @@ const T = {
   })();
 </script>
 <style>
+  .dishes li { padding: 0; background: none; border: 0; }
+  .dish-btn { display: inline-flex; align-items: center; gap: .45rem; font: inherit; font-size: .95rem; background: #fff6e3; color: inherit; border: 1.5px solid #ecd9a8; border-radius: 999px; padding: .4rem .5rem .4rem .85rem; min-height: 40px; cursor: pointer; text-align: left; }
+  .dn-i { display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--maroon); color: #fff; font-weight: 800; line-height: 1; flex: none; }
+  .dish-btn:hover { border-color: var(--maroon); }
+  .dish-btn:focus-visible { outline: 3px solid #f2b01e; outline-offset: 2px; }
+  .dish-btn.on { background: var(--maroon); border-color: var(--maroon); color: #fff; }
+  .dish-btn.on .dn-i { background: #f2b01e; color: #5c1620; }
+  .cart-hint { margin: .8rem 0 0; font-size: .95rem; color: #5a4036; }
+  .cart-bar { position: fixed; left: .6rem; right: .6rem; bottom: calc(var(--bar-h, 56px) + .6rem + env(safe-area-inset-bottom, 0px)); z-index: 70; display: flex; gap: .5rem; align-items: center; justify-content: space-between; background: #5c1620; color: #fff; border-radius: 16px; padding: .5rem .6rem; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+  .cart-bar[hidden], .cart-sheet[hidden] { display: none; }
+  .cart-count { background: none; border: 0; color: #fff; font: inherit; font-weight: 700; cursor: pointer; text-align: left; padding: .4rem; min-height: 44px; }
+  .cart-go { white-space: nowrap; min-height: 44px; padding-block: .4rem; }
+  .cart-sheet { position: fixed; left: .6rem; right: .6rem; bottom: calc(var(--bar-h, 56px) + 4.6rem + env(safe-area-inset-bottom, 0px)); z-index: 71; max-height: 55vh; overflow: auto; background: #fff; border: 2px solid #f2b01e; border-radius: 16px; padding: 1rem; box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+  .cart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; color: var(--maroon); }
+  .cart-x { border: 0; background: #fff6e3; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; }
+  .cart-list { list-style: none; margin: 0; padding: 0; }
+  :global(.cart-list li) { display: flex; justify-content: space-between; align-items: center; gap: .6rem; padding: .45rem 0; border-bottom: 1px dashed #ecd9a8; }
+  :global(.cart-rm) { border: 0; background: none; color: #a11a1a; font: inherit; font-weight: 700; cursor: pointer; padding: .4rem; min-height: 40px; }
+  .cart-foot { display: flex; gap: .6rem; justify-content: space-between; margin-top: .8rem; flex-wrap: wrap; }
+  @media (min-width: 900px) { .cart-bar { left: 1rem; right: auto; width: 460px; bottom: 1rem; } .cart-sheet { left: 1rem; right: auto; width: 460px; bottom: 5.5rem; } }
   .h3 { font-size: 1.2rem; display: flex; align-items: center; gap: .5rem; margin: 0 0 .6rem; }
   .h3 small { font-weight: 400; color: #6b5a50; font-size: .85rem; }
   .sec-ic { flex: none; }
@@ -137,7 +220,6 @@ const T = {
   .sec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
   .sec { padding: 1rem 1.1rem; }
   .dishes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
-  .dishes li { background: #fff6e3; border: 1px solid #ecd9a8; border-radius: 999px; padding: .3rem .75rem; font-size: .95rem; }
   .hero-photo { margin: 0; }
   .hero-photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow); display: block; }
   .rep { font-size: .8rem; color: #6b5a50; margin: .35rem 0 0; text-align: center; }

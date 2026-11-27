@@ -1,11 +1,12 @@
+import { readCart, removeItem, clearCart, names, langIndex } from './cart';
 // Quote form logic. Nothing is sent to a server; the message goes to WhatsApp only.
 export interface QuoteValues {
   name: string; phone: string; event: string; date: string; guests: string;
-  town: string; order: string; cuisines: string[]; notes: string;
+  town: string; order: string; cuisines: string[]; notes: string; dishes?: string[];
 }
 export interface QuoteLabels {
   greeting: string; name: string; phone: string; event: string; date: string; guests: string;
-  town: string; order: string; cuisine: string; notes: string; thanks: string;
+  town: string; order: string; cuisine: string; dishes: string; notes: string; thanks: string;
   errors: { name: string; phone: string; event: string; guests: string };
 }
 export const cleanPhone = (p: string) => p.replace(/[\s\-()]/g, '').replace(/^(\+91|91|0)(?=\d{10}$)/, '');
@@ -28,6 +29,7 @@ export function buildMessage(v: QuoteValues, l: QuoteLabels): string {
   if (v.town) lines.push(`${l.town}: ${v.town}`);
   if (v.order) lines.push(`${l.order}: ${v.order}`);
   if (v.cuisines.length) lines.push(`${l.cuisine}: ${v.cuisines.join(', ')}`);
+  if (v.dishes && v.dishes.length) { lines.push(`${l.dishes} (${v.dishes.length}):`); v.dishes.forEach((d) => lines.push(`• ${d}`)); }
   if (v.notes.trim()) lines.push(`${l.notes}: ${v.notes.trim()}`);
   lines.push('', l.thanks);
   return lines.join('\n');
@@ -50,6 +52,26 @@ export function initQuoteForm() {
     const s = form.elements.namedItem(id) as HTMLSelectElement;
     return s.value ? s.selectedOptions[0].textContent!.trim() : '';
   };
+  const box = document.getElementById('quote-dishes');
+  const ul = document.getElementById('quote-dishes-list');
+  const none = document.getElementById('quote-dishes-none');
+  const renderDishes = () => {
+    if (!box || !ul || !none) return;
+    const items = readCart(), li = langIndex();
+    ul.innerHTML = '';
+    items.forEach((it) => {
+      const row = document.createElement('li');
+      const t = document.createElement('span'); t.textContent = it.n[li] || it.n[0];
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'qd-rm'; b.textContent = box.dataset.remove || 'x'; b.setAttribute('aria-label', `${box.dataset.remove || 'x'}: ${t.textContent}`);
+      b.addEventListener('click', () => { removeItem(it.id); renderDishes(); });
+      row.append(t, b); ul.append(row);
+    });
+    none.hidden = items.length > 0;
+    document.getElementById('quote-dishes-clear')!.hidden = items.length === 0;
+  };
+  document.getElementById('quote-dishes-clear')?.addEventListener('click', () => { clearCart(); renderDishes(); });
+  renderDishes();
+  window.addEventListener('pageshow', renderDishes);
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const fd = new FormData(form);
@@ -60,6 +82,7 @@ export function initQuoteForm() {
       town: opt('town'), order: opt('order'),
       cuisines: Array.from(form.querySelectorAll<HTMLInputElement>('input[name=cuisine]:checked')).map((i) => i.parentElement!.textContent!.trim()),
       notes: String(fd.get('notes') || ''),
+      dishes: names(),
     };
     const raw = { event: String(fd.get('event') || ''), guests: v.guests };
     const errs = validate({ ...v, event: raw.event }, labels.errors);

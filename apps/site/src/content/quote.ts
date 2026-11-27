@@ -30,19 +30,19 @@ export const messageLabels: Record<Lang, QuoteLabels> = {
   mr: {
     greeting: 'नमस्कार, मला केटरिंगसाठी कोटेशन हवे आहे.',
     name: 'नाव', phone: 'फोन', event: 'कार्यक्रम', date: 'तारीख', guests: 'अंदाजे पाहुणे', town: 'गाव/शहर',
-    order: 'ऑर्डर प्रकार', cuisine: 'आवडते जेवण', notes: 'टीप', thanks: 'धन्यवाद.',
+    order: 'ऑर्डर प्रकार', cuisine: 'आवडते जेवण', dishes: 'निवडलेले पदार्थ', notes: 'टीप', thanks: 'धन्यवाद.',
     errors: { name: 'कृपया तुमचे नाव लिहा.', phone: 'कृपया १० अंकी मोबाइल नंबर लिहा.', event: 'कृपया कार्यक्रमाचा प्रकार निवडा.', guests: 'कृपया पाहुण्यांची अंदाजे संख्या लिहा.' },
   },
   en: {
     greeting: 'Hello, I would like a catering quote.',
     name: 'Name', phone: 'Phone', event: 'Event', date: 'Date', guests: 'Approx. guests', town: 'Town',
-    order: 'Order type', cuisine: 'Cuisine', notes: 'Notes', thanks: 'Thank you.',
+    order: 'Order type', cuisine: 'Cuisine', dishes: 'Selected dishes', notes: 'Notes', thanks: 'Thank you.',
     errors: { name: 'Please enter your name.', phone: 'Please enter a 10-digit mobile number.', event: 'Please choose the event type.', guests: 'Please enter the approximate number of guests.' },
   },
   hi: {
     greeting: 'नमस्ते, मुझे कैटरिंग के लिए कोटेशन चाहिए।',
     name: 'नाम', phone: 'फ़ोन', event: 'कार्यक्रम', date: 'तारीख', guests: 'अनुमानित मेहमान', town: 'शहर/गाँव',
-    order: 'ऑर्डर प्रकार', cuisine: 'पसंदीदा खाना', notes: 'टिप्पणी', thanks: 'धन्यवाद।',
+    order: 'ऑर्डर प्रकार', cuisine: 'पसंदीदा खाना', dishes: 'चुने हुए व्यंजन', notes: 'टिप्पणी', thanks: 'धन्यवाद।',
     errors: { name: 'कृपया अपना नाम लिखें।', phone: 'कृपया 10 अंकों का मोबाइल नंबर लिखें।', event: 'कृपया कार्यक्रम का प्रकार चुनें।', guests: 'कृपया मेहमानों की अनुमानित संख्या लिखें।' },
   },
 };
@@ -81,14 +81,14 @@ export const quote: Record<Lang, Record<string, string>> = {
 };
 
 // Extra copy for the redesigned quote page.
-export const qdesign: Record<Lang, { panelTitle: string; panelBody: string; steps: string[]; trust: string[]; s1: string; s2: string; s3: string; callNow: string; }> = {
+export const qdesign: Record<Lang, { panelTitle: string; panelBody: string; steps: string[]; trust: string[]; s1: string; s2: string; s3: string; callNow: string; dishesTitle: string; dishesNone: string; dishesAdd: string; dishesClear: string; dishesRemove: string; }> = {
   mr: { panelTitle: 'कार्यक्रमाची माहिती थोडक्यात द्या', panelBody: 'फॉर्म भरा, आम्ही तुमचा तयार संदेश WhatsApp वर उघडतो. फोन किंवा WhatsApp वर थेट बोललात तरी चालेल.',
     steps: ['माहिती भरा', 'WhatsApp वर पाठवा', 'आम्ही तुमच्याशी बोलतो'], trust: ['शुद्ध शाकाहारी', '३०+ वर्षांचा अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपासच्या परिसरात सेवा'],
-    s1: 'तुमची माहिती', s2: 'तुमचा कार्यक्रम', s3: 'जेवणाची आवड', callNow: 'थेट फोन करा' },
+    s1: 'तुमची माहिती', s2: 'तुमचा कार्यक्रम', s3: 'जेवणाची आवड', callNow: 'थेट फोन करा', dishesTitle: 'तुम्ही निवडलेले पदार्थ', dishesNone: 'अजून पदार्थ निवडलेले नाहीत. मेनूमधून पदार्थ निवडल्यास ते तुमच्या संदेशात जातील. हे ऐच्छिक आहे.', dishesAdd: 'मेनूमधून पदार्थ निवडा', dishesClear: 'सर्व काढा', dishesRemove: 'काढा' },
   en: { panelTitle: 'Tell us about your event', panelBody: 'Fill in the form and we open a ready message on WhatsApp. You can also call or WhatsApp us directly.',
     steps: ['Fill in the details', 'Send on WhatsApp', 'We talk to you'], trust: ['Pure vegetarian', '30+ years of experience', 'FSSAI Certified', 'Serving Latur and nearby areas'],
-    s1: 'About you', s2: 'Your event', s3: 'Food preferences', callNow: 'Call us directly' },
+    s1: 'About you', s2: 'Your event', s3: 'Food preferences', callNow: 'Call us directly', dishesTitle: 'Dishes you selected', dishesNone: 'No dishes selected yet. Dishes you pick from the menu will go into your message. This is optional.', dishesAdd: 'Choose dishes from the menu', dishesClear: 'Clear all', dishesRemove: 'Remove' },
   hi: { panelTitle: 'अपने आयोजन की जानकारी दें', panelBody: 'फ़ॉर्म भरें, हम आपका तैयार संदेश WhatsApp पर खोल देते हैं। आप सीधे फ़ोन या WhatsApp भी कर सकते हैं।',
     steps: ['जानकारी भरें', 'WhatsApp पर भेजें', 'हम आपसे बात करेंगे'], trust: ['शुद्ध शाकाहारी', '30+ साल का अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपास के क्षेत्रों में सेवा'],
-    s1: 'आपकी जानकारी', s2: 'आपका आयोजन', s3: 'खाने की पसंद', callNow: 'सीधे फ़ोन करें' },
+    s1: 'आपकी जानकारी', s2: 'आपका आयोजन', s3: 'खाने की पसंद', callNow: 'सीधे फ़ोन करें', dishesTitle: 'आपके चुने हुए व्यंजन', dishesNone: 'अभी कोई व्यंजन नहीं चुना। मेन्यू से चुने हुए व्यंजन आपके संदेश में जाएँगे। यह वैकल्पिक है।', dishesAdd: 'मेन्यू से व्यंजन चुनें', dishesClear: 'सब हटाएँ', dishesRemove: 'हटाएँ' },
 };

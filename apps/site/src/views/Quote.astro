@@ -96,6 +96,12 @@ const d = qdesign[lang];
             <label class="opt"><input type="checkbox" name="cuisine" value={o.key} /> {o[lang]}</label>
           ))}
         </fieldset>
+        <div id="quote-dishes" class="qd" data-remove={d.dishesRemove}>
+          <p class="qd-t">🛒 {d.dishesTitle}</p>
+          <ul id="quote-dishes-list" class="qd-list"></ul>
+          <p id="quote-dishes-none" class="qd-none">{d.dishesNone}</p>
+          <div class="qd-actions"><a class="btn btn-ghost" href={pagePath(lang, 'menu')}>{d.dishesAdd}</a><button type="button" id="quote-dishes-clear" class="qd-clear" hidden>{d.dishesClear}</button></div>
+        </div>
         <div>
           <label for="notes">{c.notes}</label>
           <textarea id="notes" name="notes" rows="4"></textarea>
@@ -121,6 +127,14 @@ const d = qdesign[lang];
   </section>
 </Base>
 <style>
+  .qd { background: #fffaf0; border: 2px dashed #d9c9a8; border-radius: 14px; padding: .9rem 1rem; }
+  .qd-t { margin: 0 0 .4rem; font-weight: 700; color: var(--maroon); }
+  .qd-list { list-style: none; margin: 0 0 .5rem; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .qd-list :global(li) { display: inline-flex; align-items: center; gap: .3rem; background: #fff; border: 1.5px solid var(--maroon); border-radius: 999px; padding: .15rem .3rem .15rem .8rem; }
+  :global(.qd-rm) { border: 0; background: none; color: #a11a1a; font: inherit; font-weight: 700; cursor: pointer; padding: .35rem .5rem; min-height: 36px; }
+  .qd-none { margin: 0 0 .6rem; font-size: .95rem; color: #5a4036; }
+  .qd-actions { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .qd-clear { border: 0; background: none; color: #a11a1a; font: inherit; font-weight: 700; cursor: pointer; min-height: 44px; }
   .quote-page { background: linear-gradient(180deg, #fff6e3 0%, #fdeccb 100%); }
   .q-layout { display: grid; gap: 1.5rem; margin-top: 1.25rem; align-items: start; }
   @media (min-width: 900px) { .q-layout { grid-template-columns: 340px 1fr; } .q-panel { position: sticky; top: 5.5rem; } }
