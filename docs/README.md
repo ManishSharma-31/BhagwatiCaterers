@@ -8,13 +8,13 @@ Keep these documents current. Every change that affects design, content, archite
 | `open-questions.md` | Things we must ask the owner | In progress |
 | `decision-log.md` | Decisions made, with date and reason | In progress |
 | `task-board.md` | Work breakdown, owners, status | In progress |
-| `research/01-visuals-and-image-licensing.md` | Maharashtrian visual language and copyright-safe images | Researching |
-| `research/02-latur-market-and-seo.md` | Local market, competitors, SEO, FSSAI display | Researching |
-| `research/03-architecture-and-hosting.md` | Tech stack, hosting, payments, security | Researching |
-| `MASTER-PLAN.md` | Consolidated plan, phases, sitemap | Planned |
-| `design-guide.md` | Colours, fonts, motifs, components | Planned |
-| `image-credits.md` | Every image/graphic with source and licence | Planned |
-| `content-plan.md` | Page-by-page content in Marathi, English, Hindi | Planned |
+| `research/01-visuals-and-image-licensing.md` | Maharashtrian visual language and copyright-safe images | Done |
+| `research/02-latur-market-and-seo.md` | Local market, competitors, SEO, FSSAI display | Done |
+| `research/03-architecture-and-hosting.md` | Tech stack, hosting, payments, security | Done |
+| `MASTER-PLAN.md` | Consolidated plan, phases, sitemap | Draft |
+| `design-guide.md` | Colours, fonts, motifs, components | Draft |
+| `image-credits.md` | Every image/graphic with source and licence | Draft |
+| `content-plan.md` | Page-by-page content in Marathi, English, Hindi | Draft |
 
 ## Rules for everyone working on this repo
 
