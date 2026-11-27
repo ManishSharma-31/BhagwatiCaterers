@@ -2,20 +2,20 @@ import type { Lang } from '../data/site';
 import type { QuoteLabels } from '../scripts/quote';
 type L3<T = string> = Record<Lang, T>;
 export const events: Array<{ key: string } & L3> = [
-  { key: 'wedding', mr: 'विवाह', en: 'Wedding', hi: 'विवाह' },
+  { key: 'wedding', mr: 'लग्न', en: 'Wedding', hi: 'विवाह' },
   { key: 'engagement', mr: 'साखरपुडा', en: 'Engagement', hi: 'सगाई' },
   { key: 'haldi', mr: 'हळद', en: 'Haldi', hi: 'हल्दी' },
   { key: 'housewarming', mr: 'गृहप्रवेश', en: 'Housewarming', hi: 'गृहप्रवेश' },
   { key: 'puja', mr: 'पूजा / धार्मिक कार्यक्रम', en: 'Puja / religious function', hi: 'पूजा / धार्मिक कार्यक्रम' },
   { key: 'party', mr: 'वाढदिवस / पार्टी', en: 'Birthday / party', hi: 'जन्मदिन / पार्टी' },
-  { key: 'office', mr: 'ऑफिस कार्यक्रम', en: 'Office event', hi: 'ऑफिस कार्यक्रम' },
-  { key: 'home', mr: 'घरगुती जेवण', en: 'Home-style food', hi: 'घर जैसा खाना' },
+  { key: 'office', mr: 'ऑफिस / संस्थेचा कार्यक्रम', en: 'Office / institution event', hi: 'ऑफिस / संस्था का कार्यक्रम' },
+  { key: 'home', mr: 'घरगुती जेवण (ऑर्डरवर)', en: 'Home-style food (on order)', hi: 'घर जैसा भोजन' },
   { key: 'other', mr: 'इतर', en: 'Other', hi: 'अन्य' },
 ];
 export const orderTypes: Array<{ key: string } & L3> = [
-  { key: 'ours', mr: 'सर्व साहित्य तुमचे (आम्ही सर्व आणतो)', en: 'We bring everything', hi: 'सारा सामान हमारा (हम सब लाते हैं)' },
-  { key: 'theirs', mr: 'साहित्य तुमचे, स्वयंपाक आमचा', en: 'You provide ingredients, we cook', hi: 'सामान आपका, खाना हम पकाएंगे' },
-  { key: 'unsure', mr: 'खात्री नाही', en: 'Not sure', hi: 'पक्का नहीं' },
+  { key: 'ours', mr: 'सर्व साहित्य आमचे (आम्ही सर्व आणतो)', en: 'We bring everything', hi: 'सारी सामग्री हमारी (हम सब लाते हैं)' },
+  { key: 'theirs', mr: 'साहित्य तुमचे, स्वयंपाक आमचा', en: 'You provide ingredients, we cook', hi: 'सामग्री आपकी, खाना हमारा' },
+  { key: 'unsure', mr: 'अजून ठरले नाही', en: 'Not sure', hi: 'अभी पक्का नहीं' },
 ];
 export const cuisineOpts: Array<{ key: string } & L3> = [
   { key: 'mh', mr: 'महाराष्ट्रीयन', en: 'Maharashtrian', hi: 'महाराष्ट्रीयन' },
@@ -41,7 +41,7 @@ export const messageLabels: Record<Lang, QuoteLabels> = {
   },
   hi: {
     greeting: 'नमस्ते, मुझे कैटरिंग के लिए कोटेशन चाहिए।',
-    name: 'नाम', phone: 'फोन', event: 'कार्यक्रम', date: 'तारीख', guests: 'अनुमानित मेहमान', town: 'शहर/गाँव',
+    name: 'नाम', phone: 'फ़ोन', event: 'कार्यक्रम', date: 'तारीख', guests: 'अनुमानित मेहमान', town: 'शहर/गाँव',
     order: 'ऑर्डर प्रकार', cuisine: 'पसंदीदा खाना', notes: 'टिप्पणी', thanks: 'धन्यवाद।',
     errors: { name: 'कृपया अपना नाम लिखें।', phone: 'कृपया 10 अंकों का मोबाइल नंबर लिखें।', event: 'कृपया कार्यक्रम का प्रकार चुनें।', guests: 'कृपया मेहमानों की अनुमानित संख्या लिखें।' },
   },
@@ -49,8 +49,8 @@ export const messageLabels: Record<Lang, QuoteLabels> = {
 
 export const quote: Record<Lang, Record<string, string>> = {
   mr: {
-    metaTitle: 'कोटेशन मिळवा', metaDescription: 'भगवती केटरर्सकडून कोटेशन मागवा: फॉर्म भरा आणि WhatsApp वर संदेश पाठवा. लातूर आणि आसपास शुद्ध शाकाहारी केटरिंग.',
-    title: 'कोटेशन मिळवा', lead: 'खालील माहिती भरा. तुमच्यासाठी WhatsApp संदेश तयार होईल, तो पाठवा.',
+    metaTitle: 'केटरिंग कोटेशन मागवा, लातूर', metaDescription: 'भगवती केटरर्स, लातूर कडून कोटेशन मागवा: फॉर्म भरा आणि WhatsApp वर संदेश पाठवा. लग्न, समारंभ, पूजेसाठी शुद्ध शाकाहारी केटरिंग.',
+    title: 'केटरिंग कोटेशन मागवा', lead: 'खालील माहिती भरा. तुमच्यासाठी WhatsApp संदेश तयार होईल, तो फक्त पाठवा. तुम्ही थेट फोन करूनही सांगू शकता.',
     name: 'तुमचे नाव', phone: 'मोबाइल नंबर', event: 'कार्यक्रमाचा प्रकार', choose: 'निवडा', date: 'कार्यक्रमाची तारीख', guests: 'पाहुण्यांची अंदाजे संख्या',
     town: 'गाव / शहर', order: 'ऑर्डरचा प्रकार', cuisine: 'जेवणाचा प्रकार (एक किंवा अधिक)', notes: 'इतर माहिती (ऐच्छिक)', optional: '(ऐच्छिक)',
     submit: 'WhatsApp वर संदेश तयार करा', privacy: 'तुमची माहिती फक्त तुम्ही पाठवत असलेल्या WhatsApp संदेशात जाते. आम्ही ती या वेबसाइटवर साठवत नाही.',
@@ -59,8 +59,8 @@ export const quote: Record<Lang, Record<string, string>> = {
     noscript: 'हा फॉर्म वापरण्यासाठी JavaScript आवश्यक आहे. कृपया थेट फोन करा किंवा WhatsApp वर संदेश पाठवा.',
   },
   en: {
-    metaTitle: 'Get a Quote', metaDescription: 'Request a quote from Bhagwati Caterers: fill the form and send the message on WhatsApp. Pure vegetarian catering in Latur and nearby areas.',
-    title: 'Get a Quote', lead: 'Fill in the details below. We will prepare a WhatsApp message for you to send.',
+    metaTitle: 'Get a Catering Quote, Latur', metaDescription: 'Request a quote from Bhagwati Caterers, Latur: fill the form and send the message on WhatsApp. Pure vegetarian catering for weddings, events and pujas.',
+    title: 'Get a Catering Quote', lead: 'Fill in the details below. We prepare a WhatsApp message for you to send. You can also simply call us.',
     name: 'Your name', phone: 'Mobile number', event: 'Type of event', choose: 'Choose', date: 'Event date', guests: 'Approximate number of guests',
     town: 'Town', order: 'Order type', cuisine: 'Cuisine (one or more)', notes: 'Anything else (optional)', optional: '(optional)',
     submit: 'Prepare WhatsApp message', privacy: 'Your details go only into the WhatsApp message that you send. They are not stored on this website.',
@@ -69,26 +69,26 @@ export const quote: Record<Lang, Record<string, string>> = {
     noscript: 'This form needs JavaScript. Please call us directly or message us on WhatsApp.',
   },
   hi: {
-    metaTitle: 'कोटेशन पाएं', metaDescription: 'भगवती केटरर्स से कोटेशन मांगें: फॉर्म भरें और WhatsApp पर संदेश भेजें। लातूर और आसपास शुद्ध शाकाहारी कैटरिंग।',
-    title: 'कोटेशन पाएं', lead: 'नीचे जानकारी भरें। आपके लिए WhatsApp संदेश तैयार होगा, उसे भेज दें।',
+    metaTitle: 'कैटरिंग कोटेशन पाएँ, लातूर', metaDescription: 'भगवती केटरर्स, लातूर से कोटेशन माँगें: फ़ॉर्म भरें और WhatsApp पर संदेश भेजें। शादी, समारोह, पूजा के लिए शुद्ध शाकाहारी कैटरिंग।',
+    title: 'कैटरिंग कोटेशन पाएँ', lead: 'नीचे जानकारी भरें। आपके लिए WhatsApp संदेश तैयार होगा, उसे बस भेज दें। आप सीधे फ़ोन करके भी बता सकते हैं।',
     name: 'आपका नाम', phone: 'मोबाइल नंबर', event: 'कार्यक्रम का प्रकार', choose: 'चुनें', date: 'कार्यक्रम की तारीख', guests: 'मेहमानों की अनुमानित संख्या',
     town: 'शहर / गाँव', order: 'ऑर्डर का प्रकार', cuisine: 'खाने का प्रकार (एक या अधिक)', notes: 'अन्य जानकारी (वैकल्पिक)', optional: '(वैकल्पिक)',
     submit: 'WhatsApp संदेश तैयार करें', privacy: 'आपकी जानकारी केवल उस WhatsApp संदेश में जाती है जो आप भेजते हैं। हम इसे इस वेबसाइट पर संग्रहीत नहीं करते।',
     doneTitle: 'आपका संदेश तैयार है', doneBody: 'WhatsApp नए टैब में खुल गया है। वहाँ "भेजें" दबाएं। न खुला हो तो संदेश कॉपी करके WhatsApp पर भेजें।',
-    copy: 'संदेश कॉपी करें', copied: 'संदेश कॉपी हो गया।', manual: 'संदेश चुना गया है, कृपया कॉपी करें।', callBtn: 'फोन करें', waBtn: 'WhatsApp खोलें',
-    noscript: 'इस फॉर्म के लिए JavaScript ज़रूरी है। कृपया सीधे फोन करें या WhatsApp पर संदेश भेजें।',
+    copy: 'संदेश कॉपी करें', copied: 'संदेश कॉपी हो गया।', manual: 'संदेश चुना गया है, कृपया कॉपी करें।', callBtn: 'फ़ोन करें', waBtn: 'WhatsApp खोलें',
+    noscript: 'इस फ़ॉर्म के लिए JavaScript ज़रूरी है। कृपया सीधे फ़ोन करें या WhatsApp पर संदेश भेजें।',
   },
 };
 
 // Extra copy for the redesigned quote page.
 export const qdesign: Record<Lang, { panelTitle: string; panelBody: string; steps: string[]; trust: string[]; s1: string; s2: string; s3: string; callNow: string; }> = {
-  mr: { panelTitle: 'काही मिनिटांत चौकशी करा', panelBody: 'फॉर्म भरा, आम्ही तुमचा तयार संदेश WhatsApp वर उघडतो. फोन किंवा WhatsApp वर थेट बोलणेही चालेल.',
-    steps: ['माहिती भरा', 'WhatsApp वर पाठवा', 'आम्ही संपर्क करतो'], trust: ['शुद्ध शाकाहारी', '३०+ वर्षांचा अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपासच्या शहरांत सेवा'],
-    s1: 'तुमची माहिती', s2: 'तुमचा कार्यक्रम', s3: 'जेवणाची आवड', callNow: 'लगेच फोन करा' },
-  en: { panelTitle: 'Plan your event in minutes', panelBody: 'Fill in the form and we open a ready message on WhatsApp. You can also call or WhatsApp us directly.',
-    steps: ['Fill in the details', 'Send on WhatsApp', 'We get back to you'], trust: ['Pure vegetarian', '30+ years of experience', 'FSSAI Certified', 'Serving Latur and nearby towns'],
-    s1: 'About you', s2: 'Your event', s3: 'Food preferences', callNow: 'Call now' },
-  hi: { panelTitle: 'कुछ ही मिनटों में पूछताछ करें', panelBody: 'फ़ॉर्म भरें, हम आपका तैयार संदेश WhatsApp पर खोल देते हैं। आप सीधे फोन या WhatsApp भी कर सकते हैं।',
-    steps: ['जानकारी भरें', 'WhatsApp पर भेजें', 'हम संपर्क करेंगे'], trust: ['शुद्ध शाकाहारी', '30+ साल का अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपास के शहरों में सेवा'],
-    s1: 'आपकी जानकारी', s2: 'आपका आयोजन', s3: 'खाने की पसंद', callNow: 'अभी फोन करें' },
+  mr: { panelTitle: 'कार्यक्रमाची माहिती थोडक्यात द्या', panelBody: 'फॉर्म भरा, आम्ही तुमचा तयार संदेश WhatsApp वर उघडतो. फोन किंवा WhatsApp वर थेट बोललात तरी चालेल.',
+    steps: ['माहिती भरा', 'WhatsApp वर पाठवा', 'आम्ही तुमच्याशी बोलतो'], trust: ['शुद्ध शाकाहारी', '३०+ वर्षांचा अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपासच्या परिसरात सेवा'],
+    s1: 'तुमची माहिती', s2: 'तुमचा कार्यक्रम', s3: 'जेवणाची आवड', callNow: 'थेट फोन करा' },
+  en: { panelTitle: 'Tell us about your event', panelBody: 'Fill in the form and we open a ready message on WhatsApp. You can also call or WhatsApp us directly.',
+    steps: ['Fill in the details', 'Send on WhatsApp', 'We talk to you'], trust: ['Pure vegetarian', '30+ years of experience', 'FSSAI Certified', 'Serving Latur and nearby areas'],
+    s1: 'About you', s2: 'Your event', s3: 'Food preferences', callNow: 'Call us directly' },
+  hi: { panelTitle: 'अपने आयोजन की जानकारी दें', panelBody: 'फ़ॉर्म भरें, हम आपका तैयार संदेश WhatsApp पर खोल देते हैं। आप सीधे फ़ोन या WhatsApp भी कर सकते हैं।',
+    steps: ['जानकारी भरें', 'WhatsApp पर भेजें', 'हम आपसे बात करेंगे'], trust: ['शुद्ध शाकाहारी', '30+ साल का अनुभव', 'FSSAI प्रमाणित', 'लातूर व आसपास के क्षेत्रों में सेवा'],
+    s1: 'आपकी जानकारी', s2: 'आपका आयोजन', s3: 'खाने की पसंद', callNow: 'सीधे फ़ोन करें' },
 };

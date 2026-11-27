@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ActionBar from '../components/ActionBar.astro';
 import { site, LANGS, pagePath, SITE_URL, mapsLink, type Lang, type PageKey } from '../data/site';
-import { ui } from '../i18n/ui';
+import { ui, nav } from '../i18n/ui';
 
 interface Props { lang: Lang; page: PageKey; title: string; description: string; noindex?: boolean; }
 const { lang, page, title, description, noindex = false } = Astro.props;
@@ -13,20 +13,39 @@ const htmlLang = { mr: 'mr-IN', en: 'en-IN', hi: 'hi-IN' }[lang];
 const canonical = new URL(pagePath(lang, page), SITE_URL).href;
 const fullTitle = page === 'home' ? title : `${title} | ${site.name[lang]}`;
 
+const bizDescription: Record<Lang, string> = {
+  mr: 'लातूरमधील शुद्ध शाकाहारी केटरिंग सेवा: लग्न, समारंभ, पार्टी व पूजेसाठी महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी जेवण. ३०+ वर्षांचा अनुभव. FSSAI प्रमाणित.',
+  en: 'Pure vegetarian catering in Latur for weddings, events, parties and pujas: Maharashtrian, South Indian and Rajasthani food. 30+ years of experience. FSSAI Certified.',
+  hi: 'लातूर में शुद्ध शाकाहारी कैटरिंग: शादी, समारोह, पार्टी और पूजा के लिए महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी भोजन। 30+ साल का अनुभव। FSSAI प्रमाणित।',
+};
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': ['FoodEstablishment', 'LocalBusiness'],
+  '@id': `${SITE_URL}/#business`,
   name: site.name.en,
-  alternateName: [site.name.mr],
-  description,
+  alternateName: [site.name.mr, site.name.hi],
+  description: bizDescription[lang],
   url: SITE_URL,
+  inLanguage: lang,
+  image: new URL('/art/og-card.png', SITE_URL).href,
   telephone: `+${site.phoneIntl}`,
   address: { '@type': 'PostalAddress', streetAddress: site.address.street.en, addressLocality: 'Latur', addressRegion: 'Maharashtra', postalCode: site.address.postalCode, addressCountry: 'IN' },
   hasMap: mapsLink(),
   servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Vegetarian'],
   areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
-  founder: { '@type': 'Person', name: site.owner.en },
   sameAs: Object.values(site.social).filter(Boolean),
+};
+
+// BreadcrumbList for every page except home: Home > This page.
+const pageName = page === 'credits' ? ui.credits[lang] : page === 'home' ? ui.home[lang] : nav[page][lang];
+const breadcrumb = page === 'home' ? null : {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: ui.home[lang], item: new URL(pagePath(lang, 'home'), SITE_URL).href },
+    { '@type': 'ListItem', position: 2, name: pageName, item: canonical },
+  ],
 };
 ---
 <!doctype html>
@@ -53,6 +72,7 @@ const schema = {
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    {breadcrumb && <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />}
   </head>
   <body>
     <a class="skip" href="#main">{ui.skip[lang]}</a>
