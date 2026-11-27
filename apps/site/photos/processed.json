@@ -296,6 +296,240 @@
       "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
       "width": 960,
       "height": 720
+    },
+    {
+      "slug": "menu-soup",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Tomato_soup,_Turkish_style.jpg",
+      "photographer": "E4024",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-salad",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kachumber_Salad.JPG",
+      "photographer": "Miansari66",
+      "license": "CC0 (http://creativecommons.org/publicdomain/zero/1.0/deed.en)",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "slug": "menu-juice",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Orange_juice_in_a_glass.jpg",
+      "photographer": "Nshemeire Addah",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "slug": "menu-dryfruits",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Lork.jpg",
+      "photographer": "Farzad j",
+      "license": "Public domain",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "slug": "menu-bengali",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Quick_Rasmalai_(10555623624).jpg",
+      "photographer": "Divya Kudua from Chennai, India",
+      "license": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-rabdi",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Homemade_Rabri.jpg",
+      "photographer": "Ravi Talwar",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 579
+    },
+    {
+      "slug": "menu-halwa",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Gajar-ka-halwa-Indian-dessert.jpg",
+      "photographer": "Vivekpat30",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 533
+    },
+    {
+      "slug": "menu-churma",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Churma_Laddoo.jpg",
+      "photographer": "Mints Recipes",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "slug": "menu-mawa",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Two_Gulab_Jamun_in_a_plate_01.jpg",
+      "photographer": "Suyash.dwivedi",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-mithai",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jalebi_2.jpg",
+      "photographer": "Haroldandkumar (English Wikipedia)",
+      "license": "Public domain",
+      "width": 800,
+      "height": 601
+    },
+    {
+      "slug": "menu-dalkadhi",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Dal_Tadka-Delhi.jpg",
+      "photographer": "AugustineKajur",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 533
+    },
+    {
+      "slug": "menu-raita",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Boondi_Raita.JPG",
+      "photographer": "Ravi Talwar",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 533
+    },
+    {
+      "slug": "menu-rice",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jeera_rice_with_peas.JPG",
+      "photographer": "GrishmaRavi",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 586
+    },
+    {
+      "slug": "menu-papad",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Roasted_Papad_-_Howrah_2013-11-02_4067.jpg",
+      "photographer": "Biswarup Ganguly",
+      "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)",
+      "width": 800,
+      "height": 532
+    },
+    {
+      "slug": "menu-roti",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Tandoori-roti.jpg",
+      "photographer": "Ravi Dwivedi",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-chinese",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Vegetable_Manchurian_-_NUJS_-_Kolkata_20170806133419.jpg",
+      "photographer": "Biswarup Ganguly",
+      "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "slug": "menu-chutney",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Green_Chutney.jpg",
+      "photographer": "Sanyabolia",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-kajusweets",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Kaju_katli_dessert_-_top_view.jpg",
+      "photographer": "Unknomics",
+      "license": "CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-chat",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Crispy_Pani_Puri.jpg",
+      "photographer": "Teena Sometimes",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "slug": "menu-pavbhaji",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Bhaji_pav.jpg",
+      "photographer": "BHAAGIi",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 643
+    },
+    {
+      "slug": "menu-farsan",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Khaman_Dhokla.jpg",
+      "photographer": "Manasi nafde",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 719
+    },
+    {
+      "slug": "menu-corn",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Roasted_Sweet_Corn.jpg",
+      "photographer": "Manjeshwari poet",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 530
+    },
+    {
+      "slug": "menu-namkeen",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Bombaymix.jpg",
+      "photographer": "J.P.Lon (Wikimedia Commons)",
+      "license": "Public domain",
+      "width": 800,
+      "height": 686
+    },
+    {
+      "slug": "menu-pakoda",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Pakoras_in_Jaipur.jpg",
+      "photographer": "ampersandyslexia",
+      "license": "CC BY-SA 2.0 (https://creativecommons.org/licenses/by-sa/2.0)",
+      "width": 800,
+      "height": 530
+    },
+    {
+      "slug": "menu-paneer",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Paneer_butter_masala_2.jpg",
+      "photographer": "Gannu03",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "slug": "menu-vegsabzi",
+      "source": "wikimedia",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Baingan_Ka_Bharta.JPG",
+      "photographer": "Zeel Patel",
+      "license": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+      "width": 800,
+      "height": 548
     }
   ],
   "skipped": [

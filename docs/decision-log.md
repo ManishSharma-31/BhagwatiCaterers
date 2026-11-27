@@ -53,3 +53,10 @@
 ## 2026-11-27 dish cart
 - Menu dishes are tap-to-select (no prices, no quantities: catering is by guest count). Selection kept in sessionStorage (`bc-cart`), cleared when the tab closes; never sent to a server. Quote page lists the selection (removable) and adds it to the WhatsApp message, which opens on submit as before.
 - Privacy and Cookie pages updated to disclose the session-storage cart (they previously said nothing is stored). Re-check them if the cart moves to localStorage or the server.
+
+
+## Printed menu merged (PDF from owner)
+- Transcribed the owner's printed menu (9 pages) into `menu-items.ts`: 410 new dishes added, 55 skipped as duplicates; now about 600 dishes in new groups (main course, sweets, chaat/snacks, Indo-Chinese). Names as printed are used for both Marathi and Hindi; English names are transliterations.
+- 27 sections got a Wikimedia Commons photo (800px). Credits page reads processed.json, so attribution appears automatically.
+- Not changed: phone, address, brand name. The printed menu shows other numbers and a different address; waiting for owner to confirm.
+- Skipped or unclear: items that were unreadable or looked non-vegetarian were left out; owner should review the list.

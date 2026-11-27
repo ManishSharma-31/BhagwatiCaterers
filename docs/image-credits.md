@@ -88,3 +88,37 @@ See section 4 of `research/01-visuals-and-image-licensing.md` (38 image needs, e
 | photos/rangoli | stock photo | Dinesh Korgaokar on Wikimedia Commons | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | 2026-11-27 | yes: photographer + licence + source on Credits page | reviewed by eye 2026-11-27: no faces or logos | representative image |
 
 CC BY-SA photos are shown unmodified except resizing/compression; credit, licence and source link appear on the Credits page.
+
+
+## Menu section photos (added with the printed-menu update)
+
+All from Wikimedia Commons, viewed by eye (no faces, logos or brands). Attribution is shown on the Credits page.
+
+| Slot | Photographer | Licence | Source |
+|---|---|---|---|
+| menu-soup | E4024 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Tomato_soup,_Turkish_style.jpg |
+| menu-salad | Miansari66 | CC0 | https://commons.wikimedia.org/wiki/File:Kachumber_Salad.JPG |
+| menu-juice | Nshemeire Addah | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Orange_juice_in_a_glass.jpg |
+| menu-dryfruits | Farzad j | Public domain | https://commons.wikimedia.org/wiki/File:Lork.jpg |
+| menu-bengali | Divya Kudua from Chennai, India | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Quick_Rasmalai_(10555623624).jpg |
+| menu-rabdi | Ravi Talwar | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Homemade_Rabri.jpg |
+| menu-halwa | Vivekpat30 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Gajar-ka-halwa-Indian-dessert.jpg |
+| menu-churma | Mints Recipes | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Churma_Laddoo.jpg |
+| menu-mawa | Suyash.dwivedi | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Two_Gulab_Jamun_in_a_plate_01.jpg |
+| menu-mithai | Haroldandkumar (English Wikipedia) | Public domain | https://commons.wikimedia.org/wiki/File:Jalebi_2.jpg |
+| menu-dalkadhi | AugustineKajur | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Dal_Tadka-Delhi.jpg |
+| menu-raita | Ravi Talwar | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Boondi_Raita.JPG |
+| menu-rice | GrishmaRavi | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Jeera_rice_with_peas.JPG |
+| menu-papad | Biswarup Ganguly | CC BY 3.0 | https://commons.wikimedia.org/wiki/File:Roasted_Papad_-_Howrah_2013-11-02_4067.jpg |
+| menu-roti | Ravi Dwivedi | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Tandoori-roti.jpg |
+| menu-chinese | Biswarup Ganguly | CC BY 3.0 | https://commons.wikimedia.org/wiki/File:Vegetable_Manchurian_-_NUJS_-_Kolkata_20170806133419.jpg |
+| menu-chutney | Sanyabolia | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Green_Chutney.jpg |
+| menu-kajusweets | Unknomics | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Kaju_katli_dessert_-_top_view.jpg |
+| menu-chat | Teena Sometimes | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Crispy_Pani_Puri.jpg |
+| menu-pavbhaji | BHAAGIi | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Bhaji_pav.jpg |
+| menu-farsan | Manasi nafde | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Khaman_Dhokla.jpg |
+| menu-corn | Manjeshwari poet | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Roasted_Sweet_Corn.jpg |
+| menu-namkeen | J.P.Lon (Wikimedia Commons) | Public domain | https://commons.wikimedia.org/wiki/File:Bombaymix.jpg |
+| menu-pakoda | ampersandyslexia | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Pakoras_in_Jaipur.jpg |
+| menu-paneer | Gannu03 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Paneer_butter_masala_2.jpg |
+| menu-vegsabzi | Zeel Patel | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Baingan_Ka_Bharta.JPG |

@@ -11,8 +11,8 @@ import { slots } from '../content/gallery';
 import { sections, cuisineTitle, dishCount } from '../content/menu-items';
 const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
 const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
-const groupPhotos: Record<string, string[]> = { mh: ['puran-poli', 'misal-pav', 'bhakri-pithla', 'masale-bhat', 'shrikhand', 'modak'], si: ['idli-sambar', 'dosa'], rj: ['dal-baati-churma'], more: ['jilebi', 'gulab-jamun', 'poha'] };
-const groups = (['mh', 'si', 'rj', 'more'] as const).map((k) => ({ key: k, title: cuisineTitle[k][lang], secs: sections.filter((x) => x.cuisine === k) }));
+const groupPhotos: Record<string, string[]> = { mh: ['puran-poli', 'misal-pav', 'bhakri-pithla', 'masale-bhat', 'shrikhand', 'modak'], si: ['idli-sambar', 'dosa'], rj: ['dal-baati-churma'], main: [], sweets: [], snacks: [], cn: [], more: ['jilebi', 'gulab-jamun', 'poha'] };
+const groups = (['mh', 'si', 'rj', 'main', 'sweets', 'snacks', 'cn', 'more'] as const).map((k) => ({ key: k, title: cuisineTitle[k][lang], secs: sections.filter((x) => x.cuisine === k) }));
 const CT = {
   add: { mr: 'पदार्थ निवडा', en: 'Tap a dish to add it to your quote', hi: 'पदार्थ चुनने के लिए टैप करें' }[lang],
   selected: { mr: 'निवडलेले पदार्थ', en: 'Selected dishes', hi: 'चुने हुए व्यंजन' }[lang],
@@ -78,6 +78,7 @@ const T = {
         <div class="sec-grid">
           {g.secs.map((x) => (
             <article class="card sec" data-sec>
+              {x.photo && <div class="sec-photo"><Photo name={x.photo} alt={x.title[lang]} width={800} height={600} lang={lang} fallbackIcon={x.icon} /></div>}
               <h3 class="h3"><img class="sec-ic" src={x.icon} alt="" width="36" height="36" loading="lazy" />{x.title[lang]} <small>({x.items.length})</small></h3>
               <ul class="dishes">
                 {x.items.map((d, di) => <li data-dish data-q={`${d[0]} ${d[1]} ${d[2]}`.toLowerCase()}><button type="button" class="dish-btn" aria-pressed="false" data-id={`${x.id}:${di}`} data-n={JSON.stringify(d)}><span class="dn-t">{d[['mr', 'en', 'hi'].indexOf(lang)]}</span><span class="dn-i" aria-hidden="true">+</span></button></li>)}
@@ -220,6 +221,8 @@ const T = {
   .sec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
   .sec { padding: 1rem 1.1rem; }
   .dishes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .sec-photo { margin: -.2rem -.2rem .6rem; }
+  .sec-photo :global(img) { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; display: block; }
   .hero-photo { margin: 0; }
   .hero-photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow); display: block; }
   .rep { font-size: .8rem; color: #6b5a50; margin: .35rem 0 0; text-align: center; }
