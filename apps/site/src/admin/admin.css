@@ -170,3 +170,6 @@ input[type='checkbox'], input[type='radio'] { width: 22px; min-height: 22px; hei
   .main { padding-bottom: calc(var(--a-tab-h) + 5rem + env(safe-area-inset-bottom, 0px)); }
   .toast { bottom: calc(var(--a-tab-h) + 4.2rem + env(safe-area-inset-bottom, 0px)); }
 }
+
+.logout-t { display: none; }
+@media (min-width: 960px) { .logout-t { display: inline; } }

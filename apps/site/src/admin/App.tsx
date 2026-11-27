@@ -1,6 +1,6 @@
 import './admin.css';
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import { StoreContext, LangContext, tr, useList } from './hooks';
+import { StoreContext, LangContext, tr, useList, useStore } from './hooks';
 import { useRoute, href, type Route } from './router';
 import type { Store } from './store';
 import type { Lang } from './types';
@@ -19,6 +19,20 @@ import { SearchScreen } from './screens/search';
 import { UndoBuffer, withUndo } from './undo';
 import { Toast, type ToastData } from './ui';
 import { setUnlocked } from './pin';
+import { isCloudStore } from './cloud-store';
+
+/** Sign out (cloud) or lock (local), then go to the public website home page. */
+async function logout(store: Store, lang: Lang) {
+  if (isCloudStore(store)) {
+    const r = await store.signOut(false);
+    if (!r.ok) {
+      if (!confirm(tr(lang, `${r.pending} बदल अजून अपलोड झालेले नाहीत. तरीही बाहेर पडायचे? (हे बदल जातील)`, `${r.pending} changes have not uploaded yet. Log out anyway? (They will be lost.)`))) return;
+      await store.signOut(true);
+    }
+  }
+  setUnlocked(false);
+  location.href = lang === 'mr' ? '/' : '/en/';
+}
 
 const tabs = [
   { name: 'today', icon: '🏠', mr: 'आज', en: 'Today' },
@@ -37,6 +51,7 @@ const moreItems = [
 ];
 
 function MorePage({ lang }: { lang: Lang }) {
+  const store = useStore();
   const settings = useList('settings');
   const hasPin = !!settings?.[0]?.pinHash;
   return (
@@ -47,6 +62,7 @@ function MorePage({ lang }: { lang: Lang }) {
           <a class="list-item" href={href(m.path)}><span class="li-icon">{m.icon}</span><span class="li-main">{tr(lang, m.mr, m.en)}</span></a>
         ))}
       </div>
+      <p style="margin-top:1rem"><button type="button" class="btn btn-ghost" onClick={() => void logout(store, lang)}>🚪 {tr(lang, 'लॉग आउट', 'Log out')}</button></p>
       {hasPin && (
         <p style="margin-top:1rem"><button type="button" class="btn btn-ghost" onClick={() => { setUnlocked(false); location.reload(); }}>🔒 {tr(lang, 'आता लॉक करा', 'Lock now')}</button></p>
       )}
@@ -122,6 +138,7 @@ function Shell({ rawStore }: { rawStore: Store }) {
             <span class="store-mode" title={store.mode === 'local' ? 'Data is saved on this device only' : 'Data is saved online'}>
               {store.mode === 'local' ? tr(lang, 'या फोनवर', 'This device') : tr(lang, 'ऑनलाइन', 'Online')}
             </span>
+            {!signedOut && <button class="btn btn-ghost btn-sm logout-btn" type="button" onClick={() => void logout(rawStore, lang)} aria-label={tr(lang, 'लॉग आउट', 'Log out')}><span aria-hidden="true">🚪</span><span class="logout-t"> {tr(lang, 'लॉग आउट', 'Log out')}</span></button>}
             <button class="btn btn-ghost btn-sm" type="button" onClick={() => setLang(lang === 'mr' ? 'en' : 'mr')}>{lang === 'mr' ? 'English' : 'मराठी'}</button>
           </header>
           {!online && (
