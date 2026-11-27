@@ -42,3 +42,7 @@
 ## 2026-11-27 legal pages
 - Added Terms (/terms/), Privacy (/privacy/), Cookies (/cookies/) in mr/en/hi, linked from footer legal row and quote form note. Written from verified data practices (no cookies, no analytics, form only builds a WhatsApp message). No cookie banner (nothing to consent to). General policy, not legal advice: owner to have a Latur advocate review (docs/legal-review.md has sources and open questions).
 - Re-check when: analytics, forms posting to a server, email or payments are added; DPDP Rules timeline (core duties expected May 2027, re-verify).
+
+## 2026-11-27 owner photo and email
+- Owner photo added to About (owner-supplied, 375x666 source, cropped 4:5 and upscaled 2x, so slightly soft; ask for a higher-resolution original later). Owner consented by supplying it.
+- Email set to manishsharmadota@gmail.com "for now" (site.ts `email`); shown on Contact, footer, legal pages and JSON-LD.

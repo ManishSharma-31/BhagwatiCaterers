@@ -12,7 +12,7 @@ export interface LegalDoc {
 }
 export interface LegalCommon {
   updatedLabel: string; updatedDate: string; updatedIso: string; summaryTitle: string; noticeTitle: string; notice: string;
-  contactTitle: string; ownerLabel: string; phoneLabel: string; waLabel: string; addressLabel: string; emailLabel: string; emailNote: string;
+  contactTitle: string; ownerLabel: string; phoneLabel: string; waLabel: string; addressLabel: string; emailLabel: string;
   contactCta: string; otherPages: string; onThisPage: string;
 }
 
@@ -22,7 +22,6 @@ export const legalCommon: Record<Lang, LegalCommon> = {
     summaryTitle: 'थोडक्यात', noticeTitle: 'महत्त्वाची सूचना',
     notice: 'हे धोरण सर्वसाधारण स्वरूपाचे आहे. ते कायदेशीर सल्ला नाही. तुमच्या विशिष्ट अडचणीसाठी कृपया वकिलांचा सल्ला घ्या. (मालकांनी हे धोरण स्थानिक वकिलांकडून तपासून घ्यावे.)',
     contactTitle: 'आमच्याशी संपर्क', ownerLabel: 'मालक व तक्रार निवारण अधिकारी', phoneLabel: 'फोन', waLabel: 'WhatsApp', addressLabel: 'पत्ता', emailLabel: 'ईमेल',
-    emailNote: 'ईमेल पत्ता लवकरच येथे जोडला जाईल. तोपर्यंत फोन, WhatsApp किंवा पत्त्यावर संपर्क करा.',
     contactCta: 'संपर्क पृष्ठ पहा', otherPages: 'इतर धोरणे', onThisPage: 'या पृष्ठावर',
   },
   en: {
@@ -30,7 +29,6 @@ export const legalCommon: Record<Lang, LegalCommon> = {
     summaryTitle: 'In short', noticeTitle: 'Please note',
     notice: 'This is a general policy and is not legal advice to you. For your own situation, please consult an advocate. (The owner should have this policy reviewed by a local advocate.)',
     contactTitle: 'Contact us', ownerLabel: 'Owner and grievance officer', phoneLabel: 'Phone', waLabel: 'WhatsApp', addressLabel: 'Address', emailLabel: 'Email',
-    emailNote: 'An email address will be added here soon. Until then, please contact us by phone, WhatsApp or at the address.',
     contactCta: 'Go to the Contact page', otherPages: 'Other policies', onThisPage: 'On this page',
   },
   hi: {
@@ -38,7 +36,6 @@ export const legalCommon: Record<Lang, LegalCommon> = {
     summaryTitle: 'संक्षेप में', noticeTitle: 'ज़रूरी सूचना',
     notice: 'यह नीति सामान्य स्वरूप की है और कानूनी सलाह नहीं है। अपनी विशेष स्थिति के लिए कृपया किसी अधिवक्ता से सलाह लें। (मालिक को यह नीति स्थानीय अधिवक्ता से जँचवा लेनी चाहिए।)',
     contactTitle: 'हमसे संपर्क करें', ownerLabel: 'मालिक और शिकायत निवारण अधिकारी', phoneLabel: 'फ़ोन', waLabel: 'WhatsApp', addressLabel: 'पता', emailLabel: 'ईमेल',
-    emailNote: 'ईमेल पता जल्द यहाँ जोड़ा जाएगा। तब तक कृपया फ़ोन, WhatsApp या पते पर संपर्क करें।',
     contactCta: 'संपर्क पृष्ठ देखें', otherPages: 'अन्य नीतियाँ', onThisPage: 'इस पृष्ठ पर',
   },
 };

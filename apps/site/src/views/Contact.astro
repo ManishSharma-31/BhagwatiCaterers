@@ -18,6 +18,8 @@ const c = contact[lang];
             <dd><a href={`tel:+${site.phoneIntl}`}>{site.phone}</a></dd>
             <dt>{c.waLabel}</dt>
             <dd><a href={waLink(lang)} target="_blank" rel="noopener">{site.phone}</a></dd>
+            <dt>{lang === 'en' ? 'Email' : 'ईमेल'}</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
             <dt>{c.addressLabel}</dt>
             <dd>{fullAddress(lang)} · <a href={mapsLink()} target="_blank" rel="noopener">{c.mapLabel}</a></dd>
             <dt>{c.hoursLabel}</dt>

@@ -25,8 +25,8 @@ const c = about[lang];
       <figure class="owner-photo">
         {hasOwner ? (
           <picture>
-            <source type="image/webp" srcset="/photos/owner-800.webp 800w, /photos/owner-1600.webp 1600w" sizes="(min-width: 800px) 360px, 80vw" />
-            <img src="/photos/owner-800.jpg" alt={c.ownerAlt} width="800" height="1000" loading="lazy" decoding="async" />
+            <source type="image/webp" srcset="/photos/owner-800.webp 750w" />
+            <img src="/photos/owner-800.jpg" alt={c.ownerAlt} width="750" height="938" loading="lazy" decoding="async" />
           </picture>
         ) : (
           <div class="owner-ph" role="img" aria-label={c.ownerAlt}><img src="/art/logo.svg" alt="" width="120" height="120" /></div>

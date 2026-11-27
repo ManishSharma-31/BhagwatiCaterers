@@ -37,13 +37,13 @@ Verified by reading the source and grepping the built output in `/tmp/dist-legal
 4. External links out of the site: `wa.me` (WhatsApp), `google.com/maps` (link only, no embed), photo source links on the Credits page (Pexels, Wikimedia Commons, `openfontlicense.org`). No external images, fonts, CSS or iframes are loaded: fonts (Fontsource, self-hosted) and photos are served from our own host.
 5. Hosting is planned on Cloudflare Pages, which may keep server logs (such as IP addresses). The Privacy page says "we plan to host on Cloudflare Pages". Change this if the host changes.
 6. `/admin` is a separate owner-only PWA, `noindex`, excluded from the sitemap and `robots.txt`. It stores data in IndexedDB, settings and PIN-lock state in localStorage (`bc:*` keys), the unlock flag in sessionStorage, and a service worker caches only app files, not data. Optional Supabase sync (the owner's own project, region as the owner chose) is described as optional.
-7. No prices are published; no online payment; email address does not yet exist; social profiles do not exist.
+7. No prices are published; no online payment; email is a temporary Gmail address supplied by the owner; social profiles do not exist.
 8. The FSSAI number appears only in the footer (checked: one occurrence per page). The Terms refer to "the footer".
 9. The domain is not hard-coded in legal text; pages say "this website".
 
 ## (d) Open questions for the owner
 
-1. **Email address:** to be added to the contact block (Legal.astro and `legalCommon.emailNote` in `legal.ts`) once available. Under DPDP an easy contact route for rights requests matters.
+1. **Email address:** now set to the owner-supplied address (site.ts `email`, shown on Contact, footer and legal pages). It is a personal Gmail used "for now"; replace with a business address later.
 2. **Advance and cancellation terms:** the site states no figures. Decide the real advance, payment schedule and refund rules and use them in the written confirmation (WhatsApp). Keep forfeiture to genuine reasonable loss.
 3. **Retention period:** the Privacy page says "as needed for the business and as law requires". Choose a number of years (the advocate or accountant can advise on tax and accounting record periods) and add it to section 8.
 4. **Grievance officer:** the pages name the owner, Shanti Lal Maharaj. Confirm, or name someone else.

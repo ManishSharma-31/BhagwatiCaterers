@@ -13,6 +13,7 @@ export const site = {
   phoneIntl: '919057264895',
   fssai: '21526049010527',
   years: '30+',
+  email: 'manishsharmadota@gmail.com',
   address: {
     street: { mr: 'जुल्हेलाल मार्ग, नारायण नगर', en: 'Julhelal Marg, Narayan Nagar', hi: 'जुल्हेलाल मार्ग, नारायण नगर' } as L3,
     postalCode: '413531',

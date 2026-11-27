@@ -42,7 +42,7 @@ const others = (['terms', 'privacy', 'cookies'] as const).filter((x) => x !== ke
           <dt>{k.phoneLabel}</dt><dd><a href={`tel:+${site.phoneIntl}`}>{site.phone}</a></dd>
           <dt>{k.waLabel}</dt><dd><a href={waLink(lang)} target="_blank" rel="noopener">{site.phone}</a></dd>
           <dt>{k.addressLabel}</dt><dd>{fullAddress(lang)}</dd>
-          <dt>{k.emailLabel}</dt><dd>{k.emailNote}</dd>
+          <dt>{k.emailLabel}</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
         </dl>
         <p><a class="btn btn-ghost" href={pagePath(lang, 'contact')}>{k.contactCta}</a></p>
       </section>
