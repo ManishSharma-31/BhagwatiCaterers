@@ -14,9 +14,9 @@ const canonical = new URL(pagePath(lang, page), SITE_URL).href;
 const fullTitle = page === 'home' ? title : `${title} | ${site.name[lang]}`;
 
 const bizDescription: Record<Lang, string> = {
-  mr: 'लातूरमधील शुद्ध शाकाहारी केटरिंग सेवा: लग्न, समारंभ, पार्टी व पूजेसाठी महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी जेवण. ३०+ वर्षांचा अनुभव. FSSAI प्रमाणित.',
-  en: 'Pure vegetarian catering in Latur for weddings, events, parties and pujas: Maharashtrian, South Indian and Rajasthani food. 30+ years of experience. FSSAI Certified.',
-  hi: 'लातूर में शुद्ध शाकाहारी कैटरिंग: शादी, समारोह, पार्टी और पूजा के लिए महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी भोजन। 30+ साल का अनुभव। FSSAI प्रमाणित।',
+  mr: 'लातूरमधील शुद्ध शाकाहारी केटरिंग सेवा: लग्न, समारंभ, पार्टी व पूजेसाठी महाराष्ट्रीयन, दाक्षिणात्य, राजस्थानी, गुजराती, बंगाली व इंडो-चायनीज जेवण. ३०+ वर्षांचा अनुभव. FSSAI प्रमाणित.',
+  en: 'Pure vegetarian catering in Latur for weddings, events, parties and pujas: Maharashtrian, South Indian, Rajasthani and more food. 30+ years of experience. FSSAI Certified.',
+  hi: 'लातूर में शुद्ध शाकाहारी कैटरिंग: शादी, समारोह, पार्टी और पूजा के लिए महाराष्ट्रीयन, दक्षिण भारतीय, राजस्थानी, गुजराती, बंगाली और इंडो-चायनीज भोजन। 30+ साल का अनुभव। FSSAI प्रमाणित।',
 };
 
 const schema = {
@@ -33,7 +33,7 @@ const schema = {
   email: site.email,
   address: { '@type': 'PostalAddress', streetAddress: site.address.street.en, addressLocality: 'Latur', addressRegion: 'Maharashtra', postalCode: site.address.postalCode, addressCountry: 'IN' },
   hasMap: mapsLink(),
-  servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Vegetarian'],
+  servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Gujarati', 'Bengali', 'Indo-Chinese', 'Vegetarian'],
   areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
   sameAs: Object.values(site.social).filter(Boolean),
 };

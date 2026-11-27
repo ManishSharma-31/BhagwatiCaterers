@@ -21,6 +21,9 @@ export const cuisineOpts: Array<{ key: string } & L3> = [
   { key: 'mh', mr: 'महाराष्ट्रीयन', en: 'Maharashtrian', hi: 'महाराष्ट्रीयन' },
   { key: 'si', mr: 'दाक्षिणात्य', en: 'South Indian', hi: 'दक्षिण भारतीय' },
   { key: 'rj', mr: 'राजस्थानी', en: 'Rajasthani', hi: 'राजस्थानी' },
+  { key: 'gj', mr: 'गुजराती', en: 'Gujarati', hi: 'गुजराती' },
+  { key: 'bn', mr: 'बंगाली (मिठाई)', en: 'Bengali (sweets)', hi: 'बंगाली (मिठाई)' },
+  { key: 'cn', mr: 'इंडो-चायनीज', en: 'Indo-Chinese', hi: 'इंडो-चायनीज' },
   { key: 'mix', mr: 'मिश्र', en: 'Mixed', hi: 'मिश्रित' },
 ];
 export const otherTown: L3 = { mr: 'इतर', en: 'Other', hi: 'अन्य' };

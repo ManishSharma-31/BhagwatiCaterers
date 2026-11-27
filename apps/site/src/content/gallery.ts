@@ -37,7 +37,7 @@ export const slots: Slot[] = [
 export const gallery: Record<Lang, { metaTitle: string; metaDescription: string; title: string; lead: string; ctaTitle: string; ctaBody: string }> = {
   mr: {
     metaTitle: 'गॅलरी: जेवण व समारंभाची चित्रे',
-    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी शुद्ध शाकाहारी पदार्थ आणि समारंभांची चित्रे. कोटेशनसाठी फोन किंवा WhatsApp करा.',
+    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दाक्षिणात्य, राजस्थानी, गुजराती, बंगाली व इंडो-चायनीज शुद्ध शाकाहारी पदार्थ आणि समारंभांची चित्रे. कोटेशनसाठी फोन किंवा WhatsApp करा.',
     title: 'गॅलरी',
     lead: 'आम्ही जशा प्रकारचे पदार्थ बनवतो आणि ज्या समारंभांना सेवा देतो, त्यांची ही काही चित्रे.',
     ctaTitle: 'तुमच्या समारंभाबद्दल बोलूया',
@@ -45,7 +45,7 @@ export const gallery: Record<Lang, { metaTitle: string; metaDescription: string;
   },
   en: {
     metaTitle: 'Gallery: Food and Occasions',
-    metaDescription: 'Bhagwati Caterers, Latur: pictures of pure vegetarian Maharashtrian, South Indian and Rajasthani dishes and occasions. Call or WhatsApp for a quote.',
+    metaDescription: 'Bhagwati Caterers, Latur: pictures of pure vegetarian Maharashtrian, South Indian, Rajasthani and more dishes and occasions. Call or WhatsApp for a quote.',
     title: 'Gallery',
     lead: 'A few pictures of the kinds of dishes we cook and the feel of the occasions we serve.',
     ctaTitle: "Let's talk about your occasion",
@@ -53,7 +53,7 @@ export const gallery: Record<Lang, { metaTitle: string; metaDescription: string;
   },
   hi: {
     metaTitle: 'गैलरी: भोजन और समारोह',
-    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी शुद्ध शाकाहारी व्यंजनों और समारोहों की तस्वीरें। कोटेशन के लिए फोन या WhatsApp करें।',
+    metaDescription: 'भगवती केटरर्स, लातूर: महाराष्ट्रीयन, दक्षिण भारतीय, राजस्थानी और अन्य शुद्ध शाकाहारी व्यंजनों और समारोहों की तस्वीरें। कोटेशन के लिए फोन या WhatsApp करें।',
     title: 'गैलरी',
     lead: 'हम जिस तरह के व्यंजन बनाते हैं और जिन समारोहों में सेवा देते हैं, उनके कुछ चित्र।',
     ctaTitle: 'आपके समारोह के लिए बात करें',

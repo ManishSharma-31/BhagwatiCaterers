@@ -111,7 +111,7 @@ export const packages: Record<Lang, PackagesCopy> = {
     ],
     needTitle: 'What we need to prepare your quote',
     needLead: 'To prepare a quote, please tell us:',
-    needs: ['Date of the event', 'Approximate number of guests', 'Town or city', 'Menu preference (Maharashtrian, South Indian, Rajasthani or a mix)', 'Order type: we bring everything, or you provide the ingredients', 'Any special need (for example Jain, fasting, no onion or garlic)'],
+    needs: ['Date of the event', 'Approximate number of guests', 'Town or city', 'Menu preference (Maharashtrian, South Indian, Rajasthani, Gujarati, Bengali, Indo-Chinese or a mix)', 'Order type: we bring everything, or you provide the ingredients', 'Any special need (for example Jain, fasting, no onion or garlic)'],
     ctaTitle: 'Let us get started',
     ctaBody: 'Share the date and the number of guests. We will get in touch with you.',
   },

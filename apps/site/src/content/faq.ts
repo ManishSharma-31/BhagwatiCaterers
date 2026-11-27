@@ -20,7 +20,7 @@ export const faq: Record<Lang, FaqCopy> = {
     items: [
       { q: 'तुमचे जेवण पूर्णपणे शाकाहारी आहे का?', a: 'होय. आमचे सर्व पदार्थ शुद्ध शाकाहारी आहेत.' },
       { q: 'लातूरमध्ये भगवती केटरर्स कुठे आहे?', a: 'जुल्हेलाल मार्ग, नारायण नगर, लातूर ४१३५३१. पत्ता आणि नकाशा संपर्क पृष्ठावर आहे. कार्यक्रमाबद्दल बोलण्यासाठी फोन किंवा WhatsApp करा: ९०५७२६४८९५.' },
-      { q: 'कोणत्या प्रकारचे जेवण मिळते?', a: 'महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी शाकाहारी जेवण. पदार्थांची उदाहरणे मेनू पृष्ठावर आहेत. तुमच्या कार्यक्रमाचा अंतिम मेनू आपण बोलून ठरवतो.' },
+      { q: 'कोणत्या प्रकारचे जेवण मिळते?', a: 'महाराष्ट्रीयन, दाक्षिणात्य, राजस्थानी, गुजराती, बंगाली व इंडो-चायनीज शाकाहारी जेवण. पदार्थांची उदाहरणे मेनू पृष्ठावर आहेत. तुमच्या कार्यक्रमाचा अंतिम मेनू आपण बोलून ठरवतो.' },
       { q: 'कोणत्या कार्यक्रमांसाठी सेवा देता?', a: 'लग्न, साखरपुडा, हळद, गृहप्रवेश, पूजा व धार्मिक कार्यक्रम, वाढदिवस व पार्ट्या, ऑफिस व संस्थेचे कार्यक्रम आणि कौटुंबिक मेळावे. घरगुती जेवणही ऑर्डरवर मिळते.' },
       { q: '"सर्व साहित्य आमचे" आणि "साहित्य तुमचे, स्वयंपाक आमचा" यात काय फरक?', a: '"सर्व साहित्य आमचे" मध्ये साहित्याची खरेदी आणि स्वयंपाक आम्ही करतो. "साहित्य तुमचे, स्वयंपाक आमचा" मध्ये साहित्य तुम्ही देता आणि स्वयंपाक आम्ही करतो. किती साहित्य लागेल ते आम्ही सांगतो. तपशील "ऑर्डर कशी द्यावी" पृष्ठावर आहे.' },
       { q: 'दर किती आहेत?', a: 'दर कार्यक्रमानुसार ठरतात. तारीख, पाहुण्यांची संख्या, मेनू आणि ऑर्डरचा प्रकार पाहून आम्ही कोटेशन देतो. दर वेबसाइटवर दिलेले नाहीत.' },
@@ -48,7 +48,7 @@ export const faq: Record<Lang, FaqCopy> = {
     items: [
       { q: 'Is your food completely vegetarian?', a: 'Yes. All our food is pure vegetarian.' },
       { q: 'Where is Bhagwati Caterers in Latur?', a: 'Julhelal Marg, Narayan Nagar, Latur 413531. The address and map are on the Contact page. To talk about your event, call or WhatsApp 9057264895.' },
-      { q: 'What kind of food do you serve?', a: 'Maharashtrian, South Indian and Rajasthani vegetarian food. Example dishes are on our Menu page. We plan the final menu for your event together with you.' },
+      { q: 'What kind of food do you serve?', a: 'Maharashtrian, South Indian, Rajasthani, Gujarati, Bengali and Indo-Chinese vegetarian food. Example dishes are on our Menu page. We plan the final menu for your event together with you.' },
       { q: 'Which events do you cater for?', a: 'Weddings, engagements, haldi, housewarming, pujas and religious functions, birthdays and parties, office and institution events, and family gatherings. Home-style food is also available on order.' },
       { q: 'What is the difference between "We bring everything" and "You provide ingredients, we cook"?', a: 'With "We bring everything", we buy the ingredients and cook. With "You provide ingredients, we cook", you supply the ingredients and we do the cooking; we tell you how much you need. Details are on the How to Order page.' },
       { q: 'What are your rates?', a: 'Rates depend on the event. We give a quote after looking at the date, number of guests, menu and order type. We do not list rates on the website.' },
@@ -76,7 +76,7 @@ export const faq: Record<Lang, FaqCopy> = {
     items: [
       { q: 'क्या आपका भोजन पूरी तरह शाकाहारी है?', a: 'जी हाँ। हमारा सारा भोजन शुद्ध शाकाहारी है।' },
       { q: 'लातूर में भगवती केटरर्स कहाँ है?', a: 'जुल्हेलाल मार्ग, नारायण नगर, लातूर 413531। पता और नक्शा संपर्क पृष्ठ पर है। आयोजन के बारे में बात करने के लिए फ़ोन या WhatsApp करें: 9057264895।' },
-      { q: 'किस प्रकार का भोजन मिलता है?', a: 'महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी शाकाहारी भोजन। व्यंजनों के उदाहरण मेन्यू पृष्ठ पर हैं। आपके आयोजन का अंतिम मेन्यू हम आपके साथ बात करके तय करते हैं।' },
+      { q: 'किस प्रकार का भोजन मिलता है?', a: 'महाराष्ट्रीयन, दक्षिण भारतीय, राजस्थानी, गुजराती, बंगाली और इंडो-चायनीज शाकाहारी भोजन। व्यंजनों के उदाहरण मेन्यू पृष्ठ पर हैं। आपके आयोजन का अंतिम मेन्यू हम आपके साथ बात करके तय करते हैं।' },
       { q: 'किन आयोजनों के लिए सेवा देते हैं?', a: 'विवाह, सगाई, हल्दी, गृहप्रवेश, पूजा और धार्मिक कार्यक्रम, जन्मदिन और पार्टियाँ, ऑफिस और संस्था के कार्यक्रम तथा पारिवारिक समारोह। घर जैसा भोजन भी ऑर्डर पर मिलता है।' },
       { q: '"सारी सामग्री हमारी" और "सामग्री आपकी, खाना हमारा" में क्या अंतर है?', a: '"सारी सामग्री हमारी" में सामग्री की खरीद और खाना पकाना हम करते हैं। "सामग्री आपकी, खाना हमारा" में सामग्री आप देते हैं और खाना हम पकाते हैं; कितनी सामग्री लगेगी, यह हम बताते हैं। विवरण "ऑर्डर कैसे करें" पृष्ठ पर है।' },
       { q: 'आपके दर क्या हैं?', a: 'दर आयोजन के अनुसार तय होते हैं। तारीख, मेहमानों की संख्या, मेन्यू और ऑर्डर का प्रकार देखकर हम कोटेशन देते हैं। दर वेबसाइट पर नहीं दिए गए हैं।' },

@@ -23,7 +23,7 @@ export const menu: Record<Lang, MenuCopy> = {
     metaDescription:
       'लातूरमधील भगवती केटरर्सचा शाकाहारी मेनू: पुरणपोळी, मिसळ, इडली, डोसा, दाल-बाटी-चुरमा (उदाहरणादाखल). अंतिम मेनू कार्यक्रमानुसार ठरतो.',
     h1: 'आमचा शुद्ध शाकाहारी मेनू',
-    lead: 'महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी: तिन्ही प्रकारचे शुद्ध शाकाहारी जेवण.',
+    lead: 'महाराष्ट्रीयन, दाक्षिणात्य, राजस्थानी, गुजराती, बंगाली व इंडो-चायनीज: सर्व प्रकारचे शुद्ध शाकाहारी जेवण.',
     exampleNote: 'खालील पदार्थ उदाहरणादाखल आहेत. तुमच्या कार्यक्रमासाठी कोणते पदार्थ करता येतील, ते आम्ही फोनवर बोलून सांगतो.',
     cuisines: [
       { icon: '/art/icon-puran-poli.svg', title: 'महाराष्ट्रीयन', intro: 'पारंपरिक महाराष्ट्रीयन जेवण, गोड व तिखट दोन्ही.', dishes: ['पुरणपोळी', 'मोदक', 'मिसळ', 'भाकरी-पिठलं', 'मसाले भात', 'वरण-भात', 'श्रीखंड', 'जिलेबी'] },
@@ -41,9 +41,9 @@ export const menu: Record<Lang, MenuCopy> = {
   en: {
     metaTitle: 'Pure Veg Catering Menu, Latur',
     metaDescription:
-      'Pure vegetarian catering menu in Latur: Maharashtrian, South Indian and Rajasthani dishes like puran poli, misal, idli, dosa, dal baati churma (examples).',
+      'Pure vegetarian catering menu in Latur: Maharashtrian, South Indian, Rajasthani and more dishes like puran poli, misal, idli, dosa, dal baati churma (examples).',
     h1: 'Our Pure Vegetarian Menu',
-    lead: 'Maharashtrian, South Indian and Rajasthani: pure vegetarian food in all three styles.',
+    lead: 'Maharashtrian, South Indian, Rajasthani, Gujarati, Bengali and Indo-Chinese: pure vegetarian food in many styles.',
     exampleNote: 'The dishes below are examples. We tell you which dishes we can prepare for your event when we speak with you.',
     cuisines: [
       { icon: '/art/icon-puran-poli.svg', title: 'Maharashtrian', intro: 'Traditional Maharashtrian food, sweet and savoury.', dishes: ['Puran poli', 'Modak', 'Misal', 'Bhakri with pithla', 'Masale bhat', 'Varan bhat', 'Shrikhand', 'Jilebi'] },
@@ -63,7 +63,7 @@ export const menu: Record<Lang, MenuCopy> = {
     metaDescription:
       'लातूर में भगवती केटरर्स का शाकाहारी मेन्यू: पूरन पोली, मिसल, इडली, डोसा, दाल-बाटी-चूरमा जैसे व्यंजन (उदाहरण)। अंतिम मेन्यू आयोजन के अनुसार तय होता है।',
     h1: 'हमारा शुद्ध शाकाहारी मेन्यू',
-    lead: 'महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी: तीनों प्रकार का शुद्ध शाकाहारी भोजन।',
+    lead: 'महाराष्ट्रीयन, दक्षिण भारतीय, राजस्थानी, गुजराती, बंगाली और इंडो-चायनीज: सभी प्रकार का शुद्ध शाकाहारी भोजन।',
     exampleNote: 'नीचे दिए व्यंजन उदाहरण हैं। आपके आयोजन के लिए कौन-से व्यंजन बन सकते हैं, यह बातचीत में बताया जाता है।',
     cuisines: [
       { icon: '/art/icon-puran-poli.svg', title: 'महाराष्ट्रीयन', intro: 'पारंपरिक महाराष्ट्रीयन भोजन, मीठा और नमकीन दोनों।', dishes: ['पूरन पोली', 'मोदक', 'मिसल', 'भाकरी-पिठला', 'मसाले भात', 'वरण-भात', 'श्रीखंड', 'जलेबी'] },

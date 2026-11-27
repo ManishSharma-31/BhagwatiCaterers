@@ -30,7 +30,7 @@ export const home: Record<Lang, HomeCopy> = {
       'लातूर, औसा, निलंगा, रेणापूर, तुळजापूर, अंबाजोगाई येथे लग्न, समारंभ व पूजेसाठी शुद्ध शाकाहारी केटरिंग. ३०+ वर्षांचा अनुभव. FSSAI प्रमाणित. फोन करा.',
     heroTitle: 'लातूरमधील शुद्ध शाकाहारी केटरिंग: लग्न, समारंभ आणि पूजेसाठी',
     heroLead:
-      'भगवती केटरर्स: ३० वर्षांहून अधिक अनुभव. महाराष्ट्रीयन, दाक्षिणात्य आणि राजस्थानी शाकाहारी जेवण, लातूर आणि आसपासच्या परिसरात.',
+      'भगवती केटरर्स: ३० वर्षांहून अधिक अनुभव. महाराष्ट्रीयन, दाक्षिणात्य, राजस्थानी, गुजराती, बंगाली व इंडो-चायनीज शाकाहारी जेवण, लातूर आणि आसपासच्या परिसरात.',
     orderTitle: 'ऑर्डर कशी द्यायची? दोन सोप्या पद्धती',
     orderLead: 'तुमच्या सोयीची पद्धत निवडा. कोणती योग्य आहे ते ठरवायला आम्ही मदत करू.',
     orders: [
@@ -77,10 +77,10 @@ export const home: Record<Lang, HomeCopy> = {
   en: {
     metaTitle: 'Bhagwati Caterers Latur | Pure Veg Catering for Weddings',
     metaDescription:
-      'Pure vegetarian caterers in Latur for weddings, events, parties and pujas. Maharashtrian, South Indian, Rajasthani food. 30+ years. FSSAI Certified.',
+      'Pure vegetarian caterers in Latur for weddings, events, parties and pujas. Maharashtrian, South Indian, Rajasthani and more food. 30+ years. FSSAI Certified.',
     heroTitle: 'Pure vegetarian catering in Latur for weddings, events and pujas',
     heroLead:
-      'Bhagwati Caterers: 30+ years of experience. Maharashtrian, South Indian and Rajasthani vegetarian food in Latur and nearby areas.',
+      'Bhagwati Caterers: 30+ years of experience. Maharashtrian, South Indian, Rajasthani, Gujarati, Bengali and Indo-Chinese vegetarian food in Latur and nearby areas.',
     orderTitle: 'How to order: two simple ways',
     orderLead: 'Pick the way that suits you. We are happy to help you decide.',
     orders: [
@@ -130,7 +130,7 @@ export const home: Record<Lang, HomeCopy> = {
       'लातूर, औसा, निलंगा, रेणापुर, तुलजापुर, अम्बाजोगाई में शादी, समारोह और पूजा के लिए शुद्ध शाकाहारी कैटरिंग। 30+ साल का अनुभव। FSSAI प्रमाणित। फ़ोन करें।',
     heroTitle: 'लातूर में शुद्ध शाकाहारी कैटरिंग: शादी, समारोह और पूजा के लिए',
     heroLead:
-      'भगवती केटरर्स: 30 साल से अधिक का अनुभव। महाराष्ट्रीयन, दक्षिण भारतीय और राजस्थानी शाकाहारी भोजन, लातूर और आसपास के क्षेत्रों में।',
+      'भगवती केटरर्स: 30 साल से अधिक का अनुभव। महाराष्ट्रीयन, दक्षिण भारतीय, राजस्थानी, गुजराती, बंगाली और इंडो-चायनीज शाकाहारी भोजन, लातूर और आसपास के क्षेत्रों में।',
     orderTitle: 'ऑर्डर कैसे दें? दो आसान तरीके',
     orderLead: 'अपनी सुविधा का तरीका चुनें। कौन-सा ठीक रहेगा, यह तय करने में हम मदद करेंगे।',
     orders: [
