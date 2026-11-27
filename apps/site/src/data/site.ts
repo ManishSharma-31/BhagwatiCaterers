@@ -18,9 +18,9 @@ export const site = {
     postalCode: '413531',
   },
   hours: {
-    mr: 'सर्व वेळ उपलब्ध — ऑर्डरसाठी कधीही फोन किंवा WhatsApp करा',
-    en: 'Open at all times — call or WhatsApp any time for orders',
-    hi: 'हर समय उपलब्ध — ऑर्डर के लिए कभी भी फोन या WhatsApp करें',
+    mr: 'कधीही फोन किंवा WhatsApp करा',
+    en: 'Call or WhatsApp any time',
+    hi: 'कभी भी फोन या WhatsApp करें',
   } as L3,
   city: { mr: 'लातूर', en: 'Latur', hi: 'लातूर' } as L3,
   areas: [

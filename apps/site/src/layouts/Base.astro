@@ -23,7 +23,6 @@ const schema = {
   telephone: `+${site.phoneIntl}`,
   address: { '@type': 'PostalAddress', streetAddress: site.address.street.en, addressLocality: 'Latur', addressRegion: 'Maharashtra', postalCode: site.address.postalCode, addressCountry: 'IN' },
   hasMap: mapsLink(),
-  openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '00:00', closes: '23:59' },
   servesCuisine: ['Maharashtrian', 'South Indian', 'Rajasthani', 'Vegetarian'],
   areaServed: site.areas.map((a) => ({ '@type': 'City', name: a.en })),
   founder: { '@type': 'Person', name: site.owner.en },
