@@ -14,14 +14,15 @@ Status: `todo`, `doing`, `done`, `blocked`
 ## Phase 1: Public website (waiting for owner approval of the plan)
 | Task | Owner | Status |
 |---|---|---|
-| Foundation: Astro project, layout, i18n, CI, performance budget | Foundation agent | todo |
-| Original SVG art kit | Design agent | todo |
-| Marathi, English, Hindi content | Content agent | blocked (owner info needed) |
-| Pages and components | Pages agent | todo |
-| Quote form, WhatsApp, Turnstile | Forms agent | todo |
-| Schema, sitemap, SEO | SEO agent | todo |
+| Foundation: Astro project, layout, i18n, CI, performance budget | Foundation agent | done |
+| Original SVG art kit | Design agent | done |
+| Marathi, English, Hindi content | Content agents A and B | draft done, needs owner/native review (see owner-review-A.md, owner-review-B.md) |
+| Pages and components | Page agents A and B | done |
+| Quote form with WhatsApp prefill (no server; Turnstile and email endpoint deferred) | Page agent B | done |
+| Schema, sitemap, hreflang | Foundation | done (domain placeholder) |
 | QA, accessibility, low-end Android check | QA agent | todo |
-| Deploy preview and owner review | Lead agent | todo |
+| Curate licence-checked stock photos, run download workflow | Photo agent, GitHub Action | doing |
+| Deploy preview (Cloudflare Pages) and owner review | Lead agent | todo |
 
 ## Phase 2: Owner dashboard (planned)
 
