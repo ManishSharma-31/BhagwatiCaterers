@@ -26,7 +26,7 @@
 | art/banana-leaf-meal.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
 | art/divider-kolam.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
 | art/pure-veg-badge.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
-| art/logo.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg (temporary logo, replace if owner has a logo) |
+| art/logo.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg (v2 kalash logo; replace if owner supplies one) |
 | art/favicon.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
 | art/og-card.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |
 | art/icon-puran-poli.svg | SVG art | Original SVG, created for this project by Claude, 2026-11-27 | Project-owned, original | 2026-11-27 | no | no | svg |

@@ -14,7 +14,7 @@ All files are original artwork written by hand as SVG for Bhagwati Caterers (cre
 | `banana-leaf-meal.svg` | Banana leaf with a vegetarian meal, 500x300 | Hero background art, traditional meal section, order-type card |
 | `divider-kolam.svg` | Centred kolam-style divider with lotus, 400x40 | Between page sections |
 | `pure-veg-badge.svg` | Own round leaf-in-circle badge, 96x96 (not the FSSAI logo) | Header, trust strip, footer |
-| `logo.svg` | TEMPORARY wordless lotus emblem, 160x160 | Header and footer until the owner supplies a real logo |
+| `logo.svg` | Own kalash logo (maroon seal, mango leaves, coconut), 160x160. Also used for favicon and app icons | Header, footer, PWA |
 | `favicon.svg` | Small kalash emblem, 64x64 | Browser tab icon (link rel=icon type=image/svg+xml) |
 | `og-card.svg` | Social share background with border, toran and kalash, 1200x630, no text | Base for the Open Graph image; export to PNG/JPG (platforms often reject SVG) and overlay name in HTML or design tool |
 | `icon-puran-poli.svg` | Puran poli icon, 128x128 | Menu cards, dish lists |
@@ -30,4 +30,4 @@ All files are original artwork written by hand as SVG for Bhagwati Caterers (cre
 | `icon-vada-sambar.svg` | Vada sambar icon, 128x128 | South Indian menu section |
 | `icon-sweets.svg` | Assorted sweets icon, 128x128 | Sweets and dessert cards |
 
-Notes: `logo.svg` is a temporary mark. `pure-veg-badge.svg` is our own seal and is not the FSSAI veg logo. Decorative images should use `alt=""`.
+Notes: `pure-veg-badge.svg` is our own seal and is not the FSSAI veg logo. Decorative images should use `alt=""`.

@@ -13,6 +13,15 @@ export const site = {
   phoneIntl: '919057264895',
   fssai: '21526049010527',
   years: '30+',
+  address: {
+    street: { mr: 'जुल्हेलाल मार्ग, नारायण नगर', en: 'Julhelal Marg, Narayan Nagar', hi: 'जुल्हेलाल मार्ग, नारायण नगर' } as L3,
+    postalCode: '413531',
+  },
+  hours: {
+    mr: 'सर्व वेळ उपलब्ध — ऑर्डरसाठी कधीही फोन किंवा WhatsApp करा',
+    en: 'Open at all times — call or WhatsApp any time for orders',
+    hi: 'हर समय उपलब्ध — ऑर्डर के लिए कभी भी फोन या WhatsApp करें',
+  } as L3,
   city: { mr: 'लातूर', en: 'Latur', hi: 'लातूर' } as L3,
   areas: [
     { key: 'latur', mr: 'लातूर', en: 'Latur', hi: 'लातूर' },
@@ -31,6 +40,9 @@ export const PAGES = [
   'home', 'services', 'menu', 'packages', 'gallery', 'about', 'faq', 'areas', 'contact', 'quote', 'credits',
 ] as const;
 export type PageKey = (typeof PAGES)[number];
+
+export const fullAddress = (lang: Lang) => `${site.address.street[lang]}, ${site.city[lang]} ${site.address.postalCode}`;
+export const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Julhelal Marg, Narayan Nagar, Latur 413531')}`;
 
 export const waLink = (lang: Lang, text?: string) => {
   const greeting: L3 = {

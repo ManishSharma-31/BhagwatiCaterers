@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { contact } from '../content/contact';
-import { site, waLink, pagePath, type Lang, type PageKey } from '../data/site';
+import { site, waLink, fullAddress, mapsLink, pagePath, type Lang, type PageKey } from '../data/site';
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = contact[lang];
@@ -18,6 +18,10 @@ const c = contact[lang];
             <dd><a href={`tel:+${site.phoneIntl}`}>{site.phone}</a></dd>
             <dt>{c.waLabel}</dt>
             <dd><a href={waLink(lang)} target="_blank" rel="noopener">{site.phone}</a></dd>
+            <dt>{c.addressLabel}</dt>
+            <dd>{fullAddress(lang)} · <a href={mapsLink()} target="_blank" rel="noopener">{c.mapLabel}</a></dd>
+            <dt>{c.hoursLabel}</dt>
+            <dd>{site.hours[lang]}</dd>
             <dt>{c.ownerLabel}</dt>
             <dd>{site.owner[lang]}</dd>
             <dt>{c.fssaiLabel}</dt>
