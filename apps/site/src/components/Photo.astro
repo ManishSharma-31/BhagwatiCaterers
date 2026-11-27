@@ -29,7 +29,6 @@ const srcset = has1600 ? `/photos/${name}-800.webp 800w, /photos/${name}-1600.we
     </div>
   )}
   {!exists && <figcaption class="rep">{alt}</figcaption>}
-  {exists && representative && <figcaption class="rep">{ui.repImage[lang]}</figcaption>}
 </figure>
 <style>
   .photo-fig { margin: 0; }
