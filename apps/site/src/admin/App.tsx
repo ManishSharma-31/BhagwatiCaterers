@@ -116,6 +116,14 @@ function Shell({ rawStore }: { rawStore: Store }) {
                 : tr(lang, 'इंटरनेट नाही. बदल फोनवर सेव्ह होतात आणि नेट आल्यावर आपोआप अपलोड होतील.', 'No internet. Changes are kept on this phone and upload when you are back online.')}
             </div>
           )}
+          {!signedOut && (
+            <aside class="side no-print" aria-label="Main">
+              {[...tabs.filter((t) => t.name !== 'more').map((t) => ({ path: t.name === 'today' ? '/' : '/' + t.name, icon: t.icon, mr: t.mr, en: t.en, on: active === t.name })),
+                ...moreItems.map((m) => ({ path: m.path, icon: m.icon, mr: m.mr.split(' (')[0], en: m.en, on: route.path === m.path || route.path.startsWith(m.path + '/') }))].map((it) => (
+                <a href={href(it.path)} class={it.on ? 'side-link on' : 'side-link'} aria-current={it.on ? 'page' : undefined}><span aria-hidden="true">{it.icon}</span>{tr(lang, it.mr, it.en)}</a>
+              ))}
+            </aside>
+          )}
           <main class="main">
             <LockGate store={store} lang={lang}>
               <Screens route={route} lang={lang} />

@@ -64,3 +64,9 @@
 ## Admin login required
 - /admin/ now uses cloud mode with login by default (DEFAULT_CLOUD_URL/KEY), so every new device meets the login screen. Local-only is a deliberate switch inside Settings > Cloud > Disconnect (flag bc:local-only). Removed the "use on this phone only" button from the public login screen; hid header search and tabs while signed out.
 - Honest limit: the dashboard page and code are static and public; data protection is Supabase login + row-level security + sign-ups off.
+
+## Admin redesign
+- Desktop (>=960px): left sidebar with all sections, wider pages, two-column Today and lead lists. Mobile keeps bottom tabs.
+- Today: summary tiles (new leads, follow-ups, events in 7 days, to collect, received and net this month), lead pipeline strip, compact quick actions, backup alert moved below.
+- Leads list and Today follow-ups: one-tap Call and WhatsApp buttons.
+- No data-model change.

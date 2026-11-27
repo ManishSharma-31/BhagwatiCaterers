@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import { useList, tr } from '../../hooks';
 import { href, type Route } from '../../router';
 import { LEAD_STATUSES, type Lang, type LeadStatus } from '../../types';
-import { fmtDate, orderTypeLabel, today } from '../../util';
+import { fmtDate, orderTypeLabel, today, telUrl, waUrl } from '../../util';
 import { MoreButton, usePaged } from '../../ui';
 import { countByStatus, filterLeads, followUpDue, sortLeads, townLabel, type LeadSort } from './logic';
 
@@ -53,8 +53,9 @@ export function LeadsScreen({ lang }: { lang: Lang; route: Route }) {
       {shown.length === 0 ? (
         <div class="empty">{leads.length === 0 ? tr(lang, 'अजून एकही चौकशी नाही. फोन किंवा WhatsApp वर आलेली पहिली चौकशी खाली "+ नवीन चौकशी" दाबून नोंदवा.', 'No leads yet. Tap "+ New lead" below.') : tr(lang, 'काहीही सापडले नाही. शोध किंवा फिल्टर बदलून पाहा.', 'Nothing found. Try changing the search or filter.')}</div>
       ) : (
-        <div class="list">
+        <div class="list list-cols">
           {shown.map((l) => (
+            <div class="item-wrap">
             <a class="list-item" href={href('/leads/' + l.id)}>
               <div class="li-main">
                 <div class="li-title">{l.name}</div>
@@ -69,6 +70,13 @@ export function LeadsScreen({ lang }: { lang: Lang; route: Route }) {
               </div>
               <span class={'badge ' + l.status}>{tr(lang, STATUS_LABEL[l.status].mr, STATUS_LABEL[l.status].en)}</span>
             </a>
+            {l.phone && (
+              <div class="item-actions no-print">
+                <a class="btn btn-sm btn-ghost" href={telUrl(l.phone)} aria-label={tr(lang, 'फोन करा', 'Call') + ' ' + l.name}>📞 {tr(lang, 'फोन', 'Call')}</a>
+                <a class="btn btn-sm btn-green" href={waUrl(l.phone, tr(lang, `नमस्कार ${l.name}, भगवती केटरर्स कडून बोलतोय.`, `Hello ${l.name}, this is Bhagwati Caterers.`))} target="_blank" rel="noopener" aria-label={'WhatsApp ' + l.name}>💬 WhatsApp</a>
+              </div>
+            )}
+            </div>
           ))}
         </div>
       )}
