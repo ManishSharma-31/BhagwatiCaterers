@@ -6,6 +6,11 @@ export const LAST_BACKUP_KEY = 'bc:lastBackupAt';
 export const CSV_ENTITIES = ['leads', 'quotes', 'events', 'payments', 'tasks', 'staff'] as const;
 
 export const backupFileName = (d: Date = new Date()) => `bhagwati-backup-${toISODate(d)}.json`;
+export const preRestoreFileName = (d: Date = new Date()) => {
+  const z = (n: number) => String(n).padStart(2, '0');
+  return `bhagwati-before-restore-${toISODate(d)}-${z(d.getHours())}${z(d.getMinutes())}.json`;
+};
+export const MAX_BACKUP_BYTES = 25 * 1024 * 1024;
 export const csvFileName = (entity: string, d: Date = new Date()) => `bhagwati-${entity}-${toISODate(d)}.csv`;
 
 export class BackupError extends Error { constructor(public code: 'json' | 'format' | 'version') { super(code); } }
@@ -22,6 +27,19 @@ export function parseBackup(text: string): Backup {
     data[e] = arr.filter((x: any) => x && typeof x === 'object' && typeof x.id === 'string' && x.id);
   }
   return { app: 'bhagwati-caterers', version: 1, exportedAt: String(j.exportedAt ?? ''), data };
+}
+
+/**
+ * A restore must never change this device's PIN lock or lock the owner out with an old PIN:
+ * the PIN fields in the incoming settings are replaced by the ones currently on this device (or dropped if there is none).
+ */
+export function keepDevicePin(incoming: Backup, current: Backup): Backup {
+  const cur = ((current.data.settings ?? []) as Array<{ pinHash?: string; pinSalt?: string }>)[0];
+  const settings = ((incoming.data.settings ?? []) as unknown as Array<Record<string, unknown>>).map((x) => {
+    const { pinHash: _h, pinSalt: _s, ...rest } = x;
+    return cur?.pinHash ? { ...rest, pinHash: cur.pinHash, pinSalt: cur.pinSalt } : rest;
+  });
+  return { ...incoming, data: { ...incoming.data, settings: settings as unknown as Backup['data']['settings'] } };
 }
 
 export const countBackup = (b: Backup): Record<EntityName, number> => {

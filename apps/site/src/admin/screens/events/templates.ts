@@ -16,7 +16,7 @@ const base: TemplateItem[] = [
   { mr: 'भांडी गोळा करून परत आणा, आवराआवर', en: 'Collect utensils and clean up', category: 'cleanup', offset: 1 },
   { mr: 'उर्वरित (बाकी) रक्कम वसूल करा', en: 'Collect balance payment', category: 'payment', offset: 0 },
 ];
-const advance: TemplateItem = { mr: 'अ‍ॅडव्हान्स रक्कम मिळाल्याची नोंद करा', en: 'Record the advance payment', category: 'payment', offset: -7 };
+const advance: TemplateItem = { mr: 'अॅडव्हान्स रक्कम मिळाल्याची नोंद करा', en: 'Record the advance payment', category: 'payment', offset: -7 };
 const extras: Partial<Record<EventType, TemplateItem[]>> = {
   wedding: [
     advance,

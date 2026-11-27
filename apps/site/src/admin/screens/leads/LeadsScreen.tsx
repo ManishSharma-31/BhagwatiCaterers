@@ -4,7 +4,8 @@ import { useList, tr } from '../../hooks';
 import { href, type Route } from '../../router';
 import { LEAD_STATUSES, type Lang, type LeadStatus } from '../../types';
 import { fmtDate, orderTypeLabel, today } from '../../util';
-import { countByStatus, filterLeads, followUpDue, sortLeads, townLabel } from './logic';
+import { MoreButton, usePaged } from '../../ui';
+import { countByStatus, filterLeads, followUpDue, sortLeads, townLabel, type LeadSort } from './logic';
 
 export const EVENT_LABEL: Record<string, { mr: string; en: string }> = {
   wedding: { mr: 'लग्न', en: 'Wedding' }, engagement: { mr: 'साखरपुडा', en: 'Engagement' }, haldi: { mr: 'हळद', en: 'Haldi' },
@@ -21,13 +22,18 @@ export function LeadsScreen({ lang }: { lang: Lang; route: Route }) {
   const leads = useList('leads');
   const [status, setStatus] = useState<LeadStatus | 'all'>('all');
   const [q, setQ] = useState('');
+  const [sort, setSort] = useState<LeadSort>('followup');
+  const [dueOnly, setDueOnly] = useState(false);
+  const t = today();
+  const shownAll = leads ? sortLeads(filterLeads(leads, status, q, dueOnly, t), sort) : [];
+  const paged = usePaged(shownAll, 60, status + q + sort + dueOnly);
   if (!leads) return <div class="page"><p class="muted">{tr(lang, 'लोड होत आहे…', 'Loading…')}</p></div>;
   const counts = countByStatus(leads);
-  const shown = sortLeads(filterLeads(leads, status, q));
-  const t = today();
+  const shown = paged.shown;
+  const dueCount = leads.filter((l) => followUpDue(l, t)).length;
   return (
     <div class="page">
-      <h1>{tr(lang, 'चौकशी (लीड्स)', 'Leads')}</h1>
+      <h1>{tr(lang, 'चौकशी', 'Leads')}</h1>
       <div class="field">
         <label for="lead-search">{tr(lang, 'नाव किंवा फोन शोधा', 'Search by name or phone')}</label>
         <input id="lead-search" type="search" inputMode="search" value={q} onInput={(e) => setQ((e.target as HTMLInputElement).value)} />
@@ -38,15 +44,21 @@ export function LeadsScreen({ lang }: { lang: Lang; route: Route }) {
           <button type="button" class={status === s ? 'chip on' : 'chip'} onClick={() => setStatus(s)}>{tr(lang, STATUS_LABEL[s].mr, STATUS_LABEL[s].en)} <span class="lead-count">{counts[s]}</span></button>
         ))}
       </div>
+      <div class="chips" role="group" aria-label={tr(lang, 'क्रम', 'Sort')}>
+        <button type="button" class={dueOnly ? 'chip on' : 'chip'} aria-pressed={dueOnly} onClick={() => setDueOnly(!dueOnly)}>⏰ {tr(lang, 'फॉलो-अप बाकी', 'Follow-up due')} <span class="lead-count">{dueCount}</span></button>
+        {([['followup', 'फॉलो-अप क्रमाने', 'By follow-up'], ['newest', 'नवीन आधी', 'Newest first'], ['eventdate', 'कार्यक्रम तारखेनुसार', 'By event date']] as [LeadSort, string, string][]).map(([k, mr, en]) => (
+          <button type="button" class={sort === k ? 'chip on' : 'chip'} aria-pressed={sort === k} onClick={() => setSort(k)}>{tr(lang, mr, en)}</button>
+        ))}
+      </div>
       {shown.length === 0 ? (
-        <div class="empty">{leads.length === 0 ? tr(lang, 'अजून एकही चौकशी नाही. खाली "+ नवीन चौकशी" दाबा.', 'No leads yet. Tap "+ New lead" below.') : tr(lang, 'काहीही सापडले नाही.', 'Nothing found.')}</div>
+        <div class="empty">{leads.length === 0 ? tr(lang, 'अजून एकही चौकशी नाही. फोन किंवा WhatsApp वर आलेली पहिली चौकशी खाली "+ नवीन चौकशी" दाबून नोंदवा.', 'No leads yet. Tap "+ New lead" below.') : tr(lang, 'काहीही सापडले नाही. शोध किंवा फिल्टर बदलून पाहा.', 'Nothing found. Try changing the search or filter.')}</div>
       ) : (
         <div class="list">
           {shown.map((l) => (
             <a class="list-item" href={href('/leads/' + l.id)}>
               <div class="li-main">
                 <div class="li-title">{l.name}</div>
-                <div class="li-sub">
+                <div class="li-sub">{l.phone} · 
                   {tr(lang, EVENT_LABEL[l.eventType].mr, EVENT_LABEL[l.eventType].en)}
                   {l.eventDate ? ' · ' + fmtDate(l.eventDate, lang) : ''}
                   {l.guests ? ' · ' + l.guests + tr(lang, ' पाहुणे', ' guests') : ''}
@@ -60,6 +72,7 @@ export function LeadsScreen({ lang }: { lang: Lang; route: Route }) {
           ))}
         </div>
       )}
+      <MoreButton lang={lang} paged={paged} />
       <a class="btn fab" href={href('/leads/new')}>+ {tr(lang, 'नवीन चौकशी', 'New lead')}</a>
     </div>
   );

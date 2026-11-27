@@ -3,7 +3,8 @@ import { useEffect, useState } from 'preact/hooks';
 import { useList, useStore, tr } from '../../hooks';
 import { href, type Route } from '../../router';
 import type { Backup, Lang } from '../../types';
-import { fmtDate, fmtMoney, today } from '../../util';
+import { fmtDate, fmtMoney, today, waUrl } from '../../util';
+import { buildBalanceReminder } from '../payments/logic';
 import { backupFileName, backupLevel, daysSinceBackup, getLastBackupAt, hasUserData, markBackupNow } from '../../backup';
 import { download } from '../../util';
 import { greetingKey, summarize } from './logic';
@@ -13,7 +14,7 @@ type P = { lang: Lang; route: Route };
 
 export function TodayScreen({ lang }: P) {
   const store = useStore();
-  const leads = useList('leads'), events = useList('events'), quotes = useList('quotes'), payments = useList('payments'), settings = useList('settings');
+  const leads = useList('leads'), events = useList('events'), quotes = useList('quotes'), payments = useList('payments'), settings = useList('settings'), tasks = useList('tasks');
   const [lastBackup, setLastBackup] = useState<string | null>(getLastBackupAt());
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -24,8 +25,8 @@ export function TodayScreen({ lang }: P) {
   const g = greetingKey(new Date().getHours());
   const hello = tr(lang, g === 'morning' ? 'सुप्रभात' : g === 'afternoon' ? 'नमस्कार' : 'शुभ संध्या', g === 'morning' ? 'Good morning' : g === 'afternoon' ? 'Good afternoon' : 'Good evening');
 
-  const ready = leads && events && quotes && payments;
-  const s = ready ? summarize({ leads, events, quotes, payments }, t) : null;
+  const ready = leads && events && quotes && payments && tasks;
+  const s = ready ? summarize({ leads, events, quotes, payments, tasks }, t) : null;
 
   // Backup reminder: local mode only (cloud mode keeps the data online).
   const days = daysSinceBackup(lastBackup);
@@ -61,14 +62,28 @@ export function TodayScreen({ lang }: P) {
         <a class="btn" href={href('/leads/new')}><span class="q-ico" aria-hidden="true">➕</span>{tr(lang, 'नवी चौकशी', 'New lead')}</a>
         <a class="btn" href={href('/events/new')}><span class="q-ico" aria-hidden="true">🗓️</span>{tr(lang, 'नवा कार्यक्रम', 'New event')}</a>
         <a class="btn btn-green" href={href('/payments?new=1')}><span class="q-ico" aria-hidden="true">₹</span>{tr(lang, 'पैसे नोंदवा', 'Add payment')}</a>
+        <a class="btn btn-ghost" href={href('/search')}><span class="q-ico" aria-hidden="true">🔍</span>{tr(lang, 'शोधा', 'Search')}</a>
       </div>
 
       {!s ? <p class="muted">{tr(lang, 'थोडा वेळ थांबा…', 'Loading…')}</p> : (
         <>
-          <a class="card today-stat" href={href('/leads')}>
-            <span class="n">{s.newLeads}</span>
-            <span>{s.newLeads === 0 ? tr(lang, 'नवी चौकशी नाही', 'No new leads') : tr(lang, 'नवी चौकशी (अजून संपर्क केलेला नाही)', 'New leads (not contacted yet)')}</span>
-          </a>
+          {s.upcoming.filter((u) => u.days <= 1).length > 0 && (
+            <div class="today-alert yellow" role="status">
+              <strong>{tr(lang, 'आज / उद्याचे कार्यक्रम', 'Events today / tomorrow')}</strong>
+              {s.upcoming.filter((u) => u.days <= 1).map(({ event, days: d }) => {
+                const gap = s.gaps.find((g) => g.event.id === event.id);
+                return (
+                  <p style="margin:.4rem 0 0">
+                    <a href={href('/events/' + event.id)}><strong>{d === 0 ? tr(lang, 'आज', 'Today') : tr(lang, 'उद्या', 'Tomorrow')}: {event.title}</strong></a>
+                    {event.startTime ? ` · ${event.startTime}` : ''} · {tr(lang, `${event.guests} पाहुणे`, `${event.guests} guests`)}
+                    {gap?.noDishes && <span class="badge warn" style="margin-left:.3rem">{tr(lang, 'पदार्थ निवडले नाहीत', 'No dishes')}</span>}
+                    {gap?.noStaff && <span class="badge warn" style="margin-left:.3rem">{tr(lang, 'कर्मचारी नेमले नाहीत', 'No staff')}</span>}
+                    {' '}<a href={href('/sheets/' + event.id)}>🍳 {tr(lang, 'याद्या', 'Sheets')}</a>
+                  </p>
+                );
+              })}
+            </div>
+          )}
 
           <h2>{tr(lang, 'आज फोन करायचे', 'Follow-ups due')}</h2>
           {s.followUps.length === 0 ? <p class="muted">{tr(lang, 'आज किंवा मागील कोणताही फॉलो-अप बाकी नाही.', 'No follow-ups due today or overdue.')}</p> : (
@@ -87,35 +102,77 @@ export function TodayScreen({ lang }: P) {
             </div>
           )}
 
+          {s.tasksDue.length > 0 && (
+            <>
+              <h2>{tr(lang, 'आजची कामे (व उशीर झालेली)', 'Tasks due (and overdue)')} <span class="badge warn">{s.tasksDue.length}</span></h2>
+              <div class="list">
+                {s.tasksDue.slice(0, 5).map((t) => (
+                  <a class="list-item" href={href(t.eventId ? '/tasks?event=' + t.eventId : '/tasks')}>
+                    <span class="li-main"><div class="li-title">{t.title}</div><div class="li-sub">{fmtDate(t.dueDate, lang)}</div></span>
+                    {t.dueDate! < today() && <span class="today-late">{tr(lang, 'उशीर', 'Late')}</span>}
+                  </a>
+                ))}
+              </div>
+              {s.tasksDue.length > 5 && <p><a href={href('/tasks')}>{tr(lang, `सर्व ${s.tasksDue.length} कामे पाहा`, `See all ${s.tasksDue.length} tasks`)}</a></p>}
+            </>
+          )}
+
           <h2>{tr(lang, 'पुढील ७ दिवसांतील कार्यक्रम', 'Events in the next 7 days')}</h2>
           {s.upcoming.length === 0 ? <p class="muted">{tr(lang, 'पुढील ७ दिवसांत कार्यक्रम नाही.', 'No events in the next 7 days.')}</p> : (
             <div class="list">
-              {s.upcoming.map(({ event, days: d }) => (
-                <a class="list-item" href={href('/events/' + event.id)}>
-                  <span class="li-main">
-                    <div class="li-title">{event.title}</div>
-                    <div class="li-sub">{fmtDate(event.date, lang)} · {tr(lang, `${event.guests} पाहुणे`, `${event.guests} guests`)}{event.town ? ` · ${townLabel(event.town, lang)}` : ''}</div>
-                  </span>
-                  <span class="today-days">{d === 0 ? tr(lang, 'आज', 'Today') : d === 1 ? tr(lang, 'उद्या', 'Tomorrow') : tr(lang, `${d} दिवस`, `${d} days`)}</span>
-                </a>
-              ))}
+              {s.upcoming.map(({ event, days: d }) => {
+                const gap = s.gaps.find((g) => g.event.id === event.id);
+                return (
+                  <a class="list-item" href={href('/events/' + event.id)}>
+                    <span class="li-main">
+                      <div class="li-title">{event.title}</div>
+                      <div class="li-sub">{fmtDate(event.date, lang)} · {tr(lang, `${event.guests} पाहुणे`, `${event.guests} guests`)}{event.town ? ` · ${townLabel(event.town, lang)}` : ''}</div>
+                      {gap && <div class="li-sub">{gap.noDishes ? '⚠️ ' + tr(lang, 'पदार्थ निवडले नाहीत ', 'No dishes chosen ') : ''}{gap.noStaff ? '⚠️ ' + tr(lang, 'कर्मचारी नेमले नाहीत', 'No staff assigned') : ''}</div>}
+                    </span>
+                    <span class="today-days">{d === 0 ? tr(lang, 'आज', 'Today') : d === 1 ? tr(lang, 'उद्या', 'Tomorrow') : tr(lang, `${d} दिवस`, `${d} days`)}</span>
+                  </a>
+                );
+              })}
             </div>
           )}
 
           <h2>{tr(lang, 'येणे बाकी (पक्क्या कार्यक्रमांचे)', 'Balance to collect (confirmed events)')}</h2>
-          {s.pending.length === 0 ? <p class="muted">{tr(lang, 'सध्या कोणतीही बाकी रक्कम दिसत नाही. (कोटेशन मंजूर झाले असेल तरच येथे दिसते.)', 'No balance to show. (Only events with an accepted quote appear here.)')}</p> : (
+          {s.pending.length === 0 && s.unpaidPast.length === 0 ? <p class="muted">{tr(lang, 'सध्या कोणतीही बाकी रक्कम दिसत नाही. (कोटेशन मान्य झाले असेल तरच येथे दिसते.)', 'No balance to show. (Only events with an accepted quote appear here.)')}</p> : (
             <div class="list">
-              {s.pending.map((p) => (
-                <a class="list-item" href={href('/events/' + p.event.id)}>
-                  <span class="li-main">
-                    <div class="li-title">{p.event.title}</div>
-                    <div class="li-sub">{fmtDate(p.event.date, lang)} · {tr(lang, 'एकूण', 'Total')} {fmtMoney(p.total)} · {tr(lang, 'मिळाले', 'Received')} {fmtMoney(p.received)}</div>
-                  </span>
-                  <span class="money" style="color:var(--a-red)">{fmtMoney(p.balance)}</span>
-                </a>
+              {[...s.unpaidPast.map((p) => ({ ...p, past: true })), ...s.pending.map((p) => ({ ...p, past: false }))].map((p) => (
+                <div class="card" style="margin:0">
+                  <a class="list-item" style="border:0;padding:0" href={href('/events/' + p.event.id)}>
+                    <span class="li-main">
+                      <div class="li-title">{p.event.title}</div>
+                      <div class="li-sub">{fmtDate(p.event.date, lang)} · {tr(lang, 'एकूण', 'Total')} {fmtMoney(p.total)} · {tr(lang, 'मिळाले', 'Received')} {fmtMoney(p.received)}</div>
+                      {p.past && <div class="lead-flag">{tr(lang, 'कार्यक्रम होऊन गेला, पैसे बाकी', 'Event is over, money still due')}</div>}
+                    </span>
+                    <span class="money" style="color:var(--a-red)">{fmtMoney(p.balance)}</span>
+                  </a>
+                  <p style="margin:.4rem 0 0"><button type="button" class="btn btn-green btn-sm" onClick={() => window.open(waUrl(p.event.customerPhone || p.quote.customerPhone, buildBalanceReminder({ name: p.event.customerName ?? p.quote.customerName, eventTitle: p.event.title, eventDate: p.event.date, bal: { expected: p.total, received: p.received, balance: p.balance } }, settings?.[0] ?? {}, lang)), '_blank', 'noopener')}>💬 {tr(lang, 'बाकी रकमेची आठवण', 'Balance reminder')}</button></p>
+                </div>
               ))}
             </div>
           )}
+
+          {s.staleQuotes.length > 0 && (
+            <>
+              <h2>{tr(lang, 'कोटेशनचे उत्तर आलेले नाही', 'Quotes waiting for an answer')}</h2>
+              <div class="list">
+                {s.staleQuotes.slice(0, 5).map(({ quote, days: d }) => (
+                  <a class="list-item" href={href('/quotes/' + quote.id)}>
+                    <span class="li-main"><div class="li-title">{quote.customerName}</div><div class="li-sub">{quote.eventTitle}</div></span>
+                    <span class="today-late">{tr(lang, `${d} दिवस`, `${d} days`)}</span>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
+
+          <a class="card today-stat" href={href('/leads')} style="margin-top:1rem">
+            <span class="n">{s.newLeads}</span>
+            <span>{s.newLeads === 0 ? tr(lang, 'नवी चौकशी नाही', 'No new leads') : tr(lang, 'नवी चौकशी (अजून संपर्क केलेला नाही)', 'New leads (not contacted yet)')}</span>
+          </a>
         </>
       )}
       {store.mode === 'cloud' && <p class="muted small" style="margin-top:1rem">{tr(lang, 'माहिती ऑनलाइन सुरक्षित आहे. तरीही अधूनमधून बॅकअप घेणे चांगले (सेटिंग्ज).', 'Your data is saved online. A backup now and then is still a good idea (Settings).')}</p>}

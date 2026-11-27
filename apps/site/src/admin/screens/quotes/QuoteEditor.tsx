@@ -4,9 +4,10 @@ import { useList, useStore, tr } from '../../hooks';
 import { go, href, type Route } from '../../router';
 import { ORDER_TYPES, type Lang, type OrderType, type Quote, type QuoteStatus } from '../../types';
 import { defaultSettings } from '../../seed';
-import { fmtDate, fmtMoney, newId, orderTypeLabel, quoteTotal, waNumber, waUrl } from '../../util';
+import { fmtDate, fmtMoney, newId, normPhone, orderTypeLabel, quoteTotal, waNumber, waUrl } from '../../util';
 import { CUISINE_LABEL, balanceAfterAdvance, buildQuoteMessage, cleanLines, dishNames, fromEvent, fromLead, groupMenu, leadStatusAfterQuote, perPlateLabel, validateQuote, type QuoteErrors } from './logic';
 import { QSTATUS } from './QuotesScreen';
+import { CopyButton } from '../../ui';
 
 type F = {
   leadId?: string; eventId?: string; customerName: string; customerPhone: string; eventTitle: string; eventDate: string; town: string; orderType: OrderType;
@@ -18,7 +19,7 @@ const numStr = (n: number) => (n ? String(n) : '');
 
 const toQuote = (f: F, id: string, base?: Quote): Quote => ({
   id, createdAt: base?.createdAt ?? new Date().toISOString(), updatedAt: new Date().toISOString(),
-  leadId: f.leadId, eventId: f.eventId, customerName: f.customerName.trim(), customerPhone: f.customerPhone.trim(), eventTitle: f.eventTitle.trim(),
+  leadId: f.leadId, eventId: f.eventId, customerName: f.customerName.trim(), customerPhone: normPhone(f.customerPhone), eventTitle: f.eventTitle.trim(),
   eventDate: f.eventDate || undefined, town: f.town.trim() || undefined, orderType: f.orderType, dishIds: f.dishIds, extraDishes: f.extraDishes.map((d) => d.trim()).filter(Boolean),
   guests: num(f.guests), perPlate: num(f.perPlate), lines: cleanLines(f.lines.map((l) => ({ label: l.label.trim(), amount: Number(l.amount) || 0 }))),
   discount: num(f.discount), advanceAmount: num(f.advance), status: f.status, validUntil: f.validUntil || undefined, terms: f.terms.trim() || undefined, notes: f.notes.trim() || undefined,
@@ -99,7 +100,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
   };
   const accept = async () => { if (!check()) return; await persist('accepted'); setAccepted(true); setMsg(''); };
   const reject = async () => { if (!check()) return; await persist('rejected'); setMsg(tr(lang, 'नामंजूर म्हणून नोंदवले', 'Marked as rejected')); };
-  const remove = async () => { if (existing && confirm(tr(lang, 'हे कोटेशन कायमचे काढायचे?', 'Delete this quote permanently?'))) { await store.remove('quotes', existing.id); go('/quotes'); } };
+  const remove = async () => { if (existing && confirm(tr(lang, 'हे कोटेशन काढायचे?', 'Delete this quote permanently?'))) { await store.remove('quotes', existing.id); go('/quotes'); } };
   const toggleDish = (id: string) => set('dishIds', f.dishIds.includes(id) ? f.dishIds.filter((x) => x !== id) : [...f.dishIds, id]);
   const addExtra = () => { if (extra.trim()) { set('extraDishes', [...f.extraDishes, extra.trim()]); setExtra(''); } };
   const setLine = (i: number, k: 'label' | 'amount', v: string) => set('lines', f.lines.map((l, j) => (j === i ? { ...l, [k]: v } : l)));
@@ -107,6 +108,9 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
   const groups = groupMenu(menu!, search, f.dishIds);
   const lines = cleanLines(cur.lines);
   const wm = f.orderType === 'with-material';
+  const linkedEvent = savedId ? events!.find((e) => e.quoteId === savedId || (!!existing?.eventId && e.id === existing.eventId)) : undefined;
+  const msgText = () => buildQuoteMessage({ ...cur, status: f.status === 'accepted' ? 'accepted' : 'sent' }, names, settings, lang);
+  const datePast = !!f.eventDate && f.eventDate < new Date().toISOString().slice(0, 10) && f.status !== 'accepted';
 
   return (
     <div class="page">
@@ -117,7 +121,9 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
         {(accepted || f.status === 'accepted') && savedId && (
           <div class="quote-done">
             <p><b>{tr(lang, 'कोटेशन मान्य झाले. चौकशी "पक्के" केली.', 'Quote accepted. Lead marked as confirmed.')}</b></p>
-            <a class="btn btn-green" href={href('/events/new?quote=' + savedId)}>🗓️ {tr(lang, 'कार्यक्रम बनवा', 'Create event')}</a>
+            {linkedEvent
+              ? <a class="btn btn-green" href={href('/events/' + linkedEvent.id)}>🗓️ {tr(lang, 'कार्यक्रम उघडा (आधीच बनवला आहे)', 'Open event (already created)')}</a>
+              : <a class="btn btn-green" href={href('/events/new?quote=' + savedId)}>🗓️ {tr(lang, 'कार्यक्रम बनवा', 'Create event')}</a>}
           </div>
         )}
 
@@ -132,7 +138,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
             <h3>{tr(lang, 'कार्यक्रम', 'Event')}</h3>
             <div class="field"><label for="q-title">{tr(lang, 'कार्यक्रमाचे नाव', 'Event title')}</label><input id="q-title" value={f.eventTitle} onInput={txt('eventTitle')} /></div>
             <div class="grid2">
-              <div class="field"><label for="q-date">{tr(lang, 'तारीख', 'Event date')}</label><input id="q-date" type="date" value={f.eventDate} onInput={txt('eventDate')} /></div>
+              <div class="field"><label for="q-date">{tr(lang, 'तारीख', 'Event date')}</label><input id="q-date" type="date" value={f.eventDate} onInput={txt('eventDate')} />{datePast && <div class="warn-text">{tr(lang, '⚠️ ही तारीख होऊन गेली आहे.', '⚠️ This date is in the past.')}</div>}</div>
               <div class="field"><label for="q-town">{tr(lang, 'गाव / शहर', 'Town')}</label><input id="q-town" value={f.town} onInput={txt('town')} /></div>
             </div>
             <div class="field"><label for="q-order">{tr(lang, 'ऑर्डरचा प्रकार', 'Order type')}</label>
@@ -186,7 +192,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
           </div>
 
           <div class="card">
-            <div class="field"><label for="q-valid">{tr(lang, 'कोटेशन कधीपर्यंत वैध?', 'Valid until')}</label><input id="q-valid" type="date" value={f.validUntil} onInput={txt('validUntil')} /></div>
+            <div class="field"><label for="q-valid">{tr(lang, 'कोटेशन कधीपर्यंत वैध?', 'Valid until')}</label><input id="q-valid" type="date" value={f.validUntil} onInput={txt('validUntil')} />{!!f.validUntil && f.validUntil < new Date().toISOString().slice(0, 10) && <div class="warn-text">{tr(lang, '⚠️ वैधता संपली आहे.', '⚠️ This quote has expired.')}</div>}</div>
             <div class="field"><label for="q-terms">{tr(lang, 'अटी व शर्ती', 'Terms and conditions')}</label><textarea id="q-terms" value={f.terms} onInput={txt('terms')} /></div>
             <div class="field"><label for="q-notes">{tr(lang, 'आतल्या नोंदी (ग्राहकाला दिसत नाहीत)', 'Private notes (not shown to customer)')}</label><textarea id="q-notes" value={f.notes} onInput={txt('notes')} /></div>
           </div>
@@ -195,6 +201,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
           <div class="quote-actions">
             <button class="btn" type="submit">💾 {tr(lang, 'मसुदा सेव्ह करा', 'Save draft')}</button>
             <button class="btn btn-green" type="button" onClick={share}>💬 {tr(lang, 'WhatsApp वर पाठवा', 'Share on WhatsApp')}</button>
+            <CopyButton lang={lang} small={false} text={msgText} label={tr(lang, 'संदेश कॉपी करा', 'Copy message')} />
             <button class="btn btn-ghost" type="button" onClick={() => { if (check()) window.print(); }}>🖨️ {tr(lang, 'प्रिंट / PDF', 'Print / Save as PDF')}</button>
             <button class="btn btn-green" type="button" onClick={accept}>✔ {tr(lang, 'मान्य झाले', 'Accepted')}</button>
             <button class="btn btn-ghost" type="button" onClick={reject}>✖ {tr(lang, 'नामंजूर', 'Rejected')}</button>
@@ -223,7 +230,7 @@ export function QuoteEditor({ lang, route }: { lang: Lang; route: Route }) {
             {cur.discount > 0 && <tr><td>{tr(lang, 'सूट', 'Discount')}</td><td class="r">-{fmtMoney(cur.discount)}</td></tr>}
             <tr><td><b>{tr(lang, 'एकूण', 'Total')}</b></td><td class="r"><b>{fmtMoney(total)}</b></td></tr>
             {cur.advanceAmount > 0 && <tr><td>{tr(lang, 'आगाऊ रक्कम', 'Advance')}</td><td class="r">{fmtMoney(cur.advanceAmount)}</td></tr>}
-            {cur.advanceAmount > 0 && <tr><td>{tr(lang, 'उरलेली रक्कम', 'Balance')}</td><td class="r">{fmtMoney(balance)}</td></tr>}
+            {cur.advanceAmount > 0 && <tr><td>{tr(lang, 'बाकी रक्कम', 'Balance')}</td><td class="r">{fmtMoney(balance)}</td></tr>}
           </tbody>
         </table>
         {cur.validUntil && <p>{tr(lang, 'कोटेशन वैध: ', 'Valid until: ')}{fmtDate(cur.validUntil, lang)}</p>}

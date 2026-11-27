@@ -3,18 +3,20 @@ import { useState } from 'preact/hooks';
 import { tr, useList, useStore } from '../../hooks';
 import { href, type Route } from '../../router';
 import type { Lang, Staff } from '../../types';
-import { fmtDate, fmtMoney, telUrl, today, waUrl, waNumber } from '../../util';
+import { fmtDate, fmtMoney, normPhone, telUrl, today, waUrl, waNumber } from '../../util';
 import { roleLabel } from '../events/labels';
+import { wageMonth } from './logic';
 
 const ROLES: Staff['role'][] = ['cook', 'helper', 'server', 'driver', 'manager', 'other'];
 
 export function StaffScreen({ lang }: { lang: Lang; route: Route }) {
   const store = useStore();
-  const staff = useList('staff'), events = useList('events');
+  const staff = useList('staff'), events = useList('events'), payments = useList('payments');
   const [form, setForm] = useState<Partial<Staff> | null>(null);
   const [err, setErr] = useState('');
-  if (!staff || !events) return <div class="page"><p class="muted">{tr(lang, 'लोड होत आहे…', 'Loading…')}</p></div>;
+  if (!staff || !events || !payments) return <div class="page"><p class="muted">{tr(lang, 'लोड होत आहे…', 'Loading…')}</p></div>;
   const t0 = today();
+  const monthKey = t0.slice(0, 7);
   const assignedTo = (id: string) => events.filter((e) => e.staffIds.includes(id) && e.status !== 'cancelled');
   const sorted = [...staff].sort((a, b) => Number(b.active) - Number(a.active) || a.name.localeCompare(b.name));
 
@@ -22,16 +24,16 @@ export function StaffScreen({ lang }: { lang: Lang; route: Route }) {
     if (!form?.name?.trim()) return setErr(tr(lang, 'नाव लिहा.', 'Please enter the name.'));
     const phone = form.phone?.trim();
     if (phone && !waNumber(phone)) return setErr(tr(lang, 'फोन नंबर १० अंकी (६-९ ने सुरू) हवा.', 'Phone must be a 10-digit mobile number.'));
-    await store.put('staff', { ...(form as Staff), name: form.name.trim(), phone: phone || undefined, role: form.role ?? 'helper', active: form.active ?? true, dailyWage: form.dailyWage || undefined });
+    await store.put('staff', { ...(form as Staff), name: form.name.trim(), phone: phone ? normPhone(phone) : undefined, role: form.role ?? 'helper', active: form.active ?? true, dailyWage: form.dailyWage && form.dailyWage > 0 ? form.dailyWage : undefined });
     setForm(null); setErr('');
   };
   const del = async (s: Staff) => {
     const used = events.filter((e) => e.staffIds.includes(s.id)).length;
     if (used) {
-      if (confirm(tr(lang, `${s.name} ${used} कार्यक्रमांत नेमलेले आहेत, म्हणून हटवता येत नाही. निष्क्रिय करायचे?`, `${s.name} is assigned to ${used} event(s) so cannot be deleted. Make inactive instead?`))) await store.put('staff', { ...s, active: false });
+      if (confirm(tr(lang, `${s.name} ${used} कार्यक्रमांत नेमलेले आहेत, म्हणून काढता येत नाही. निष्क्रिय करायचे?`, `${s.name} is assigned to ${used} event(s) so cannot be deleted. Make inactive instead?`))) await store.put('staff', { ...s, active: false });
       return;
     }
-    if (confirm(tr(lang, `${s.name} कायमचे हटवायचे?`, `Delete ${s.name} permanently?`))) { await store.remove('staff', s.id); setForm(null); }
+    if (confirm(tr(lang, `${s.name} काढायचे?`, `Delete ${s.name} permanently?`))) { await store.remove('staff', s.id); setForm(null); }
   };
 
   return (
@@ -51,9 +53,9 @@ export function StaffScreen({ lang }: { lang: Lang; route: Route }) {
           <div class="field"><label for="st-notes">{tr(lang, 'नोंदी', 'Notes')}</label><textarea id="st-notes" value={form.notes || ''} onInput={(e) => setForm({ ...form, notes: (e.target as HTMLTextAreaElement).value })} /></div>
           {err && <p class="err" role="alert">{err}</p>}
           <div class="row">
-            <button type="button" class="btn btn-green" onClick={save}>{tr(lang, 'जतन करा', 'Save')}</button>
+            <button type="button" class="btn btn-green" onClick={save}>{tr(lang, 'सेव्ह करा', 'Save')}</button>
             <button type="button" class="btn btn-ghost" onClick={() => { setForm(null); setErr(''); }}>{tr(lang, 'रद्द', 'Cancel')}</button>
-            {form.id && <button type="button" class="btn btn-danger" onClick={() => del(form as Staff)}>{tr(lang, 'हटवा', 'Delete')}</button>}
+            {form.id && <button type="button" class="btn btn-danger" onClick={() => del(form as Staff)}>{tr(lang, 'काढा', 'Delete')}</button>}
           </div>
         </div>
       )}
@@ -61,6 +63,7 @@ export function StaffScreen({ lang }: { lang: Lang; route: Route }) {
       {sorted.map((s) => {
         const up = assignedTo(s.id).filter((e) => e.date >= t0).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 5);
         const wa = s.phone && waNumber(s.phone);
+        const w = wageMonth(s, events, payments, monthKey, t0);
         return (
           <div class={'card st-card' + (s.active ? '' : ' st-off')} key={s.id}>
             <div class="row between">
@@ -69,9 +72,17 @@ export function StaffScreen({ lang }: { lang: Lang; route: Route }) {
               <label class="check"><input type="checkbox" checked={s.active} onChange={() => store.put('staff', { ...s, active: !s.active })} /> {tr(lang, 'सक्रिय', 'Active')}</label>
             </div>
             {s.notes && <p class="muted small">{s.notes}</p>}
+            <div class="small st-wage">
+              <strong>{tr(lang, 'या महिन्याचे पगार / मजुरी', 'Wages this month')}</strong>
+              <div>{tr(lang, `कामाचे दिवस (कार्यक्रम): ${w.days}`, `Days worked (events): ${w.days}`)}
+                {s.dailyWage ? tr(lang, ` · अंदाजे ${fmtMoney(w.estimate)} (रोजंदारी × दिवस)`, ` · about ${fmtMoney(w.estimate)} (daily wage × days)`) : tr(lang, ' · रोजंदारी भरलेली नाही', ' · no daily wage entered')}</div>
+              <div>{tr(lang, 'दिले: ', 'Paid: ')}<span class="money">{fmtMoney(w.paid)}</span>{s.dailyWage ? <> · {tr(lang, 'बाकी (अंदाज): ', 'Still due (estimate): ')}<span class="money">{fmtMoney(Math.max(0, w.due))}</span></> : null}
+                {w.paidTotal > w.paid ? tr(lang, ` · एकूण आतापर्यंत ${fmtMoney(w.paidTotal)}`, ` · all time ${fmtMoney(w.paidTotal)}`) : ''}</div>
+            </div>
             <div class="row">
               {s.phone && <a class="btn btn-sm" href={telUrl(s.phone)}>📞 {tr(lang, 'फोन', 'Call')}</a>}
               {wa && <a class="btn btn-sm btn-green" href={waUrl(s.phone!, '')} target="_blank" rel="noopener">💬 WhatsApp</a>}
+              <a class="btn btn-sm btn-ghost" href={href('/payments?new=1&kind=expense&staff=' + s.id)}>₹ {tr(lang, 'पगार / मजुरी दिली', 'Pay wages')}</a>
               <button type="button" class="btn btn-sm btn-ghost" onClick={() => { setForm(s); window.scrollTo(0, 0); }}>✏️ {tr(lang, 'बदला', 'Edit')}</button>
             </div>
             {up.length > 0 && (

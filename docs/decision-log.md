@@ -33,3 +33,8 @@
 - Menu: 150+ example dishes in 12 sections, trilingual, with jump links and live search (src/content/menu-items.ts). Names are drafts for the owner to confirm.
 - Quote page redesigned (side panel, numbered steps, pill choices); form logic unchanged.
 - About: owner section with photo slot (/photos/owner-800.webp etc.). Placeholder shows the logo until the photo arrives.
+
+## 2026-11-27 content and dashboard reviews
+- Hours wording: "Call or WhatsApp any time"; no 24h opening hours in schema.
+- Public copy audited and rewritten (docs/content-review.md); 13 questions open for the owner.
+- Dashboard reviewed and improved (docs/admin-review.md): global search, duplicate-phone warning, global undo, safer restore with automatic safety copy, kitchen-sheet guest scaling (no prices), wage tracking, Today priorities. Only additive field: Payment.staffId.

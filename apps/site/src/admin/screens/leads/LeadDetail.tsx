@@ -4,9 +4,12 @@ import { useList, useStore, tr } from '../../hooks';
 import { go, href, type Route } from '../../router';
 import { EVENT_TYPES, LEAD_SOURCES, LEAD_STATUSES, ORDER_TYPES, type EventType, type Lang, type Lead, type LeadSource, type LeadStatus, type OrderType } from '../../types';
 import { defaultSettings } from '../../seed';
-import { fmtDate, fmtMoney, orderTypeLabel, quoteTotal, telUrl, today, waUrl } from '../../util';
-import { LEAD_TOWNS, buildLeadMessage, followUpDate, townLabel, validateLead, type LeadErrors } from './logic';
+import { fmtDate, fmtMoney, normPhone, orderTypeLabel, quoteTotal, telUrl, today, waUrl } from '../../util';
+import { LEAD_TOWNS, buildLeadMessage, findDuplicates, followUpDate, townLabel, validateLead, type LeadErrors } from './logic';
 import { EVENT_LABEL, STATUS_LABEL } from './LeadsScreen';
+import { QSTATUS } from '../quotes/QuotesScreen';
+import { KIND, METHOD } from '../payments/PaymentsScreen';
+import { CopyButton } from '../../ui';
 
 const SOURCE_LABEL: Record<LeadSource, { mr: string; en: string }> = {
   whatsapp: { mr: 'व्हॉट्सअॅप', en: 'WhatsApp' }, call: { mr: 'फोन कॉल', en: 'Phone call' }, walkin: { mr: 'प्रत्यक्ष भेट', en: 'Walk-in' },
@@ -53,7 +56,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
     const x = { ...f, ...over };
     return {
       ...(existing ?? {}),
-      name: x.name.trim(), phone: x.phone.trim(), eventType: x.eventType, eventDate: x.eventDate || undefined,
+      name: x.name.trim(), phone: normPhone(x.phone), eventType: x.eventType, eventDate: x.eventDate || undefined,
       guests: x.guests ? Number(x.guests) : undefined, town: x.town.trim() || undefined, orderType: x.orderType, cuisines: x.cuisines,
       notes: x.notes.trim() || undefined, status: x.status, source: x.source, nextFollowUp: x.nextFollowUp || undefined,
       lostReason: x.status === 'lost' ? x.lostReason.trim() || undefined : undefined,
@@ -64,6 +67,8 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
     const e = validateLead(x, lang);
     setErrs(e);
     if (Object.keys(e).length) { setMsg(tr(lang, 'कृपया लाल रंगातील चुका दुरुस्त करा.', 'Please fix the errors shown in red.')); return null; }
+    if (isNew && findDuplicates(leads, x.phone).length && !confirm(tr(lang, 'या नंबरची चौकशी आधीच आहे. तरीही नवी चौकशी सेव्ह करायची?', 'A lead with this number already exists. Save a new one anyway?'))) return null;
+    if (isNew && x.eventDate && x.eventDate < today() && !confirm(tr(lang, 'कार्यक्रमाची तारीख होऊन गेलेली आहे. तरीही सेव्ह करायचे?', 'The event date is in the past. Save anyway?'))) return null;
     const saved = await store.put('leads', build(over));
     setMsg(tr(lang, 'सेव्ह झाले ✔', 'Saved ✔'));
     if (isNew) go('/leads/' + saved.id);
@@ -72,7 +77,9 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
   const quick = (over: Partial<Form>) => { setF((p) => ({ ...p, ...over })); if (!isNew) void save(over); };
   const remove = async () => {
     if (!existing) return;
-    if (confirm(tr(lang, 'ही चौकशी कायमची काढायची?', 'Delete this lead permanently?'))) { await store.remove('leads', existing.id); go('/leads'); }
+    const linked = (quotes ?? []).filter((q) => q.leadId === existing.id).length + (events ?? []).filter((ev) => ev.leadId === existing.id).length;
+    const extra = linked ? tr(lang, ` यातील ${linked} कोटेशन/कार्यक्रम तसेच राहतील.`, ` Its ${linked} linked quote(s)/event(s) will stay.`) : '';
+    if (confirm(tr(lang, 'ही चौकशी काढायची?', 'Delete this lead?') + extra)) { await store.remove('leads', existing.id); go('/leads'); }
   };
 
   const t = today();
@@ -80,6 +87,8 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
   const myQuotes = (quotes ?? []).filter((q) => q.leadId === id);
   const myEvents = (events ?? []).filter((ev) => ev.leadId === id);
   const myPays = (payments ?? []).filter((p) => p.leadId === id || (p.eventId && myEvents.some((ev) => ev.id === p.eventId)));
+  const dupes = findDuplicates(leads, f.phone, existing?.id);
+  const pastDate = !!f.eventDate && f.eventDate < t && f.status !== 'completed';
   const townIsPreset = (LEAD_TOWNS as readonly string[]).includes(f.town);
 
   return (
@@ -93,6 +102,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
           {phoneOk ? <a class="btn btn-green" target="_blank" rel="noopener" href={waUrl(f.phone, buildLeadMessage({ name: f.name, eventDate: f.eventDate || undefined }, settings, lang))}>💬 WhatsApp</a> : <button class="btn btn-green" type="button" disabled>💬 WhatsApp</button>}
           <a class="btn" href={href('/quotes/new?lead=' + id)}>🧾 {tr(lang, 'कोटेशन बनवा', 'Create quote')}</a>
           <a class="btn" href={href('/events/new?lead=' + id)}>🗓️ {tr(lang, 'कार्यक्रम बनवा', 'Create event')}</a>
+          <CopyButton lang={lang} small={false} text={() => buildLeadMessage({ name: f.name, eventDate: f.eventDate || undefined }, settings, lang)} label={tr(lang, 'संदेश कॉपी', 'Copy message')} />
         </div>
       )}
 
@@ -116,12 +126,19 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
         <div class="field"><label for="ld-name">{tr(lang, 'ग्राहकाचे नाव *', 'Customer name *')}</label>
           <input id="ld-name" value={f.name} onInput={txt('name')} autoComplete="off" aria-invalid={!!errs.name} />{errs.name && <div class="err">{errs.name}</div>}</div>
         <div class="field"><label for="ld-phone">{tr(lang, 'मोबाईल नंबर * (१० अंक)', 'Mobile number * (10 digits)')}</label>
-          <input id="ld-phone" type="tel" inputMode="tel" value={f.phone} onInput={txt('phone')} aria-invalid={!!errs.phone} />{errs.phone && <div class="err">{errs.phone}</div>}</div>
+          <input id="ld-phone" type="tel" inputMode="tel" value={f.phone} onInput={txt('phone')} aria-invalid={!!errs.phone} />{errs.phone && <div class="err">{errs.phone}</div>}
+          {dupes.length > 0 && (
+            <div class="warn-box" role="alert">
+              ⚠️ {tr(lang, 'हा नंबर आधीच नोंदलेला आहे: ', 'This number is already saved: ')}
+              {dupes.slice(0, 3).map((d, i) => <span>{i ? ', ' : ''}<a href={href('/leads/' + d.id)}>{d.name}</a> ({tr(lang, STATUS_LABEL[d.status].mr, STATUS_LABEL[d.status].en)})</span>)}
+              {tr(lang, '. नवी नोंद करण्याऐवजी जुनी उघडा.', '. Open the old one instead of adding a new entry.')}
+            </div>
+          )}</div>
         <div class="grid2">
           <div class="field"><label for="ld-type">{tr(lang, 'कार्यक्रमाचा प्रकार', 'Event type')}</label>
             <select id="ld-type" value={f.eventType} onChange={txt('eventType')}>{EVENT_TYPES.map((x) => <option value={x}>{tr(lang, EVENT_LABEL[x].mr, EVENT_LABEL[x].en)}</option>)}</select></div>
           <div class="field"><label for="ld-date">{tr(lang, 'कार्यक्रमाची तारीख', 'Event date')}</label>
-            <input id="ld-date" type="date" value={f.eventDate} onInput={txt('eventDate')} /></div>
+            <input id="ld-date" type="date" value={f.eventDate} onInput={txt('eventDate')} />{pastDate && <div class="warn-text">{tr(lang, '⚠️ ही तारीख होऊन गेली आहे.', '⚠️ This date is in the past.')}</div>}</div>
           <div class="field"><label for="ld-guests">{tr(lang, 'पाहुण्यांची संख्या', 'Number of guests')}</label>
             <input id="ld-guests" type="number" inputMode="numeric" min="1" value={f.guests} onInput={txt('guests')} aria-invalid={!!errs.guests} />{errs.guests && <div class="err">{errs.guests}</div>}</div>
           <div class="field"><label for="ld-town">{tr(lang, 'गाव / शहर', 'Town')}</label>
@@ -161,7 +178,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
           <h3>🧾 {tr(lang, 'कोटेशन', 'Quotes')}</h3>
           {myQuotes.length === 0 ? <p class="muted">{tr(lang, 'अजून नाही', 'None yet')}</p> : (
             <div class="list">{myQuotes.map((q) => (
-              <a class="list-item" href={href('/quotes/' + q.id)}><div class="li-main"><div class="li-title">{q.eventTitle || q.customerName}</div><div class="li-sub">{fmtMoney(quoteTotal(q))}</div></div><span class={'badge ' + q.status}>{q.status}</span></a>
+              <a class="list-item" href={href('/quotes/' + q.id)}><div class="li-main"><div class="li-title">{q.eventTitle || q.customerName}</div><div class="li-sub">{fmtMoney(quoteTotal(q))}</div></div><span class={'badge ' + q.status}>{tr(lang, QSTATUS[q.status].mr, QSTATUS[q.status].en)}</span></a>
             ))}</div>)}
           <h3>🗓️ {tr(lang, 'कार्यक्रम', 'Events')}</h3>
           {myEvents.length === 0 ? <p class="muted">{tr(lang, 'अजून नाही', 'None yet')}</p> : (
@@ -171,7 +188,7 @@ export function LeadDetail({ lang, route }: { lang: Lang; route: Route }) {
           <h3>₹ {tr(lang, 'पैसे', 'Payments')}</h3>
           {myPays.length === 0 ? <p class="muted">{tr(lang, 'अजून नाही', 'None yet')}</p> : (
             <div class="list">{myPays.map((p) => (
-              <div class="list-item"><div class="li-main"><div class="li-title">{fmtDate(p.date, lang)}</div><div class="li-sub">{p.kind} · {p.method}</div></div><span class="money" style={{ color: p.direction === 'in' ? 'var(--a-green)' : 'var(--a-red)' }}>{p.direction === 'in' ? '+' : '-'}{fmtMoney(p.amount)}</span></div>
+              <div class="list-item"><div class="li-main"><div class="li-title">{fmtDate(p.date, lang)}</div><div class="li-sub">{tr(lang, KIND[p.kind].mr, KIND[p.kind].en)} · {tr(lang, METHOD[p.method].mr, METHOD[p.method].en)}</div></div><span class="money" style={{ color: p.direction === 'in' ? 'var(--a-green)' : 'var(--a-red)' }}>{p.direction === 'in' ? '+' : '-'}{fmtMoney(p.amount)}</span></div>
             ))}</div>)}
           <p><a class="btn btn-ghost btn-sm" href={href('/payments?lead=' + id + '&new=1')}>+ {tr(lang, 'पैसे नोंदवा', 'Add payment')}</a></p>
         </div>

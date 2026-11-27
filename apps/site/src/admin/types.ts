@@ -111,6 +111,7 @@ export interface Payment extends Base {
   date: string; // YYYY-MM-DD
   reference?: string; // UPI transaction id etc.
   note?: string;
+  staffId?: string; // optional: wages paid to this Staff member (direction 'out')
 }
 
 export interface MenuItem extends Base {

@@ -33,7 +33,7 @@ export function QtyEditor({ lang, dish, onClose }: { lang: Lang; dish: MenuItem;
       {err && <p class="err" role="alert">{err}</p>}
       <div class="row">
         <button type="button" class="btn btn-sm btn-ghost" onClick={() => setRows([...rows, { ingredient: '', qty: '', unit: 'kg' }])}>+ {tr(lang, 'साहित्य', 'Ingredient')}</button>
-        <button type="button" class="btn btn-sm btn-green" onClick={save}>{tr(lang, 'जतन करा', 'Save')}</button>
+        <button type="button" class="btn btn-sm btn-green" onClick={save}>{tr(lang, 'सेव्ह करा', 'Save')}</button>
         <button type="button" class="btn btn-sm btn-ghost" onClick={onClose}>{tr(lang, 'रद्द', 'Cancel')}</button>
       </div>
     </div>

@@ -15,7 +15,7 @@ export function TaskForm({ lang, task, defaults, events, staff, onClose }: { lan
     onClose();
   };
   const remove = async () => {
-    if (task && confirm(tr(lang, 'हे काम हटवायचे?', 'Delete this task?'))) { await store.remove('tasks', task.id); onClose(); }
+    if (task && confirm(tr(lang, 'हे काम काढायचे?', 'Delete this task?'))) { await store.remove('tasks', task.id); onClose(); }
   };
   const evs = [...events].sort((a, b) => b.date.localeCompare(a.date));
   return (
@@ -40,9 +40,9 @@ export function TaskForm({ lang, task, defaults, events, staff, onClose }: { lan
       <div class="field"><label for="tk-notes">{tr(lang, 'नोंद', 'Notes')}</label><input id="tk-notes" value={t.notes || ''} onInput={(e) => set({ notes: (e.target as HTMLInputElement).value })} /></div>
       {err && <p class="err" role="alert">{err}</p>}
       <div class="row">
-        <button type="button" class="btn btn-green" onClick={save}>{tr(lang, 'जतन करा', 'Save')}</button>
+        <button type="button" class="btn btn-green" onClick={save}>{tr(lang, 'सेव्ह करा', 'Save')}</button>
         <button type="button" class="btn btn-ghost" onClick={onClose}>{tr(lang, 'रद्द', 'Cancel')}</button>
-        {task && <button type="button" class="btn btn-danger" onClick={remove}>{tr(lang, 'हटवा', 'Delete')}</button>}
+        {task && <button type="button" class="btn btn-danger" onClick={remove}>{tr(lang, 'काढा', 'Delete')}</button>}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import type { CatEvent, Lang, MenuItem, Task } from '../../types';
 import { fmtDate, orderTypeLabel, waUrl } from '../../util';
 import { dishName, townLabel } from '../events/labels';
 import { QtyEditor } from './QtyEditor';
+import { CopyButton } from '../../ui';
 import { dishLines, fmtQty, hasQty, shoppingTotals, STARTER_PACKING } from './logic';
 
 type Tab = 'prep' | 'shop' | 'pack';
@@ -15,22 +16,26 @@ export function SheetsScreen({ lang, route }: { lang: Lang; route: Route }) {
   const events = useList('events'), menu = useList('menu'), tasks = useList('tasks');
   const [tab, setTab] = useState<Tab>('prep');
   const [editing, setEditing] = useState<string | null>(null);
+  const [gOverride, setGOverride] = useState('');   // guests for THIS sheet only (not saved to the event)
+  const [buffer, setBuffer] = useState(0);          // extra % for safety
   if (!events || !menu || !tasks) return <div class="page"><p class="muted">{tr(lang, 'लोड होत आहे…', 'Loading…')}</p></div>;
   const ev = events.find((e) => e.id === id);
   if (!ev) return <div class="page"><h1>{tr(lang, 'कार्यक्रम सापडला नाही', 'Event not found')}</h1><a class="btn" href={href('/events')}>{tr(lang, 'कार्यक्रम यादी', 'All events')}</a></div>;
 
+  const base = Number(gOverride) > 0 ? Math.round(Number(gOverride)) : ev.guests;
+  const guests = Math.max(1, Math.round(base * (1 + buffer / 100)));
   const dishes = ev.dishIds.map((d) => menu.find((m) => m.id === d)).filter(Boolean) as MenuItem[];
   const withMat = ev.orderType === 'with-material';
   const packTasks = tasks.filter((t) => t.eventId === ev.id && t.category === 'packing');
-  const shop = shoppingTotals(dishes, ev.guests, (m) => dishName(m, lang));
+  const shop = shoppingTotals(dishes, guests, (m) => dishName(m, lang));
   const noData = dishes.filter((d) => !hasQty(d));
 
   const shopTitle = withMat ? tr(lang, 'ग्राहकाने द्यायचे साहित्य', 'Ingredients the customer must provide') : tr(lang, 'खरेदी यादी', 'Shopping list');
   const waText = () => {
-    const head = `*${ev.title}*\n${fmtDate(ev.date, lang)}${ev.startTime ? ' ' + ev.startTime : ''} | ${[ev.venue, townLabel(ev.town, lang)].filter(Boolean).join(', ')} | ${ev.guests} ${tr(lang, 'पाहुणे', 'guests')}\n`;
+    const head = `*${ev.title}*\n${fmtDate(ev.date, lang)}${ev.startTime ? ' ' + ev.startTime : ''} | ${[ev.venue, townLabel(ev.town, lang)].filter(Boolean).join(', ')} | ${guests} ${tr(lang, 'पाहुणे', 'guests')}\n`;
     if (tab === 'prep') {
       return head + `\n*${tr(lang, 'तयारी (पदार्थानुसार)', 'Prep by dish')}*\n` + dishes.map((d) => {
-        const l = dishLines(d, ev.guests);
+        const l = dishLines(d, guests);
         return `\n${dishName(d, lang)}\n` + (l.length ? l.map((r) => `- ${r.ingredient}: ${fmtQty(r.qty, r.unit)}`).join('\n') : `- ${tr(lang, 'प्रमाण भरलेले नाही', 'quantities not entered')}`);
       }).join('\n') + (ev.extraDishes.length ? `\n\n${tr(lang, 'इतर', 'Other')}: ${ev.extraDishes.join(', ')}` : '');
     }
@@ -50,11 +55,25 @@ export function SheetsScreen({ lang, route }: { lang: Lang; route: Route }) {
       <div class="no-print"><a href={href('/events/' + ev.id)}>← {tr(lang, 'कार्यक्रम', 'Event')}</a></div>
       <div class="sh-head">
         <h1>{ev.title}</h1>
-        <div>📅 {fmtDate(ev.date, lang)}{ev.startTime ? ', ' + ev.startTime : ''} · 👥 {ev.guests} {tr(lang, 'पाहुणे', 'guests')}</div>
+        <div>📅 {fmtDate(ev.date, lang)}{ev.startTime ? ', ' + ev.startTime : ''} · 👥 {guests} {tr(lang, 'पाहुणे', 'guests')}{guests !== ev.guests && <span class="muted"> ({tr(lang, `कार्यक्रमात ${ev.guests}`, `event has ${ev.guests}`)})</span>}</div>
         {(ev.venue || ev.town) && <div>📍 {[ev.venue, townLabel(ev.town, lang)].filter(Boolean).join(', ')}</div>}
         <div class="muted">{orderTypeLabel(ev.orderType, lang)}</div>
       </div>
 
+      <div class="card no-print sh-scale">
+        <div class="field" style="margin-bottom:.4rem">
+          <label for="sh-guests">{tr(lang, 'या यादीसाठी पाहुणे (बदलून पाहा)', 'Guests for this list (try a different number)')}</label>
+          <div class="row">
+            <input id="sh-guests" style="max-width:9rem" type="number" inputMode="numeric" min="1" placeholder={String(ev.guests)} value={gOverride} onInput={(e) => setGOverride((e.target as HTMLInputElement).value)} />
+            {(gOverride !== '' || buffer > 0) && <button type="button" class="btn btn-ghost btn-sm" onClick={() => { setGOverride(''); setBuffer(0); }}>{tr(lang, 'मूळ संख्या', 'Reset')}</button>}
+          </div>
+        </div>
+        <div class="chips" role="group" aria-label={tr(lang, 'जास्तीचे प्रमाण', 'Extra margin')} style="margin-bottom:0">
+          <span class="muted small" style="align-self:center">{tr(lang, 'जास्तीचे (मार्जिन):', 'Extra margin:')}</span>
+          {[0, 5, 10, 15].map((b) => <button type="button" class={buffer === b ? 'chip on' : 'chip'} aria-pressed={buffer === b} onClick={() => setBuffer(b)}>{b === 0 ? tr(lang, 'नाही', 'None') : '+' + b + '%'}</button>)}
+        </div>
+        <p class="muted small" style="margin:.4rem 0 0">{tr(lang, 'प्रमाण १०० पाहुण्यांच्या आकड्यावरून मोजले जाते. हे फक्त साहित्याचे अंदाजे प्रमाण आहे; यात किंमत नाही.', 'Quantities scale from your per-100-guests numbers. Raw material estimates only; no prices.')}</p>
+      </div>
       <div class="sh-tabs no-print" role="tablist">
         {([['prep', tr(lang, 'तयारी', 'Prep')], ['shop', withMat ? tr(lang, 'ग्राहकाचे साहित्य', 'Customer items') : tr(lang, 'खरेदी', 'Shopping')], ['pack', tr(lang, 'पॅकिंग', 'Packing')]] as [Tab, string][]).map(([k, label]) => (
           <button type="button" role="tab" aria-selected={tab === k} class={'chip' + (tab === k ? ' on' : '')} onClick={() => setTab(k)}>{label}</button>
@@ -63,6 +82,7 @@ export function SheetsScreen({ lang, route }: { lang: Lang; route: Route }) {
       <div class="row no-print" style="margin-bottom:.8rem">
         <button type="button" class="btn btn-ghost btn-sm" onClick={() => window.print()}>🖨 {tr(lang, 'प्रिंट', 'Print')}</button>
         <button type="button" class="btn btn-green btn-sm" onClick={share}>💬 {tr(lang, 'WhatsApp वर पाठवा', 'Share on WhatsApp')}</button>
+        <CopyButton lang={lang} text={waText} />
       </div>
 
       {tab !== 'pack' && dishes.length === 0 && ev.extraDishes.length === 0 && <p class="empty">{tr(lang, 'या कार्यक्रमात पदार्थ निवडलेले नाहीत. कार्यक्रम उघडून पदार्थ निवडा.', 'No dishes chosen for this event. Open the event and pick dishes.')} <a href={href('/events/' + ev.id)}>{tr(lang, 'कार्यक्रम उघडा', 'Open event')}</a></p>}
@@ -71,12 +91,12 @@ export function SheetsScreen({ lang, route }: { lang: Lang; route: Route }) {
         <>
           {noData.length > 0 && <div class="sh-note">{tr(lang, `${noData.length} पदार्थांचे प्रमाण भरलेले नाही. "प्रमाण भरा" दाबून एकदा भरा, पुढच्या वेळी आपोआप दिसेल. आम्ही कोणतेही प्रमाण स्वतः लिहिलेले नाही.`, `${noData.length} dish(es) have no quantities yet. Tap "Add quantities" once and it will be remembered. No quantities are guessed.`)}</div>}
           {dishes.map((d) => {
-            const lines = dishLines(d, ev.guests);
+            const lines = dishLines(d, guests);
             return (
               <div class="card sh-dish" key={d.id}>
                 <h3>{dishName(d, lang)}</h3>
                 {lines.length > 0 && (
-                  <table class="table sh-table"><thead><tr><th>{tr(lang, 'साहित्य', 'Ingredient')}</th><th>{tr(lang, `प्रमाण (${ev.guests} पाहुणे)`, `Qty (${ev.guests} guests)`)}</th></tr></thead>
+                  <table class="table sh-table"><thead><tr><th>{tr(lang, 'साहित्य', 'Ingredient')}</th><th>{tr(lang, `प्रमाण (${guests} पाहुणे)`, `Qty (${guests} guests)`)}</th></tr></thead>
                     <tbody>{lines.map((r) => <tr><td>{r.ingredient}</td><td>{fmtQty(r.qty, r.unit)}</td></tr>)}</tbody></table>
                 )}
                 {lines.length === 0 && <p class="muted">{tr(lang, 'प्रमाण भरलेले नाही.', 'No quantities entered.')}</p>}

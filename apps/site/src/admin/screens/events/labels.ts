@@ -9,7 +9,7 @@ const ET: Record<EventType, [string, string]> = {
 export const eventTypeLabel = (t: EventType, lang: Lang) => tr(lang, ET[t]?.[0] ?? t, ET[t]?.[1] ?? t);
 
 const ES: Record<EventStatus, [string, string]> = {
-  planned: ['नियोजित', 'Planned'], confirmed: ['निश्चित', 'Confirmed'], done: ['पूर्ण', 'Done'], cancelled: ['रद्द', 'Cancelled'],
+  planned: ['नियोजित', 'Planned'], confirmed: ['पक्का', 'Confirmed'], done: ['पूर्ण', 'Done'], cancelled: ['रद्द', 'Cancelled'],
 };
 export const eventStatusLabel = (s: EventStatus, lang: Lang) => tr(lang, ES[s][0], ES[s][1]);
 

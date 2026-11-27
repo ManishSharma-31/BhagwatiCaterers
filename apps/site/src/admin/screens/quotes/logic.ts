@@ -1,6 +1,6 @@
 // Pure quote logic: totals, validation, messages, lead status rules. No JSX.
 import type { CatEvent, Lang, Lead, LeadStatus, MenuItem, Quote, QuoteLine, QuoteStatus, Settings } from '../../types';
-import { fmtDate, fmtMoney, quoteTotal } from '../../util';
+import { cleanText, fmtDate, fmtMoney, quoteTotal } from '../../util';
 
 export const balanceAfterAdvance = (q: Pick<Quote, 'guests' | 'perPlate' | 'lines' | 'discount' | 'advanceAmount'>) =>
   quoteTotal(q) - (q.advanceAmount || 0);
@@ -11,8 +11,8 @@ export interface QuoteErrors { name?: string; phone?: string; guests?: string; p
 export const validateQuote = (q: Pick<Quote, 'customerName' | 'customerPhone' | 'guests' | 'perPlate'>, phoneOk: boolean, lang: Lang): QuoteErrors => {
   const e: QuoteErrors = {};
   if (!q.customerName.trim()) e.name = lang === 'mr' ? 'ग्राहकाचे नाव लिहा' : 'Enter the customer name';
-  if (!phoneOk) e.phone = lang === 'mr' ? '१० अंकी मोबाईल नंबर लिहा' : 'Enter a valid 10-digit mobile number';
-  if (!(q.guests > 0)) e.guests = lang === 'mr' ? 'पाहुण्यांची संख्या लिहा' : 'Enter number of guests';
+  if (!phoneOk) e.phone = lang === 'mr' ? '१० अंकी मोबाईल नंबर लिहा (६, ७, ८ किंवा ९ ने सुरू होणारा)' : 'Enter a valid 10-digit mobile number (starting with 6, 7, 8 or 9)';
+  if (!(q.guests > 0)) e.guests = lang === 'mr' ? 'पाहुण्यांची संख्या लिहा (१ किंवा जास्त)' : 'Enter number of guests (1 or more)';
   if (!(q.perPlate > 0)) e.perPlate = lang === 'mr' ? 'दर लिहा' : 'Enter the rate';
   return e;
 };
@@ -54,39 +54,56 @@ export const perPlateLabel = (orderType: Quote['orderType'], lang: Lang) =>
 
 type MsgSettings = Pick<Settings, 'businessName' | 'phone' | 'fssai' | 'upiId'>;
 
-/** WhatsApp text for a quote, in Marathi or English. Only includes what has been filled in. */
+/** WhatsApp text for a quote, in Marathi or English. Only includes what has been filled in. User text is cleaned of hidden/control characters. */
 export const buildQuoteMessage = (q: Quote, dishes: string[], s: MsgSettings, lang: Lang): string => {
   const mr = lang === 'mr';
   const total = quoteTotal(q);
   const lines = cleanLines(q.lines);
+  const biz = cleanText(s.businessName) || (mr ? 'भगवती केटरर्स' : 'Bhagwati Caterers');
   const out: string[] = [];
-  out.push(`*${s.businessName}*`);
-  out.push(mr ? `नमस्कार ${q.customerName} जी, आपले कोटेशन:` : `Namaste ${q.customerName}, here is your quote:`);
+  out.push(`*${biz}*`);
+  out.push(mr ? `नमस्कार ${cleanText(q.customerName)} जी, आपले कोटेशन:` : `Namaste ${cleanText(q.customerName)}, here is your quote:`);
   out.push('');
-  if (q.eventTitle) out.push((mr ? 'कार्यक्रम: ' : 'Event: ') + q.eventTitle);
+  if (q.eventTitle) out.push((mr ? 'कार्यक्रम: ' : 'Event: ') + cleanText(q.eventTitle));
   if (q.eventDate) out.push((mr ? 'दिनांक: ' : 'Date: ') + fmtDate(q.eventDate, lang));
-  if (q.town) out.push((mr ? 'गाव/शहर: ' : 'Place: ') + q.town);
+  if (q.town) out.push((mr ? 'गाव/शहर: ' : 'Place: ') + cleanText(q.town));
   out.push((mr ? 'पाहुणे: ' : 'Guests: ') + q.guests);
   if (dishes.length) {
     out.push('', mr ? '*पदार्थ:*' : '*Menu:*');
-    dishes.forEach((d, i) => out.push(`${i + 1}. ${d}`));
+    dishes.forEach((d, i) => out.push(`${i + 1}. ${cleanText(d)}`));
   }
   out.push('');
   const rateLabel = q.orderType === 'with-material' ? (mr ? 'प्रति थाळी मजुरी' : 'Labour per plate') : (mr ? 'प्रति थाळी दर' : 'Rate per plate');
-  out.push(`${rateLabel}: ${fmtMoney(q.perPlate)} x ${q.guests} = ${fmtMoney(q.guests * q.perPlate)}`);
-  for (const l of lines) out.push(`${l.label || (mr ? 'इतर' : 'Other')}: ${fmtMoney(l.amount)}`);
+  out.push(`${rateLabel}: ${fmtMoney(q.perPlate)} × ${q.guests} = ${fmtMoney(q.guests * q.perPlate)}`);
+  for (const l of lines) out.push(`${cleanText(l.label) || (mr ? 'इतर' : 'Other')}: ${fmtMoney(l.amount)}`);
   if (q.discount) out.push(`${mr ? 'सूट' : 'Discount'}: -${fmtMoney(q.discount)}`);
   out.push(`*${mr ? 'एकूण' : 'Total'}: ${fmtMoney(total)}*`);
   if (q.advanceAmount) {
     out.push(`${mr ? 'आगाऊ रक्कम (अॅडव्हान्स)' : 'Advance'}: ${fmtMoney(q.advanceAmount)}`);
-    out.push(`${mr ? 'उरलेली रक्कम' : 'Balance'}: ${fmtMoney(total - q.advanceAmount)}`);
+    out.push(`${mr ? 'बाकी रक्कम' : 'Balance'}: ${fmtMoney(total - q.advanceAmount)}`);
+    if (s.upiId) out.push(`${mr ? 'UPI वर पाठवण्यासाठी' : 'Pay by UPI'}: ${cleanText(s.upiId)}`);
   }
   if (q.orderType === 'with-material') out.push('', mr ? 'टीप: साहित्य ग्राहक देणार; आम्ही फक्त स्वयंपाक करू.' : 'Note: ingredients provided by customer; we only cook.');
+  if (q.terms && cleanText(q.terms)) out.push('', mr ? '*अटी:*' : '*Terms:*', cleanText(q.terms));
   if (q.validUntil) out.push('', (mr ? 'कोटेशन वैध: ' : 'Valid until: ') + fmtDate(q.validUntil, lang));
-  out.push('', mr ? 'धन्यवाद.' : 'Thank you.', `${s.businessName}${s.phone ? ' | ' + s.phone : ''}`);
+  out.push('', mr ? 'धन्यवाद.' : 'Thank you.', `${biz}${s.phone ? ' | ' + s.phone : ''}`);
   if (s.fssai) out.push(`FSSAI: ${s.fssai}`);
   return out.join('\n');
 };
+
+export type QuoteSort = 'recent' | 'total' | 'eventdate';
+export const matchesQuote = (q: Quote, term: string) => {
+  const s = term.trim().toLowerCase();
+  if (!s) return true;
+  const digits = s.replace(/\D/g, '');
+  return q.customerName.toLowerCase().includes(s) || q.eventTitle.toLowerCase().includes(s) || (q.town ?? '').toLowerCase().includes(s) || (digits.length >= 3 && q.customerPhone.replace(/\D/g, '').includes(digits));
+};
+export const sortQuotes = (qs: Quote[], mode: QuoteSort) =>
+  [...qs].sort((a, b) => {
+    if (mode === 'total') return quoteTotal(b) - quoteTotal(a);
+    if (mode === 'eventdate') { if (!!a.eventDate !== !!b.eventDate) return a.eventDate ? -1 : 1; if (a.eventDate && b.eventDate && a.eventDate !== b.eventDate) return a.eventDate < b.eventDate ? -1 : 1; }
+    return a.updatedAt < b.updatedAt ? 1 : -1;
+  });
 
 /** Prefill fields (never prices) from a lead. */
 export const fromLead = (l: Lead, lang: 'mr' | 'en' = 'en') => ({

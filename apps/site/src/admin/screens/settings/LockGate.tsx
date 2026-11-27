@@ -22,6 +22,17 @@ export function LockGate({ store, lang, children }: { store: Store; lang: Lang; 
     return () => { alive = false; off(); };
   }, [store]);
 
+  // Lock again when the app was in the background for 5 minutes or more (a deterrent on a shared phone).
+  useEffect(() => {
+    let hiddenAt = 0;
+    const on = () => {
+      if (document.visibilityState === 'hidden') hiddenAt = Date.now();
+      else if (hiddenAt && Date.now() - hiddenAt > 5 * 60 * 1000 && isUnlocked()) { setUnlocked(false); force((n) => n + 1); }
+    };
+    document.addEventListener('visibilitychange', on);
+    return () => document.removeEventListener('visibilitychange', on);
+  }, []);
+
   const state = getAuthState(store);
   if (state === 'cloud-locked') return <Login store={store} lang={lang} />;
   if (state === 'cloud-denied') return <Denied store={store} lang={lang} />;
@@ -48,6 +59,16 @@ function PinPad({ lang, hash, salt, onOk }: { lang: Lang; hash: string; salt: st
     setMsg(next.lockedUntil > Date.now() ? '' : tr(lang, 'PIN चुकीचा आहे. पुन्हा प्रयत्न करा.', 'Wrong PIN. Try again.'));
   };
   const press = (d: string) => { if (wait === 0 && pin.length < PIN_MAX) { setPin(pin + d); setMsg(''); } };
+  // Keyboard support (desktop, or a phone with a keyboard).
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => {
+      if (/^\d$/.test(e.key)) press(e.key);
+      else if (e.key === 'Backspace') setPin((p) => p.slice(0, -1));
+      else if (e.key === 'Enter') void submit();
+    };
+    addEventListener('keydown', k);
+    return () => removeEventListener('keydown', k);
+  });
 
   return (
     <div class="lock-wrap">
@@ -65,6 +86,8 @@ function PinPad({ lang, hash, salt, onOk }: { lang: Lang; hash: string; salt: st
           <button type="button" class="lock-key" aria-label="OK" disabled={pin.length < 4 || wait > 0} onClick={submit}>✓</button>
         </div>
         <p class="muted small">{tr(lang, 'PIN हा या फोनवरील साधा कुलूप आहे, मजबूत सुरक्षा नाही.', 'The PIN is a simple lock on this phone, not strong security.')}</p>
+        <details class="small"><summary>{tr(lang, 'PIN विसरलात?', 'Forgot the PIN?')}</summary>
+          <p class="muted">{tr(lang, 'PIN परत मिळवता येत नाही. बॅकअप फाइल असेल तर: फोनच्या ब्राउझर सेटिंग्जमध्ये या साइटचा डेटा पुसा, अॅप पुन्हा उघडा आणि सेटिंग्जमधून बॅकअप परत आणा. बॅकअप नसेल तर माहिती परत मिळणार नाही, म्हणून नियमित बॅकअप घ्या.', 'The PIN cannot be recovered. If you have a backup file: clear this site\'s data in the browser settings, open the app again and restore the backup from Settings. Without a backup the data cannot be recovered, so back up regularly.')}</p></details>
       </div>
     </div>
   );

@@ -32,6 +32,34 @@ export const waUrl = (phone: string, text: string) => {
   const n = waNumber(phone);
   return `https://wa.me/${n}?text=${encodeURIComponent(text)}`;
 };
+/** Last 10 digits of an Indian number (used to compare numbers typed in different styles: +91, 0, spaces). '' if too short. */
+export const phoneKey = (phone: string) => { const d = (phone || '').replace(/\D/g, ''); return d.length >= 10 ? d.slice(-10) : ''; };
+/** Store a valid Indian mobile as plain 10 digits (no +91, spaces or dashes); anything else is only trimmed so the owner can fix it. */
+export const normPhone = (phone: string) => { const n = waNumber(phone); return n ? n.slice(2) : (phone || '').trim(); };
+/** True when the text is a usable 10-digit Indian mobile number. */
+export const isValidPhone = (phone: string) => !!waNumber(phone);
+/** True when an ISO date (YYYY-MM-DD) is before today. */
+export const isPast = (iso?: string) => !!iso && iso < today();
+
+/** Remove control, zero-width and bidi-override characters from text that goes into WhatsApp messages or exports. */
+export const cleanText = (s: string | undefined | null) =>
+  (s ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g, '').trim();
+
+/** Copy text to the clipboard. Falls back to a hidden textarea for old browsers. Returns true on success. */
+export async function copyText(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); return true; }
+  } catch { /* fall through */ }
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  } catch { return false; }
+}
+
 export const telUrl = (phone: string) => { const n = waNumber(phone); return n ? `tel:+${n}` : `tel:${phone}`; };
 
 export const quoteTotal = (q: Pick<Quote, 'guests' | 'perPlate' | 'lines' | 'discount'>) =>
@@ -56,7 +84,9 @@ export const toCsv = (rows: Array<Record<string, unknown>>) => {
   if (!rows.length) return '';
   const cols = [...new Set(rows.flatMap((r) => Object.keys(r)))];
   const esc = (v: unknown) => {
-    const s = Array.isArray(v) ? v.join('; ') : v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
+    let s = Array.isArray(v) ? v.join('; ') : v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
+    // Spreadsheet formula injection: a text cell that starts with = + - @ (or tab/CR) could run as a formula in Excel. Prefix a quote.
+    if (typeof v === 'string' && /^[=@\t\r]|^[+-](?![\d\s.,()+-]*$)/.test(s)) s = "'" + s;
     return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   };
   return '﻿' + [cols.join(','), ...rows.map((r) => cols.map((c) => esc(r[c])).join(','))].join('\r\n');

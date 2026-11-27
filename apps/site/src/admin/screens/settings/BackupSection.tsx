@@ -2,7 +2,7 @@ import { useState } from 'preact/hooks';
 import { tr, useStore } from '../../hooks';
 import { ENTITY_NAMES, type Backup, type EntityName, type Lang } from '../../types';
 import { download } from '../../util';
-import { BackupError, CSV_ENTITIES, backupFileName, countBackup, csvFileName, daysSinceBackup, entityCsv, getLastBackupAt, markBackupNow, parseBackup, previewImport, type PreviewRow } from '../../backup';
+import { BackupError, CSV_ENTITIES, MAX_BACKUP_BYTES, backupFileName, countBackup, csvFileName, daysSinceBackup, entityCsv, getLastBackupAt, hasUserData, keepDevicePin, markBackupNow, parseBackup, preRestoreFileName, previewImport, type PreviewRow } from '../../backup';
 import { isCloudStore } from '../../cloud-store';
 import { clearCloudConfig } from '../../cloud-config';
 
@@ -36,6 +36,7 @@ export function BackupSection({ lang }: { lang: Lang }) {
     const input = ev.target as HTMLInputElement; const file = input.files?.[0]; input.value = '';
     if (!file) return;
     setMsg(null);
+    if (file.size > MAX_BACKUP_BYTES) return setMsg({ ok: false, t: tr(lang, 'ही फाइल खूप मोठी आहे; ही बॅकअप फाइल नसावी.', 'This file is too large to be a backup.') });
     try {
       const b = parseBackup(await file.text());
       setPending({ b, rows: previewImport(await store.exportAll(), b, mode), name: file.name });
@@ -45,17 +46,37 @@ export function BackupSection({ lang }: { lang: Lang }) {
     }
   };
   const changeMode = async (m: 'merge' | 'replace') => { setMode(m); if (pending) setPending({ ...pending, rows: previewImport(await store.exportAll(), pending.b, m) }); };
+  /** Save the data that is on this device right now to a file, so a restore can always be undone by restoring that file. */
+  const safetyCopy = async (): Promise<string | null> => {
+    const cur = await store.exportAll();
+    if (!hasUserData(cur)) return null;
+    const fname = preRestoreFileName();
+    download(fname, JSON.stringify(cur, null, 2), 'application/json');
+    return fname;
+  };
   const restore = async () => {
     if (!pending) return;
     const c = countBackup(pending.b);
-    if (mode === 'replace' && !confirm(tr(lang, `सावधान: सध्याची सर्व माहिती पुसून फाइलमधील माहिती (चौकशी ${c.leads}, कार्यक्रम ${c.events}, कोटेशन ${c.quotes}) भरली जाईल. पुढे जायचे?`, `Careful: ALL current data will be erased and replaced by the file (leads ${c.leads}, events ${c.events}, quotes ${c.quotes}). Continue?`))) return;
+    const incoming = `(${tr(lang, 'चौकशी', 'leads')} ${c.leads}, ${tr(lang, 'कार्यक्रम', 'events')} ${c.events}, ${tr(lang, 'कोटेशन', 'quotes')} ${c.quotes}, ${tr(lang, 'पैसे', 'payments')} ${c.payments})`;
+    const sum = pending.rows.reduce((t, r) => ({ add: t.add + r.add, update: t.update + r.update, remove: t.remove + r.remove }), { add: 0, update: 0, remove: 0 });
+    const ok = mode === 'replace'
+      ? confirm(tr(lang, `सावधान: सध्याची सर्व माहिती पुसून फाइलमधील माहिती ${incoming} भरली जाईल. ${sum.remove} नोंदी पुसल्या जातील.\n\nपुढे जाण्यापूर्वी सध्याच्या माहितीची सुरक्षा-फाइल आपोआप डाउनलोड होईल. पुढे जायचे?`, `Careful: ALL current data will be erased and replaced by the file ${incoming}. ${sum.remove} record(s) will be removed.\n\nA safety copy of your current data will be downloaded first. Continue?`))
+        && (hasUserData(pending.b) || confirm(tr(lang, 'या फाइलमध्ये एकही चौकशी/कार्यक्रम/कोटेशन/पैसे नाही! तरीही सर्व माहिती पुसायची?', 'This file has NO leads, events, quotes or payments! Still erase everything?')))
+      : confirm(tr(lang, `फाइलमधील ${sum.add} नवीन नोंदी जोडल्या जातील आणि ${sum.update} नोंदी नवीन आवृत्तीने बदलल्या जातील. काहीही पुसले जाणार नाही.\n\nसुरक्षेसाठी आधी सध्याच्या माहितीची प्रत डाउनलोड होईल. पुढे जायचे?`, `${sum.add} new record(s) will be added and ${sum.update} updated with newer versions. Nothing is deleted.\n\nA safety copy of your current data will be downloaded first. Continue?`));
+    if (!ok) return;
     setBusy(true);
-    try { await store.importAll(pending.b, mode); setMsg({ ok: true, t: tr(lang, 'माहिती परत आणली.', 'Data restored.') }); setPending(null); }
-    catch { setMsg({ ok: false, t: tr(lang, 'परत आणता आले नाही.', 'Could not restore.') }); }
+    try {
+      const current = await store.exportAll();
+      const saved = await safetyCopy();
+      await store.importAll(keepDevicePin(pending.b, current), mode);
+      setMsg({ ok: true, t: tr(lang, `माहिती परत आणली.${saved ? ` आधीची माहिती "${saved}" नावाने डाउनलोड केली आहे; चुकले असल्यास तीच फाइल परत आणा.` : ''}`, `Data restored.${saved ? ` Your previous data was saved as "${saved}"; restore that file if this was a mistake.` : ''}`) });
+      setPending(null);
+    } catch { setMsg({ ok: false, t: tr(lang, 'परत आणता आले नाही. तुमची सध्याची माहिती तशीच आहे का ते तपासा.', 'Could not restore. Please check that your current data is still there.') }); }
     setBusy(false);
   };
   const clearAll = async () => {
     const cloud = isCloudStore(store);
+    if (!cloud) { try { const saved = await safetyCopy(); if (saved) setMsg({ ok: true, t: tr(lang, `सुरक्षेसाठी माहितीची प्रत "${saved}" नावाने डाउनलोड केली आहे.`, `A safety copy was downloaded as "${saved}".`) }); } catch { /* continue to the confirmation */ } }
     if (!confirm(cloud ? tr(lang, 'या फोनवरील प्रत पुसायची आणि बाहेर पडायचे? क्लाउडमधील माहिती तशीच राहील.', 'Erase this phone\'s copy and sign out? Data in the cloud stays.') : tr(lang, 'या फोनवरील सर्व माहिती कायमची पुसायची? बॅकअप घेतला नसेल तर ती परत येणार नाही.', 'Erase ALL data on this phone for good? It cannot come back unless you have a backup.'))) return;
     if (!confirm(tr(lang, 'खात्री आहे का? हे परत करता येणार नाही.', 'Are you really sure? This cannot be undone.'))) return;
     if (isCloudStore(store)) { await store.signOut(true); clearCloudConfig(); }
@@ -81,7 +102,7 @@ export function BackupSection({ lang }: { lang: Lang }) {
           </div>
           <table class="table set-table"><thead><tr><th></th><th>{tr(lang, 'फाइलमध्ये', 'In file')}</th><th>{tr(lang, 'नवीन', 'New')}</th><th>{tr(lang, 'बदलणार', 'Updated')}</th>{mode === 'merge' ? <th>{tr(lang, 'तशीच', 'Kept')}</th> : <th>{tr(lang, 'पुसणार', 'Removed')}</th>}</tr></thead>
             <tbody>{pending.rows.filter((r) => r.incoming || r.remove).map((r) => <tr><td>{name(r.entity)}</td><td>{r.incoming}</td><td>{r.add}</td><td>{r.update}</td><td>{mode === 'merge' ? r.keep : r.remove}</td></tr>)}</tbody></table>
-          {mode === 'replace' && <p class="set-warn">{tr(lang, 'सर्व बदला निवडल्यास सध्याची सर्व माहिती पुसली जाते.', 'Replace erases all current data first.')}</p>}
+          {mode === 'replace' ? <p class="set-warn">{tr(lang, 'सर्व बदला निवडल्यास सध्याची सर्व माहिती पुसली जाते. पुसण्यापूर्वी तिची सुरक्षा-प्रत आपोआप डाउनलोड होते.', 'Replace erases all current data. A safety copy is downloaded automatically first.')}</p> : <p class="muted small">{tr(lang, 'मिसळल्यास काहीही पुसले जात नाही. आपली सध्याची PIN या फोनवर तशीच राहते.', 'Merge deletes nothing. The PIN on this phone is kept either way.')}</p>}
           <div class="set-actions">
             <button class="btn" type="button" disabled={busy} onClick={restore}>{mode === 'merge' ? tr(lang, 'मिसळून परत आणा', 'Merge now') : tr(lang, 'सर्व बदला', 'Replace now')}</button>
             <button class="btn btn-ghost" type="button" onClick={() => setPending(null)}>{tr(lang, 'रद्द करा', 'Cancel')}</button>
@@ -91,6 +112,7 @@ export function BackupSection({ lang }: { lang: Lang }) {
       {msg && <p class={msg.ok ? 'ok' : 'err'} role="status">{msg.t}</p>}
 
       <h3>{tr(lang, 'Excel साठी CSV', 'CSV for Excel')}</h3>
+      <p class="muted small">{tr(lang, 'ही फक्त पाहण्यासाठी यादी आहे; यातून माहिती परत आणता येत नाही. परत आणण्यासाठी वरचा JSON बॅकअप वापरा.', 'For viewing only: you cannot restore from CSV. Use the JSON backup above for that.')}</p>
       <div class="set-actions">{CSV_ENTITIES.map((e) => <button class="btn btn-sm btn-ghost" type="button" onClick={() => csv(e)}>{name(e)}</button>)}</div>
 
       <h3>{tr(lang, 'धोक्याचे', 'Danger zone')}</h3>
