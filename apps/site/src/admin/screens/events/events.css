@@ -1,0 +1,27 @@
+.ev-cal { padding: .6rem; }
+.ev-head { display: flex; align-items: center; gap: .4rem; margin-bottom: .5rem; }
+.ev-head h2 { flex: 1; margin: 0; text-align: center; font-size: 1.1rem; }
+.ev-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.ev-wd { text-align: center; font-weight: 700; font-size: .8rem; color: var(--a-muted); padding: .2rem 0; }
+.ev-day { min-height: 48px; border: 1px solid var(--a-line); border-radius: 8px; background: #fff; font: inherit; padding: 2px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; cursor: pointer; color: var(--a-ink); }
+.ev-day.pad { border: 0; background: transparent; cursor: default; }
+.ev-day.today { border: 2px solid var(--a-kesari); font-weight: 700; }
+.ev-day.sel { background: var(--a-maroon); color: #fff; }
+.ev-day.busy { background: #fff0b3; }
+.ev-day.busy.sel { background: var(--a-maroon); }
+.ev-dots { display: flex; gap: 2px; align-items: center; font-size: .72rem; font-weight: 700; }
+.ev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--a-green); display: inline-block; }
+.ev-day.busy .ev-dot { background: var(--a-red); }
+.ev-warn { background: #fff0b3; border: 2px solid var(--a-haldi); border-radius: 12px; padding: .5rem .8rem; margin-bottom: .6rem; font-weight: 700; }
+.ev-sub { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
+.ev-sec { margin-top: 1rem; }
+.ev-tpl-row { display: grid; grid-template-columns: 28px 1fr; gap: .5rem; align-items: start; padding: .5rem 0; border-bottom: 1px solid var(--a-line); }
+.ev-tpl-row .grid2 { grid-template-columns: 1fr 150px; }
+.ev-dish-group { margin-bottom: .5rem; }
+.ev-dishes { max-height: 340px; overflow: auto; border: 1px solid var(--a-line); border-radius: 10px; padding: .3rem .6rem; }
+.ev-bar { height: 12px; border-radius: 999px; background: #eee3cc; overflow: hidden; margin: .3rem 0 .6rem; }
+.ev-bar > i { display: block; height: 100%; background: var(--a-green); }
+.ev-tag { display: inline-flex; align-items: center; gap: .3rem; background: #f4e7c8; border-radius: 999px; padding: .1rem .3rem .1rem .7rem; margin: 0 .3rem .3rem 0; }
+.ev-tag button { border: 0; background: transparent; font-size: 1.2rem; min-width: 36px; min-height: 36px; cursor: pointer; }
+.ev-pay { display: grid; grid-template-columns: 1fr auto; gap: .2rem .8rem; }
+.ev-savebar { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1rem 0; }

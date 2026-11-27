@@ -1,0 +1,7 @@
+.lead-flag { color: var(--a-red); font-weight: 700; font-size: .85rem; }
+.lead-meta { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
+.lead-actions { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: .75rem; }
+.lead-actions .btn { width: 100%; }
+.lead-sticky { position: sticky; bottom: calc(var(--a-tab-h) + env(safe-area-inset-bottom, 0px)); background: var(--a-cream); padding: .5rem 0; display: flex; gap: .5rem; z-index: 20; }
+.lead-sticky .btn { flex: 1; }
+.lead-count { font-weight: 400; opacity: .8; }

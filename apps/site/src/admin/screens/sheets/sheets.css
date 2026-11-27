@@ -1,0 +1,14 @@
+.sh-big { font-size: 1.15rem; }
+.sh-head h1 { margin-bottom: .2rem; }
+.sh-tabs { display: flex; gap: .4rem; margin: .8rem 0; }
+.sh-tabs .chip { flex: 1; min-height: 48px; font-size: 1rem; }
+.sh-dish { break-inside: avoid; }
+.sh-dish h3 { font-size: 1.25rem; margin: 0 0 .3rem; }
+.sh-table td, .sh-table th { font-size: 1.1rem; }
+.sh-note { background: #fff0b3; border: 2px solid var(--a-haldi); border-radius: 12px; padding: .5rem .8rem; margin-bottom: .75rem; }
+.sh-edit-row { display: grid; grid-template-columns: 1fr 90px 90px 44px; gap: .4rem; margin-bottom: .4rem; }
+.sh-pack { display: flex; align-items: center; gap: .7rem; min-height: 52px; border-bottom: 1px solid var(--a-line); font-size: 1.15rem; }
+.sh-pack input[type=checkbox] { width: 28px; height: 28px; min-height: 28px; flex: none; }
+.sh-pack .grow { flex: 1; }
+.sh-box { display: inline-block; width: 18px; height: 18px; border: 2px solid #000; margin-right: .5rem; vertical-align: middle; }
+@media print { .sh-big { font-size: 14pt; } .sh-box { border-color: #000; } }

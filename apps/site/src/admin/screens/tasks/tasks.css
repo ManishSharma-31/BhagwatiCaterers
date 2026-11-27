@@ -1,0 +1,10 @@
+.tk-item { display: flex; align-items: flex-start; gap: .7rem; background: var(--a-card); border: 1px solid var(--a-line); border-radius: 14px; padding: .6rem .8rem; min-height: 60px; }
+.tk-item.over { border-color: var(--a-red); background: #fff4f3; }
+.tk-box { flex: none; width: 44px; height: 44px; border-radius: 10px; border: 3px solid var(--a-maroon); background: #fff; font-size: 1.7rem; line-height: 1; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.tk-box.on { background: var(--a-green); border-color: var(--a-green); }
+.tk-main { flex: 1; min-width: 0; text-align: left; background: none; border: 0; font: inherit; color: inherit; padding: 0; cursor: pointer; }
+.tk-title { font-weight: 700; display: block; }
+.tk-title.done { text-decoration: line-through; opacity: .6; }
+.tk-sub { font-size: .88rem; color: var(--a-muted); display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.tk-sec summary { cursor: pointer; font-weight: 700; font-size: 1.1rem; color: var(--a-maroon); min-height: 44px; display: flex; align-items: center; }
+.tk-sec .list { margin-bottom: 1rem; }

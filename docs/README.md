@@ -24,3 +24,6 @@ Keep these documents current. Every change that affects design, content, archite
 4. No secrets (keys, passwords, tokens) in the repo.
 5. Log important decisions in `decision-log.md`.
 6. Update `task-board.md` when starting and finishing work.
+
+- [phase2-design.md](phase2-design.md) — dashboard contract
+- [supabase-setup.md](supabase-setup.md) — owner steps for cloud sync

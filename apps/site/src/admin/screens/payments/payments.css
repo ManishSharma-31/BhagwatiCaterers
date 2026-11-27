@@ -1,0 +1,9 @@
+.pay-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: .8rem; }
+.pay-tile { background: #fff; border: 1px solid var(--a-line); border-radius: 12px; padding: .6rem .5rem; text-align: center; }
+.pay-tile .money { font-size: 1.1rem; display: block; }
+.pay-tile small { color: var(--a-muted); }
+.pay-in { color: var(--a-green); }
+.pay-out { color: var(--a-red); }
+.pay-balance { background: #fff6d6; border: 1px solid var(--a-haldi); }
+.pay-balance > div { display: flex; justify-content: space-between; }
+@media (max-width: 380px) { .pay-tiles { grid-template-columns: 1fr; } }

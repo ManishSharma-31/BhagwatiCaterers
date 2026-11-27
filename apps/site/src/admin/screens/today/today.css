@@ -1,0 +1,12 @@
+.today-hello { margin-bottom: .25rem; }
+.today-sub { margin-bottom: 1rem; }
+.today-alert { border-radius: 14px; padding: .8rem 1rem; margin-bottom: .75rem; border: 2px solid; }
+.today-alert.red { background: #fde2e1; border-color: var(--a-red); }
+.today-alert.yellow { background: #fff0b3; border-color: var(--a-haldi); }
+.today-quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: 1rem; }
+.today-quick .btn { flex-direction: column; min-height: 64px; border-radius: 14px; text-align: center; line-height: 1.2; padding: .4rem; }
+.today-quick .q-ico { font-size: 1.4rem; }
+.today-stat { display: flex; align-items: center; gap: .75rem; text-decoration: none; color: inherit; }
+.today-stat .n { font-size: 2rem; font-weight: 700; color: var(--a-maroon); min-width: 2.2rem; text-align: center; }
+.today-days { font-weight: 700; color: var(--a-kesari); white-space: nowrap; }
+.today-late { color: var(--a-red); font-weight: 700; }

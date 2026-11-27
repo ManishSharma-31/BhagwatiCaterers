@@ -17,3 +17,8 @@
 | 2026-11-27 | 25 Pexels photos shown in Gallery, all labelled "representative image"; 3 rejected after visual review (thali-top: possible non-veg item; thali-sweets: label mismatch; buffet-indoor: possible logo) | Photos were chosen from page text only, so each was checked by eye after download. |
 | 2026-11-27 | CI size budget counts code and art only, not photos | Photos are lazy-loaded and served at 800 px on phones. |
 | 2026-11-27 | No genuine free photo found for puran poli, bhakri-pithla, shrikhand, masale bhat, dal baati churma, rangoli | Owner photos needed first for these. Wrong-dish substitutes are not used. |
+
+## Phase 2 (dashboard)
+- Local-first PWA at /admin; Supabase optional (single `records` table, RLS + allowlist, no service-role key, publishable key pre-filled).
+- Default titles/towns follow the UI language (fixed after e2e testing).
+- Not verified here: real Supabase calls (network blocked), real phone taps, wa.me on devices. See docs/supabase-setup.md.

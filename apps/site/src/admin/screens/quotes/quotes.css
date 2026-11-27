@@ -1,0 +1,21 @@
+.quote-note { background: #fff6d6; border: 1px solid var(--a-haldi); border-radius: 10px; padding: .6rem .8rem; font-size: .92rem; margin-bottom: .8rem; }
+.quote-dish { display: flex; align-items: center; gap: .6rem; min-height: 44px; }
+.quote-pick { max-height: 340px; overflow: auto; border: 1px solid var(--a-line); border-radius: 10px; padding: .4rem .7rem; margin-bottom: .6rem; }
+.quote-pick h4 { margin: .6rem 0 .2rem; color: var(--a-maroon); }
+.quote-line { display: grid; grid-template-columns: 1fr 120px auto; gap: .4rem; align-items: end; margin-bottom: .5rem; }
+.quote-total { font-size: 1.25rem; }
+.quote-sum { display: grid; gap: .2rem; }
+.quote-sum > div { display: flex; justify-content: space-between; }
+.quote-actions { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin: .75rem 0; }
+.quote-actions .btn { width: 100%; }
+.quote-done { background: #d1fadf; border: 1px solid var(--a-green); border-radius: 12px; padding: .8rem 1rem; margin-bottom: .8rem; }
+/* printable quote */
+.quote-print { font-size: 12pt; color: #000; }
+.quote-print h1 { color: #000; text-align: center; margin: 0; }
+.quote-print .qp-sub { text-align: center; margin-bottom: .8rem; }
+.quote-print table { width: 100%; border-collapse: collapse; margin: .5rem 0; }
+.quote-print th, .quote-print td { border: 1px solid #444; padding: .3rem .5rem; text-align: left; }
+.quote-print td.r, .quote-print th.r { text-align: right; }
+.quote-print .qp-sign { display: flex; justify-content: space-between; margin-top: 3rem; }
+.quote-print .qp-sign div { border-top: 1px solid #000; width: 40%; text-align: center; padding-top: .3rem; }
+.quote-print ol { margin: .3rem 0 .6rem 1.2rem; padding: 0; columns: 2; }
