@@ -6,6 +6,11 @@ import { ui } from '../i18n/ui';
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = menu[lang];
+import Photo from '../components/Photo.astro';
+import { slots } from '../content/gallery';
+const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
+const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
+const cuisinePhotos: string[][] = [['misal-pav', 'modak', 'jilebi', 'gulab-jamun', 'poha'], ['idli-sambar', 'dosa'], []];
 ---
 <Base lang={lang} page="menu" title={c.metaTitle} description={c.metaDescription}>
   <section class="hero">
@@ -15,18 +20,34 @@ const c = menu[lang];
         <p class="lead">{c.lead}</p>
         <p class="note">{c.exampleNote}</p>
       </div>
-      <div><img src="/art/thali.svg" alt="" width="360" height="360" fetchpriority="high" /></div>
+      <figure class="hero-photo">
+        <picture>
+          <source type="image/webp" srcset="/photos/misal-pav-thali-800.webp 800w" sizes="(min-width: 900px) 40vw, 100vw" />
+          <img src="/photos/misal-pav-thali-800.jpg" alt={altOf('misal-pav-thali')} width="800" height="532" fetchpriority="high" decoding="async" />
+        </picture>
+        <figcaption class="rep">{ui.repImage[lang]}</figcaption>
+      </figure>
     </div>
   </section>
   <section class="section">
     <div class="wrap">
       <div class="grid three">
-        {c.cuisines.map((x) => (
+        {c.cuisines.map((x, i) => (
           <article class="card big">
             <img class="icon" src={x.icon} alt="" width="64" height="64" loading="lazy" />
             <h2 class="h3">{x.title}</h2>
             <p>{x.intro}</p>
             <ul>{x.dishes.map((d) => <li>{d}</li>)}</ul>
+            {cuisinePhotos[i].length > 0 && (
+              <div class="dish-photos">
+                {cuisinePhotos[i].map((n) => (
+                  <div class="dp">
+                    <Photo name={n} alt={altOf(n)} width={800} height={600} representative lang={lang} fallbackIcon={icOf(n)} />
+                    <span class="dn">{altOf(n)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </article>
         ))}
       </div>
@@ -60,4 +81,12 @@ const c = menu[lang];
 </Base>
 <style>
   .h3 { font-size: 1.3rem; }
+  .hero-photo { margin: 0; }
+  .hero-photo img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow); display: block; }
+  .rep { font-size: .8rem; color: #6b5a50; margin: .35rem 0 0; text-align: center; }
+  .dish-photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; margin-top: .5rem; }
+  .dp { min-width: 0; }
+  .dp :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; display: block; }
+  .dp :global(.rep) { font-size: .68rem; line-height: 1.25; color: #6b5a50; margin: .2rem 0 0; }
+  .dn { display: block; font-weight: 600; font-size: .85rem; margin-top: .1rem; }
 </style>

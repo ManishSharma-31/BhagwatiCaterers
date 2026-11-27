@@ -6,6 +6,12 @@ import { ui } from '../i18n/ui';
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = services[lang];
+import Photo from '../components/Photo.astro';
+import { slots } from '../content/gallery';
+const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
+const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
+// service index -> photo (0 wedding, 3 housewarming, 4 puja, 5 parties)
+const svcPhoto: Record<number, string> = { 0: 'hero-wedding-decor', 3: 'kalash', 4: 'puja-thali', 5: 'buffet-counter' };
 ---
 <Base lang={lang} page="services" title={c.metaTitle} description={c.metaDescription}>
   <section class="hero">
@@ -15,15 +21,25 @@ const c = services[lang];
         <p class="lead">{c.lead}</p>
         <p class="note">{c.note}</p>
       </div>
-      <div><img src="/art/kalash.svg" alt="" width="300" height="300" fetchpriority="high" /></div>
+      <figure class="hero-photo">
+        <picture>
+          <source type="image/webp" srcset="/photos/kalash-decorated-800.webp 800w" sizes="(min-width: 900px) 40vw, 100vw" />
+          <img src="/photos/kalash-decorated-800.jpg" alt={altOf('kalash-decorated')} width="800" height="600" fetchpriority="high" decoding="async" />
+        </picture>
+        <figcaption class="rep">{ui.repImage[lang]}</figcaption>
+      </figure>
     </div>
   </section>
   <section class="section">
     <div class="wrap">
       <div class="grid three">
-        {c.items.map((s) => (
+        {c.items.map((s, i) => (
           <article class="card">
-            <img class="icon" src={s.icon} alt="" width="64" height="64" loading="lazy" />
+            {svcPhoto[i] ? (
+              <div class="ph"><Photo name={svcPhoto[i]} alt={altOf(svcPhoto[i])} width={800} height={600} representative lang={lang} fallbackIcon={icOf(svcPhoto[i])} /></div>
+            ) : (
+              <img class="icon" src={s.icon} alt="" width="64" height="64" loading="lazy" />
+            )}
             <h2 class="h3">{s.title}</h2>
             <p>{s.body}</p>
           </article>
@@ -52,4 +68,10 @@ const c = services[lang];
 </Base>
 <style>
   .h3 { font-size: 1.3rem; }
+  .hero-photo { margin: 0; }
+  .hero-photo img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow); display: block; }
+  .rep { font-size: .8rem; color: #6b5a50; margin: .35rem 0 0; text-align: center; }
+  .ph { margin: -.4rem -.4rem .8rem; }
+  .ph :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; display: block; }
+  .ph :global(.rep) { font-size: .75rem; color: #6b5a50; margin: .25rem 0 0; }
 </style>

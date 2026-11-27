@@ -1,0 +1,14 @@
+{
+  "name": "Bhagwati Caterers Admin",
+  "short_name": "BC Admin",
+  "start_url": "/admin/",
+  "scope": "/admin/",
+  "display": "standalone",
+  "background_color": "#fff6e3",
+  "theme_color": "#7a1f2b",
+  "lang": "mr",
+  "icons": [
+    { "src": "/admin/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/admin/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

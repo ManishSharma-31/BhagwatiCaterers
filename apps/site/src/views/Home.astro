@@ -6,6 +6,11 @@ import { ui } from '../i18n/ui';
 interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = home[lang];
+import Photo from '../components/Photo.astro';
+import { slots } from '../content/gallery';
+const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
+const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
+const cuisinePhotos: Array<string | null> = ['misal-pav', 'idli-sambar', null];
 ---
 <Base lang={lang} page="home" title={c.metaTitle} description={c.metaDescription}>
   <section class="hero">
@@ -24,9 +29,13 @@ const c = home[lang];
           <a class="btn btn-ghost" href={`tel:+${site.phoneIntl}`}>📞 {site.phone}</a>
         </div>
       </div>
-      <div>
-        <img src="/art/thali.svg" alt="" width="400" height="400" fetchpriority="high" />
-      </div>
+      <figure class="hero-photo">
+        <picture>
+          <source type="image/webp" srcset="/photos/hero-wedding-decor-800.webp 800w, /photos/hero-wedding-decor-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 100vw" />
+          <img src="/photos/hero-wedding-decor-800.jpg" alt={altOf('hero-wedding-decor')} width="800" height="1000" fetchpriority="high" decoding="async" />
+        </picture>
+        <figcaption class="rep">{ui.repImage[lang]}</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -55,9 +64,13 @@ const c = home[lang];
       <h2 class="center">{c.cuisineTitle}</h2>
       <p class="note center">{c.cuisineNote}</p>
       <div class="grid three">
-        {c.cuisines.map((x) => (
+        {c.cuisines.map((x, i) => (
           <article class="card">
-            <img class="icon" src={x.icon} alt="" width="64" height="64" loading="lazy" />
+            {cuisinePhotos[i] ? (
+              <div class="ph"><Photo name={cuisinePhotos[i]!} alt={altOf(cuisinePhotos[i]!)} width={800} height={600} representative lang={lang} fallbackIcon={icOf(cuisinePhotos[i]!)} /></div>
+            ) : (
+              <img class="icon" src={x.icon} alt="" width="64" height="64" loading="lazy" />
+            )}
             <h3>{x.title}</h3>
             <p>{x.dishes}</p>
           </article>
@@ -71,6 +84,7 @@ const c = home[lang];
 
   <section class="section">
     <div class="wrap center">
+      <div class="ph band"><Photo name="marigold-entrance" alt={altOf('marigold-entrance')} width={800} height={400} representative lang={lang} fallbackIcon={icOf('marigold-entrance')} /></div>
       <h2>{c.occasionTitle}</h2>
       <ul class="chips" style="justify-content:center">
         {c.occasions.map((o) => <li>{o}</li>)}
@@ -110,3 +124,14 @@ const c = home[lang];
     </div>
   </section>
 </Base>
+<style>
+  .hero-photo { margin: 0; }
+  .hero-photo img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 40%; border-radius: var(--radius, 14px); box-shadow: var(--shadow); display: block; }
+  @media (min-width: 900px) { .hero-photo img { aspect-ratio: 4 / 5; } }
+  .rep, .hero-photo :global(.rep) { font-size: .8rem; color: #6b5a50; margin: .35rem 0 0; text-align: center; }
+  .ph { margin: -.4rem -.4rem .8rem; }
+  .ph :global(img) { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; display: block; }
+  .ph :global(.rep) { font-size: .75rem; color: #6b5a50; margin: .25rem 0 0; }
+  .band { margin: 0 auto 1.5rem; max-width: 900px; }
+  .band :global(img) { aspect-ratio: 16 / 7; object-position: center 35%; }
+</style>
