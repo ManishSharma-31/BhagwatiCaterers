@@ -1,5 +1,4 @@
 import type { MenuItem, Settings } from './types';
-import { newId } from './util';
 
 // Starter menu: EXAMPLE dishes only. The owner edits the real menu in the dashboard (docs/open-questions.md).
 type Row = [string, string, MenuItem['cuisine'], MenuItem['category']];
@@ -37,7 +36,7 @@ const rows: Row[] = [
 
 export const seedMenu = (): MenuItem[] => {
   const now = new Date().toISOString();
-  return rows.map(([nameMr, nameEn, cuisine, category]) => ({ id: newId(), createdAt: now, updatedAt: now, nameMr, nameEn, cuisine, category, active: true }));
+  return rows.map(([nameMr, nameEn, cuisine, category]) => ({ id: 'seed-' + nameEn.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), createdAt: now, updatedAt: now, nameMr, nameEn, cuisine, category, active: true }));
 };
 
 export const defaultSettings = (): Settings => {

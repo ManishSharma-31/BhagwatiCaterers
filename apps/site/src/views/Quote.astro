@@ -64,11 +64,12 @@ const d = qdesign[lang];
         <div class="pair">
         <div>
           <label for="date">{c.date} {c.optional}</label>
-          <input id="date" name="date" type="date" />
+          <input id="date" name="date" type="date" aria-describedby="err-date" />
+          <p class="err" id="err-date" aria-live="polite"></p>
         </div>
         <div>
           <label for="guests">{c.guests} *</label>
-          <input id="guests" name="guests" type="number" min="1" inputmode="numeric" required aria-describedby="err-guests" />
+          <input id="guests" name="guests" type="number" min="1" step="1" inputmode="numeric" required aria-describedby="err-guests" />
           <p class="err" id="err-guests" aria-live="polite"></p>
         </div>
         </div>
@@ -117,7 +118,7 @@ const d = qdesign[lang];
         <div class="btn-row">
           <button type="button" id="quote-copy" class="btn btn-ghost" data-ok={c.copied} data-manual={c.manual}>{c.copy}</button>
           <a class="btn btn-primary" href={`tel:+${site.phoneIntl}`}>{c.callBtn}: {site.phone}</a>
-          <a class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{c.waBtn}</a>
+          <a id="quote-wa" class="btn btn-wa" href={waLink(lang)} target="_blank" rel="noopener">{c.waBtn}</a>
         </div>
         <p class="note" id="quote-copied" role="status"></p>
       </section>

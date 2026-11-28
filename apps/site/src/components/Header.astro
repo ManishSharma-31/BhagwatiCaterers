@@ -11,7 +11,7 @@ const items = ['services', 'menu', 'packages', 'gallery', 'about', 'areas', 'con
       <img src="/art/logo.svg" alt="" width="44" height="44" />
       <span class="brand-name">{site.name[lang]}</span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>☰ {lang === 'en' ? 'Menu' : 'मेनू'}</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span aria-hidden="true">☰</span> {lang === 'en' ? 'Navigation' : lang === 'hi' ? 'नेविगेशन' : 'नेव्हिगेशन'}</button>
     <nav id="site-nav" class="nav" aria-label="Main">
       {items.map((k) => (
         <a href={pagePath(lang, k)} aria-current={page === k ? 'page' : undefined}>{nav[k][lang]}</a>

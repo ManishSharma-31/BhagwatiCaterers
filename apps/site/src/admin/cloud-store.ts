@@ -16,6 +16,7 @@ const OUTBOX_KEY = 'bc-cloud:outbox';
 const FAILED_KEY = 'bc-cloud:failed';
 const META_KEY = 'bc-cloud:meta';
 const PAGE = 1000;
+import { enquiryToLead, type EnquiryRow } from './enquiry';
 const BATCH = 200;
 
 export interface CloudStatus {
@@ -201,6 +202,31 @@ export class CloudStore implements Store {
     return this.sync();
   }
 
+  // ---------- website enquiries ----------
+  private enquiryIds: string[] = [];
+  /** Copy new website enquiries into Leads (once each: the lead id is 'enq-<id>'). Never throws; a missing table is ignored. */
+  private async importEnquiries() {
+    try {
+      const r = await this.rest('enquiries?select=*&imported_at=is.null&order=created_at.asc&limit=100');
+      if (!r.ok) return;
+      const rows = (await r.json()) as EnquiryRow[];
+      for (const row of rows) {
+        const id = 'enq-' + row.id;
+        if (!(this.cache.leads ?? []).some((l) => l.id === id)) await this.put('leads', enquiryToLead(row));
+        this.enquiryIds.push(row.id);
+      }
+    } catch { /* try again next sync */ }
+  }
+  /** After the new leads have been uploaded, tell the server they are imported. */
+  private async markEnquiriesImported() {
+    if (!this.enquiryIds.length || this.outbox.length) return;
+    try {
+      const ids = this.enquiryIds.join(',');
+      const r = await this.rest(`enquiries?id=in.(${ids})`, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ imported_at: new Date().toISOString() }) });
+      if (r.ok) this.enquiryIds = [];
+    } catch { /* try again next sync */ }
+  }
+
   // ---------- download ----------
   /** Download everything and merge it with changes still waiting to upload. Returns true if something changed. */
   private async pull(): Promise<boolean> {
@@ -233,7 +259,9 @@ export class CloudStore implements Store {
       if (!this.auth.isSignedIn()) return;
       this.emit();
       try {
+        await this.importEnquiries();
         await this.flush();
+        await this.markEnquiriesImported();
         const changed = await this.pull();
         this.lastError = undefined;
         await this.persist();

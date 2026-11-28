@@ -74,3 +74,11 @@
 ## Admin UX review round 2 (docs/admin-ux-review-2.md)
 Done: login centring, due-today first on Today, pipeline hidden on phone, 44px tap targets (back links, call/WhatsApp, scale chips), one-line brand, no FAB/toast overlap, autofocus on new lead name and payment amount, focus first invalid field, skip link, Lock now in sidebar, friendlier 404, Latin digits in Marathi dates.
 Not done yet: sticky Save bars and Delete placement (F08, F10), shorter lead form (F05 grouping), print layout (F12, F13), calendar day badges (F19), Settings card hints (F20).
+
+## Enquiries, quote validation, testimonials (latest batch)
+- Quote form: past dates rejected (min = today), guests must be a whole number >= 1 (no upper limit). WhatsApp still opens even if saving fails.
+- Website enquiries go to WhatsApp AND to Supabase table `enquiries` (insert-only for the public; only signed-in owner/team can read). Admin imports them into Leads (source "website"). Requires running `supabase/migrations/0002_enquiries.sql` once.
+- Privacy/legal text updated in mr/en/hi to describe this.
+- No prices anywhere on the website: owner/team quote manually.
+- Testimonials slider built but list is empty by design (real, consented reviews only). Add to `src/content/testimonials.ts`; photos in `public/photos/testimonials/`.
+- UAT fixes: stable seed menu ids, payment amount cap, nav label, footer tap targets, branded 404.

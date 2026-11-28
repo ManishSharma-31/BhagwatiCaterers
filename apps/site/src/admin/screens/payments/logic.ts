@@ -49,6 +49,7 @@ export interface PayErrors { amount?: string; reference?: string; date?: string 
 export const validatePayment = (p: { amount: number; method: string; reference?: string; date: string; direction: 'in' | 'out' }, lang: Lang): PayErrors => {
   const e: PayErrors = {};
   if (!(p.amount > 0)) e.amount = lang === 'mr' ? 'रक्कम लिहा (० पेक्षा जास्त)' : 'Enter the amount (more than 0)';
+  else if (p.amount > 10_000_000) e.amount = lang === 'mr' ? 'रक्कम खूप मोठी आहे (१ कोटीपेक्षा जास्त). कृपया तपासा.' : 'The amount is too large (over 1 crore). Please check it.';
   if (p.method === 'upi' && !(p.reference ?? '').trim()) e.reference = lang === 'mr' ? 'UPI व्यवहार क्रमांक (ट्रान्झॅक्शन आयडी) लिहा' : 'Enter the UPI transaction id';
   if (!p.date) e.date = lang === 'mr' ? 'तारीख निवडा' : 'Pick a date';
   return e;

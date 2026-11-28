@@ -93,3 +93,4 @@ The copy on the old phone is not erased.
 - **Forgot the password**: Authentication, Users, choose your user, send a password reset or set a new one. [VERIFY]
 - **Wrong data after restore**: restore the earlier backup file with **Replace everything**.
 - Never share the database password or the secret key. The dashboard never needs them.
+- Step 3b: run `supabase/migrations/0002_enquiries.sql` in the SQL Editor to enable website-enquiry saving.

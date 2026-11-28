@@ -7,6 +7,7 @@ interface Props { lang: Lang; page: PageKey; }
 const { lang } = Astro.props;
 const c = home[lang];
 import Photo from '../components/Photo.astro';
+import Testimonials from '../components/Testimonials.astro';
 import { slots } from '../content/gallery';
 const altOf = (n: string) => slots.find((s) => s.name === n)!.alt[lang];
 const icOf = (n: string) => slots.find((s) => s.name === n)!.icon;
@@ -101,6 +102,8 @@ const cuisinePhotos: Array<string | null> = ['misal-pav', 'idli-sambar', 'dal-ba
       </div>
     </div>
   </section>
+
+  <Testimonials lang={lang} />
 
   <section class="section">
     <div class="wrap center">

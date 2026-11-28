@@ -1,0 +1,97 @@
+---
+import { testimonials, testimonialsTitle, type Testimonial } from '../content/testimonials';
+import type { Lang } from '../data/site';
+interface Props { lang: Lang; items?: Testimonial[] }
+const { lang, items = testimonials } = Astro.props;
+const t = testimonialsTitle[lang];
+const initials = (n: string) => n.trim().split(/\s+/).slice(0, 2).map((w) => Array.from(w)[0] ?? '').join('');
+---
+{items.length > 0 && (
+  <section class="section alt testi" aria-labelledby="testi-h">
+    <div class="wrap">
+      <div class="testi-head">
+        <h2 id="testi-h">{t.title}</h2>
+        {items.length > 1 && (
+          <div class="testi-arrows">
+            <button type="button" class="testi-btn" data-dir="-1" aria-label={t.prev}>←</button>
+            <button type="button" class="testi-btn" data-dir="1" aria-label={t.next}>→</button>
+          </div>
+        )}
+      </div>
+      <div class="testi-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label={t.title}>
+        {items.map((x) => (
+          <figure class="testi-card">
+            {x.rating && <div class="testi-stars" role="img" aria-label={`${x.rating} / 5`}>{'★'.repeat(x.rating)}<span class="off">{'★'.repeat(5 - x.rating)}</span></div>}
+            <blockquote lang={x.lang ?? lang}><p>{x.text}</p></blockquote>
+            <figcaption>
+              {x.photo
+                ? <img class="testi-av" src={`/photos/testimonials/${x.photo}`} alt="" width="56" height="56" loading="lazy" decoding="async" />
+                : <span class="testi-av ini" aria-hidden="true">{initials(x.name)}</span>}
+              <span><strong>{x.name}</strong><br /><span class="testi-about">{x.about}</span></span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      {items.length > 1 && <div class="testi-dots" role="group" aria-label={t.title}>
+        {items.map((_, i) => <button type="button" class="testi-dot" data-i={i} aria-label={`${t.goto} ${i + 1}`}></button>)}
+      </div>}
+    </div>
+  </section>
+)}
+<script>
+  // Sliding cards: arrows, dots, swipe, and a gentle auto-slide that stops on hover/focus/touch or if the visitor prefers less motion.
+  const root = document.querySelector<HTMLElement>('.testi');
+  if (root) {
+    const track = root.querySelector<HTMLElement>('.testi-track')!;
+    const cards = Array.from(track.children) as HTMLElement[];
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('.testi-dot'));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = false, timer = 0;
+    const step = () => (cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : cards[0].offsetWidth);
+    const index = () => Math.round(track.scrollLeft / step());
+    const go = (i: number) => track.scrollTo({ left: i * step(), behavior: reduce ? 'auto' : 'smooth' });
+    const maxIdx = () => Math.max(0, Math.round((track.scrollWidth - track.clientWidth) / step()));
+    const next = (d: number) => { const m = maxIdx(); let i = index() + d; if (i > m) i = 0; if (i < 0) i = m; go(i); };
+    const mark = () => { const i = Math.min(index(), dots.length - 1); dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i))); };
+    root.querySelectorAll<HTMLButtonElement>('.testi-btn').forEach((b) => b.addEventListener('click', () => next(Number(b.dataset.dir))));
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.i))));
+    track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+    track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); next(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); next(-1); } });
+    if (!reduce && cards.length > 1) {
+      let hold = 0;
+      const stop = () => { paused = true; };
+      const resume = () => { paused = false; };
+      // Mouse or keyboard: pause until they leave. Touch: pause for 10 seconds, then carry on.
+      ['mouseenter', 'focusin'].forEach((ev) => root.addEventListener(ev, stop, { passive: true }));
+      ['mouseleave', 'focusout'].forEach((ev) => root.addEventListener(ev, resume));
+      root.addEventListener('touchstart', () => { stop(); clearTimeout(hold); hold = window.setTimeout(resume, 10000); }, { passive: true });
+      timer = window.setInterval(() => { if (!paused && !document.hidden) next(1); }, 4500);
+      addEventListener('pagehide', () => clearInterval(timer));
+    }
+    mark();
+  }
+</script>
+<style>
+  .testi-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .testi-head h2 { margin: 0; }
+  .testi-arrows { display: flex; gap: .5rem; }
+  .testi-btn { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--maroon); background: #fff; color: var(--maroon); font-size: 1.3rem; cursor: pointer; line-height: 1; }
+  .testi-btn:hover { background: var(--maroon); color: #fff; }
+  .testi-track { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .4rem .2rem 1.4rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .testi-track::-webkit-scrollbar { display: none; }
+  .testi-card { flex: 0 0 min(88%, 400px); scroll-snap-align: start; margin: 0; background: #fff; border: 1px solid #f0dfb8; border-radius: 18px; padding: 1.1rem 1.2rem; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; gap: .8rem; position: relative; }
+  .testi-card::before { content: '\201C'; position: absolute; right: 1rem; top: -.2rem; font-size: 4.5rem; line-height: 1; color: #f2b01e55; font-family: Georgia, serif; }
+  .testi-stars { color: #f59e0b; letter-spacing: .12em; font-size: 1.15rem; }
+  .testi-stars .off { color: #e6d9bd; }
+  .testi-card blockquote { margin: 0; }
+  .testi-card blockquote p { margin: 0; font-size: 1.05rem; line-height: 1.65; }
+  .testi-card figcaption { display: flex; align-items: center; gap: .8rem; border-top: 1px solid #f0e4c8; padding-top: .8rem; }
+  .testi-av { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid #f0dfb8; }
+  .testi-av.ini { display: inline-flex; align-items: center; justify-content: center; background: var(--maroon); color: #fff; font-weight: 700; font-size: 1.15rem; }
+  .testi-about { color: #6b5a4e; font-size: .95rem; }
+  .testi-dots { display: flex; justify-content: center; gap: .5rem; margin-top: .2rem; }
+  .testi-dot { width: 12px; height: 12px; border-radius: 50%; border: 0; background: #d9c79c; padding: 0; cursor: pointer; position: relative; }
+  .testi-dot::after { content: ''; position: absolute; inset: -16px; }
+  .testi-dot[aria-current='true'] { width: 32px; border-radius: 8px; background: var(--maroon); }
+  @media (min-width: 900px) { .testi-card { flex-basis: calc((100% - 2rem) / 3); } }
+</style>

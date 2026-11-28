@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { pagePath } from '../data/site';
+import { ui } from '../i18n/ui';
+const lang = 'mr' as const;
+---
+<Base lang={lang} page="home" title="पृष्ठ सापडले नाही" description="हे पृष्ठ सापडले नाही. मुख्य पृष्ठ, मेनू किंवा कोटेशन पाहा." noindex>
+  <section class="section center">
+    <div class="wrap">
+      <h1>हे पृष्ठ सापडले नाही</h1>
+      <p class="lead">तुम्ही शोधत असलेला पत्ता चुकीचा असू शकतो किंवा पृष्ठ हलवले असेल. खालील लिंकवरून पुढे जा, किंवा आम्हाला फोन/WhatsApp करा.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={pagePath(lang, 'home')}>{ui.home[lang]}</a>
+        <a class="btn btn-ghost" href={pagePath(lang, 'menu')}>{ui.menu?.[lang] ?? 'मेनू'}</a>
+        <a class="btn btn-wa" href={pagePath(lang, 'quote')}>{ui.getQuote[lang]}</a>
+      </div>
+    </div>
+  </section>
+</Base>
