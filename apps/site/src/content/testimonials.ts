@@ -17,7 +17,13 @@ export interface Testimonial {
   rating?: 1 | 2 | 3 | 4 | 5;
 }
 
-export const testimonials: Testimonial[] = [];
+// TEMPORARY SAMPLE CARDS (preview only). DELETE ALL "SAMPLE" ENTRIES before the site goes public, and add real reviews.
+export const testimonials: Testimonial[] = [
+  { name: 'Sample Customer 1', about: 'SAMPLE – Wedding, Latur', text: 'SAMPLE TEXT: This is a placeholder card to preview the slider. A real customer review will appear here.', lang: 'en', rating: 5 },
+  { name: 'Sample Customer 2', about: 'SAMPLE – Housewarming, Ausa', text: 'SAMPLE TEXT: This is a placeholder card to preview the slider. A real customer review will appear here.', lang: 'en', rating: 5 },
+  { name: 'Sample Customer 3', about: 'SAMPLE – Birthday party, Udgir', text: 'SAMPLE TEXT: This is a placeholder card to preview the slider. A real customer review will appear here.', lang: 'en', rating: 4 },
+  { name: 'Sample Customer 4', about: 'SAMPLE – Corporate lunch, Nilanga', text: 'SAMPLE TEXT: This is a placeholder card to preview the slider. A real customer review will appear here.', lang: 'en', rating: 5 },
+];
 
 export const testimonialsTitle: Record<Lang, { title: string; prev: string; next: string; goto: string }> = {
   mr: { title: 'आमचे ग्राहक काय म्हणतात', prev: 'मागील अभिप्राय', next: 'पुढील अभिप्राय', goto: 'अभिप्राय' },
